@@ -24,11 +24,11 @@ fi
 cat > make.bacio << EOF
 SHELL=/bin/sh
 
-\$(LIB):	\$(LIB)( bacio.v1.4.o baciof.o bafrio.o byteswap.o chk_endianc.o)
+\$(LIB):	\$(LIB)( bacio.o baciof.o bafrio.o byteswap.o chk_endianc.o)
 
-\$(LIB)(bacio.v1.4.o):       bacio.v1.4.c clib.h
-	\${CCMP} -c \$(CFLAGS) bacio.v1.4.c
-	ar -rv \$(AFLAGS) \$(LIB) bacio.v1.4.o
+\$(LIB)(bacio.o):       bacio.c clib.h
+	\${CCMP} -c \$(CFLAGS) bacio.c
+	ar -rv \$(AFLAGS) \$(LIB) bacio.o
 
 \$(LIB)(baciof.o):   baciof.f
 	\${FCMP} -c \$(FFLAGS) baciof.f
@@ -45,7 +45,7 @@ SHELL=/bin/sh
 \$(LIB)(chk_endianc.o):       chk_endianc.f 
 	\${FCMP} -c \$(FFLAGS) chk_endianc.f
 	ar -rv \$(AFLAGS) \$(LIB) chk_endianc.o
-	rm -f baciof.o bafrio.o bacio.v1.4.o *.mod byteswap.o chk_endianc.o
+	rm -f baciof.o bafrio.o bacio.o *.mod byteswap.o chk_endianc.o
 
 EOF
 
