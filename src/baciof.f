@@ -352,7 +352,7 @@ C$$$
         INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
 !
         if(IB<0 .or. NB<0 ) THEN
-          print *,'WRONG: in BAFRREAD starting postion IB or read '//    &
+          print *,'WRONG: in BAREAD starting postion IB or read '//      &
      &   'data size NB < 0, STOP! '//                                    &
      &   'Consider using bafreadl and long integer'
           KA=0
@@ -538,7 +538,7 @@ C$$$
         INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
 !
         if(IB<0 .or. NB<0 ) THEN
-          print *,'WRONG: in BAFRWRITEstarting postion IB or read '//    &
+          print *,'WRONG: in BAWRITE starting postion IB or read '//     &
      &   'data size NB <0, STOP! ' //                                    &
      &   'Consider using bafrrwritel and long integer'
           KA=0

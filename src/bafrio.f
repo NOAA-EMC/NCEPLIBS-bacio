@@ -327,7 +327,7 @@ C$$$
       INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
 !
         if(IB<0 .or. NB<0 ) THEN
-          print *,'WRONG: in BAFRREAD starting postion IB or read '//    &
+          print *,'WRONG: in BAFRWRITE starting postion IB or read '//   &
      &   'data size NB <0, STOP! ' //                                    &
      &   'Consider use bafrrwritel and long integer'
           KA=0
