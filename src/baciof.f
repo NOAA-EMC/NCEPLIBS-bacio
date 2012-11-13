@@ -351,10 +351,9 @@ C$$$
         CHARACTER,INTENT(OUT) :: A(NB)
         INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
 !
-        if(IB<0 .or. NB<0 ) THEN
-          print *,'WRONG: in BAREAD starting postion IB or read '//      &
-     &   'data size NB < 0, STOP! '//                                    &
-     &   'Consider using bafreadl and long integer'
+        if(NB<0 ) THEN
+          print *,'WRONG: in BAREAD read data size NB < 0, STOP! '//       &
+     &   'Consider using BAREADL and long integer'
           KA=0
           return
         ENDIF
@@ -537,10 +536,9 @@ C$$$
         CHARACTER,INTENT(IN) :: A(NB)
         INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
 !
-        if(IB<0 .or. NB<0 ) THEN
-          print *,'WRONG: in BAWRITE starting postion IB or read '//     &
-     &   'data size NB <0, STOP! ' //                                    &
-     &   'Consider using bafrrwritel and long integer'
+        if(NB<0 ) THEN
+          print *,'WRONG: in BAWRITE read data size NB <0, STOP! '//      &
+     &    'Consider using BAWRITEL and long integer'
           KA=0
           return
         ENDIF
