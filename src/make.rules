@@ -5,4 +5,4 @@
 	$(FC) $(EXTRA_FCFLAGS) $(FCFLAGS) $<
 
 .c.o:
-	$(CC) $(EXTRA_CCFLAGS) $(CCFLAGS) $<
+	$(CC) $(EXTRA_CFLAGS) $(CFLAGS) $<
