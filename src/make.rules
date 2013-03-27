@@ -1,0 +1,8 @@
+# Suffix rules
+.SUFFIXES:
+.SUFFIXES: .f .c .o
+.f.o:
+	$(FC) $(EXTRA_FCFLAGS) $(FCFLAGS) $<
+
+.c.o:
+	$(CC) $(EXTRA_CCFLAGS) $(CCFLAGS) $<
