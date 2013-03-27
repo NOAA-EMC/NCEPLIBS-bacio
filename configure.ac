@@ -78,7 +78,12 @@ esac
 
 # ...and now Fortran
 case $FC in
-  ifort|gfortran|pgf95) 
+  gfortran)
+    FCFLAGS="-O3 $FCFLAGS"
+    if test "x${precision}" = x8; then
+      FCFLAGS="-fdefault-integer-8 -fdefault-real-8 $FCFLAGS"
+    fi ;;
+  ifort|pgf95) 
     FCFLAGS="-O3 $FCFLAGS"
     if test "x${precision}" = x8; then
       FCFLAGS="-i8 -r8 $FCFLAGS"
