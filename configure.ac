@@ -60,40 +60,34 @@ AC_MSG_NOTICE([Building precision ${precision} version.])
 AC_SUBST(SUFFIX,[_${precision}])
 
 
-# Set the default compiler flags
+# Set the default type promotion compiler flags
 
 # ...C ones first
 case $CC in
-  icc)  CFLAGS="-O3 -DUNDERSCORE -DLINUX $CFLAGS" ;;
-  gcc)  CFLAGS="-O3 -DUNDERSCORE -DLINUX $CFLAGS" ;;
-  pgcc) CFLAGS="-O3 -DUNDERSCORE -DLINUX $CFLAGS" ;;
-  xlc)  CFLAGS="-q64 -O3 $CFLAGS"
-        if test "x${precision}" = x4; then
-          CFLAGS="-DIBM4 $CFLAGS"
-        else
-          CFLAGS="-qlonglong -DIBM8 $CFLAGS"
-        fi ;;
+  xlc|ncepxlc)
+    if test "x${precision}" = x4; then
+      CFLAGS="-DIBM4 $CFLAGS"
+    else
+      CFLAGS="-qlonglong -DIBM8 $CFLAGS"
+    fi ;;
   *) ;;
 esac
 
 # ...and now Fortran
 case $FC in
   gfortran)
-    FCFLAGS="-O3 $FCFLAGS"
     if test "x${precision}" = x8; then
       FCFLAGS="-fdefault-integer-8 -fdefault-real-8 $FCFLAGS"
     fi ;;
   ifort|pgf95) 
-    FCFLAGS="-O3 $FCFLAGS"
     if test "x${precision}" = x8; then
       FCFLAGS="-i8 -r8 $FCFLAGS"
     fi ;;
-  xlf2003)  
-    FCFLAGS="-O3 -qnosave $FCFLAGS"
+  xlf2003|ncepxlf)
     if test "x${precision}" = x8; then
       FCFLAGS="-qintsize=8 -qrealsize=8 $FCFLAGS"
     fi ;;
-  *) ;;
+  *) AC_MSG_WARN([Precision promotion flags for $FC unknown and not set]);;
 esac
 
 AC_OUTPUT
