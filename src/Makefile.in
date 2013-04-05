@@ -9,12 +9,10 @@ tarname = @PACKAGE_TARNAME@
 distdir = $(tarname)-$(version)@SUFFIX@
 
 # Prefix-specific substitution variables
-prefix      = @prefix@
-exec_prefix = @exec_prefix@
-bindir      = @bindir@
+prefix = @prefix@
 
 # Mixed package and prefix substitution variables
-installdir  = $(prefix)/$(distdir)
+installdir = $(prefix)/$(distdir)
 
 # Compiler substitution variables
 FC = @FC@
@@ -36,13 +34,15 @@ library: $(OBJ_FILES)
 	ar -crvs lib$(package).a $(OBJ_FILES)
 
 clean:
+	cd test && $(MAKE) $@
 	-rm *.o *.mod *.a
 
 distclean: clean
+	cd test && $(MAKE) $@
 	-rm Makefile
 
-check: all
-	@echo "***THIS IS WHERE THE UNIT TEST INVOCATION GOES***"
+check: library
+	cd test && $(MAKE) $@
 
 install_include:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/include
@@ -76,7 +76,15 @@ Makefile: Makefile.in ../config.status
 # Specify targets that do not generate filesystem objects
 .PHONY: all clean distclean check install nco_install uninstall
 
-# File dependency and suffix rule include files
+# Dependency include file
 include make.dependencies
-include make.rules
+
+# Suffix rules
+.SUFFIXES:
+.SUFFIXES: .f .c .o
+.f.o:
+	$(FC) $(EXTRA_FCFLAGS) $(FCFLAGS) $<
+
+.c.o:
+	$(CC) $(EXTRA_CFLAGS) $(CFLAGS) $<
 

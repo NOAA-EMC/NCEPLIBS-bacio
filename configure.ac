@@ -15,7 +15,7 @@ AC_CONFIG_SRCDIR([src/bacio.c])
 
 
 # Define the configuration files
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile src/test/Makefile])
 
 
 # Check for programs
@@ -48,6 +48,17 @@ AC_LANG(Fortran)
 AC_FC_SRCEXT(f)
 
 
+# Check platform endian-ness
+AC_MSG_CHECKING([if platform is little-endian])
+if test 1 -eq `printf '\1' | od -dAn`; then
+  AC_MSG_RESULT(yes)
+  ENDIAN_TYPE="little"
+else
+  AC_MSG_RESULT(no)
+  ENDIAN_TYPE="big"
+fi
+
+
 # Establish the default type promotion
 AC_ARG_ENABLE([promote],
   [AS_HELP_STRING([--enable-promote],[Promote defaults to 8. @<:@default: 4@:>@])],
@@ -61,7 +72,6 @@ AC_SUBST(SUFFIX,[_${precision}])
 
 
 # Set the default type promotion compiler flags
-
 # ...C ones first
 case $CC in
   xlc|ncepxlc)
@@ -72,7 +82,6 @@ case $CC in
     fi ;;
   *) ;;
 esac
-
 # ...and now Fortran
 case $FC in
   gfortran)
@@ -89,5 +98,30 @@ case $FC in
     fi ;;
   *) AC_MSG_WARN([Precision promotion flags for $FC unknown and not set]);;
 esac
+
+
+# Determine the I/O endian-type to use in testing.
+AC_ARG_ENABLE([big-endian-test],
+  [AS_HELP_STRING([--disable-big-endian-test],[Native I/O on little-endian machines for testing. @<:@default: big-endian@:>@])],
+  [endian_test=little],[endian_test=big])
+
+
+# Assign the Fortran compiler switches accordingly
+if test "${endian_test}" = big -a "${ENDIAN_TYPE}" = little; then
+  ENDIAN_TYPE=${endian_test}
+  case ${FC} in
+    ifort)    ENDIAN_FCFLAGS="-convert big_endian";;
+    gfortran) ENDIAN_FCFLAGS="-fconvert=big-endian";;
+    pgf95)    ENDIAN_FCFLAGS="-byteswapio";;
+    g95)      ENDIAN_FCFLAGS="-fendian=big";;
+    xlf2003)  ;;
+    *)        AC_MSG_WARN([Endian swap flags for $FC unknown and not set]);;
+  esac
+else
+  ENDIAN_FCFLAGS=""
+fi
+AC_SUBST(ENDIAN_TYPE)
+AC_SUBST(ENDIAN_FCFLAGS)
+AC_MSG_NOTICE([Building ${ENDIAN_TYPE}-endian tests])
 
 AC_OUTPUT

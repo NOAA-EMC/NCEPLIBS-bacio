@@ -1,0 +1,56 @@
+# @configure_input@
+
+# src/test level makefile template
+
+# Package-specific substitution variables
+package = @PACKAGE_NAME@
+
+# The file definitions.
+EXE_FILE = test_runner
+SRC_FILES = test_baciof-@ENDIAN_TYPE@_endian.f90 \
+            test_bafrio-@ENDIAN_TYPE@_endian.f90 \
+            test_wryte.f90
+OBJ_FILES = ${SRC_FILES:.f90=.o} \
+            $(EXE_FILE).o
+
+# Auxillary definitions for test program compilation and linking
+AUX_FCFLAGS = -I..
+AUX_LDFLAGS = -L..
+AUX_LIBS = -l$(package)
+
+# Tools-specific substitution variables
+FC      = @FC@
+FCFLAGS = @FCFLAGS@ @ENDIAN_FCFLAGS@ -I.. -c
+LDFLAGS = @LDFLAGS@ -L..
+LIBS    = @LIBS@ -l$(package)
+
+# The targets
+all: $(EXE_FILE)
+
+check: $(EXE_FILE)
+	@echo "========================="; \
+	echo "  Running $(EXE_FILE)..."; \
+	echo; \
+	$(EXE_FILE); \
+	echo "========================="
+
+clean:
+	-rm $(OBJ_FILES) $(EXE_FILE)
+
+distclean: clean
+	-rm Makefile
+
+$(EXE_FILE): $(OBJ_FILES)
+	$(FC) $(LDFLAGS) $(OBJ_FILES) -o $(EXE_FILE) $(LIBS)
+
+# Specify targets that do not generate filesystem objects
+.PHONY: all clean update distclean
+
+# Include dependencies
+include make.dependencies
+
+# Specify suffix rules
+.SUFFIXES: .f90 .o
+.f90.o:
+	$(FC) $(FCFLAGS) $<
+
