@@ -45,6 +45,7 @@ fi
 
 # Set the programming language
 AC_LANG(Fortran)
+AC_FC_FREEFORM
 AC_FC_SRCEXT(f)
 
 
@@ -68,6 +69,7 @@ case ${promote} in
   *) precision=4;;
 esac
 AC_MSG_NOTICE([Building precision ${precision} version.])
+AC_SUBST(PRECISION,[${precision}])
 AC_SUBST(SUFFIX,[_${precision}])
 
 
@@ -100,6 +102,10 @@ case $FC in
 esac
 
 
+# ==========================================================
+# NOTE: The section below deals ONLY with the TESTS.
+#       No library build options are affected here.
+
 # Determine the I/O endian-type to use in testing.
 AC_ARG_ENABLE([big-endian-test],
   [AS_HELP_STRING([--disable-big-endian-test],[Native I/O on little-endian machines for testing. @<:@default: big-endian@:>@])],
@@ -123,5 +129,6 @@ fi
 AC_SUBST(ENDIAN_TYPE)
 AC_SUBST(ENDIAN_FCFLAGS)
 AC_MSG_NOTICE([Building ${ENDIAN_TYPE}-endian tests])
+# ==========================================================
 
 AC_OUTPUT

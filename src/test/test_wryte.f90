@@ -1,12 +1,18 @@
-  subroutine test_wryte()
+  function test_wryte() result(err_stat)
 !
         implicit none
+!
+       integer :: err_stat
 !
        integer,parameter :: strl=40
        character(strl) arr,arr1
        character(255) cin
        integer ios,flunit,i,arrylen
        integer iskip,iread,nread
+!
+!--- indicate successful error status
+       err_stat = 0
+    
 
        flunit=99
        cin='data_wryte'
@@ -25,9 +31,9 @@
       
       if(trim(arr1)/=trim(arr) ) then
           print *,'BACIO: wrong with wryte'
-          stop
+          err_stat = 1; return
       endif
 !
        print *,'BACIO unit test: test_wryte ends normally'
 
-  end subroutine test_wryte
+  end function test_wryte

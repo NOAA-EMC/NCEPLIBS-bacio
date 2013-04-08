@@ -28,14 +28,13 @@ LIBS    = @LIBS@ -l$(package)
 all: $(EXE_FILE)
 
 check: $(EXE_FILE)
-	@echo "========================="; \
-	echo "  Running $(EXE_FILE)..."; \
-	echo; \
+	@echo "========================================"; \
+	echo "  Running @ENDIAN_TYPE@-endian precision @PRECISION@ tests..."; \
 	$(EXE_FILE); \
-	echo "========================="
+	echo  "========================================"
 
 clean:
-	-rm $(OBJ_FILES) $(EXE_FILE)
+	-rm $(OBJ_FILES) $(EXE_FILE) data_*
 
 distclean: clean
 	-rm Makefile

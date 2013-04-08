@@ -1,6 +1,8 @@
-  subroutine test_baciof()
+  function test_baciof() result(err_stat)
 !
     implicit none
+!
+    integer :: err_stat
 !
     integer,parameter :: kindr=4,kindr8=8,kindi=4
     integer,parameter :: im=20,jm=10,lm=5
@@ -15,6 +17,11 @@
     integer(8) iskip8,iwrite8,nwrite8,iread8,nread8
     character(16) machine_endian
     logical do_byteswap
+
+!
+!--- indicate successful error status
+    err_stat = 0
+    
 !
 !--- test baread/bawrite/wytre subroutines in baciof.f  
 !
@@ -139,7 +146,7 @@
 !     print *,'in test_baciof,r2=',r2
      if(maxval(r1-r2)/=0.or.minval(r1-r2)/=0) then
        print *,'Wrong in test_baciof, r4'
-       stop
+       err_stat = 1; return
      endif
 !
 !read out r8
@@ -156,7 +163,7 @@
      call baread(flunit,iskip,iread,nread,lens1)
      if(maxval(s1-s2)/=0.or.minval(s1-s2)/=0) then
        print *,'Wrong in test_baciof, r8'
-       stop
+       err_stat = 1; return
      endif
 !
 !read int
@@ -175,7 +182,7 @@
      call baread(flunit,iskip,iread,nread,leni1)
      if(maxval(i1-i2)/=0.or.minval(i1-i2)/=0) then
        print *,'Wrong in test_baciof, i4'
-       stop
+       err_stat = 1; return
      endif
 !
 !read string
@@ -193,7 +200,7 @@
      call baread(flunit,iskip,iread,nread,lenc1)
      if(astr2/=astr1 ) then
        print *,'Wrong in test_baciof, string'
-       stop
+       err_stat = 1; return
      endif
 !
       call baclose(flunit,iret)
@@ -208,24 +215,23 @@
      close(flunit)
 !
      if(maxval(r1-r3)/=0.or.minval(r1-r3)/=0) then
-print *, maxval(r1-r3), minval(r1-r3)
        print *,'Wrong in test_baciof, Fortran r4'
-       stop
+       err_stat = 1; return
      endif
      if(maxval(s1-s3)/=0.or.minval(s1-s3)/=0) then
        print *,'Wrong in test_baciof, Fortran r8'
-       stop
+       err_stat = 1; return
      endif
      if(maxval(i1-i3)/=0.or.minval(i1-i3)/=0) then
        print *,'Wrong in test_baciof, Fortran i4'
-       stop
+       err_stat = 1; return
      endif
      if(astr3/=astr1) then
        print *,'Wrong in test_baciof, Fortran string'
-       stop
+       err_stat = 1; return
      endif
 !
      print *,'BACIO: unit test test_bacio ends normally'
 
 !
-  end subroutine test_baciof
+  end function test_baciof
