@@ -1,0 +1,12 @@
+export FC="pgf95"
+export FCFLAGS=" \
+ -g \
+ -fast"
+ 
+export CC="pgcc"
+export CFLAGS=" \
+ -g \
+ -fast"
+ 
+export LDFLAGS=""
+export LIBS=""

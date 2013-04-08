@@ -76,12 +76,7 @@ AC_SUBST(SUFFIX,[_${precision}])
 # Set the default type promotion compiler flags
 # ...C ones first
 case $CC in
-  xlc|ncepxlc)
-    if test "x${precision}" = x4; then
-      CFLAGS="-DIBM4 $CFLAGS"
-    else
-      CFLAGS="-qlonglong -DIBM8 $CFLAGS"
-    fi ;;
+  xlc|ncepxlc) CFLAGS="-DIBM${precision} $CFLAGS";;
   *) ;;
 esac
 # ...and now Fortran

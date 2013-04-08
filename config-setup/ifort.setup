@@ -1,0 +1,14 @@
+export FC="ifort"
+export FCFLAGS=" \
+ -O3 \
+ -xHOST \
+ -traceback"
+ 
+export CC="icc"
+export CFLAGS=" \
+ -O3 \
+ -DUNDERSCORE \
+ -DLINUX"
+ 
+export LDFLAGS=""
+export LIBS=""
