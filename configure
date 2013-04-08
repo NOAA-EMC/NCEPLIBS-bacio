@@ -607,6 +607,7 @@ LIBOBJS
 ENDIAN_FCFLAGS
 ENDIAN_TYPE
 SUFFIX
+PRECISION
 FCFLAGS_f
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -2940,6 +2941,78 @@ ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_fc_compiler_gnu
+{ $as_echo "$as_me:$LINENO: checking for Fortran flag needed to allow free-form source" >&5
+$as_echo_n "checking for Fortran flag needed to allow free-form source... " >&6; }
+if test "${ac_cv_fc_freeform+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_fc_freeform=unknown
+ac_fc_freeform_FCFLAGS_save=$FCFLAGS
+for ac_flag in none -ffree-form -FR -free -qfree -Mfree -Mfreeform \
+               -freeform "-f free"
+do
+  test "x$ac_flag" != xnone && FCFLAGS="$ac_fc_freeform_FCFLAGS_save $ac_flag"
+  cat >conftest.$ac_ext <<_ACEOF
+
+  program freeform
+       ! FIXME: how to best confuse non-freeform compilers?
+       print *, 'Hello ', &
+           'world.'
+       end
+_ACEOF
+rm -f conftest.$ac_objext
+if { (ac_try="$ac_compile"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_compile") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_fc_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest.$ac_objext; then
+  ac_cv_fc_freeform=$ac_flag; break
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+done
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+FCFLAGS=$ac_fc_freeform_FCFLAGS_save
+
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_fc_freeform" >&5
+$as_echo "$ac_cv_fc_freeform" >&6; }
+if test "x$ac_cv_fc_freeform" = xunknown; then
+  { { $as_echo "$as_me:$LINENO: error: Fortran does not accept free-form source" >&5
+$as_echo "$as_me: error: Fortran does not accept free-form source" >&2;}
+   { (exit 77); exit 77; }; }
+else
+  if test "x$ac_cv_fc_freeform" != xnone; then
+    FCFLAGS="$FCFLAGS $ac_cv_fc_freeform"
+  fi
+
+fi
+ac_ext=${ac_fc_srcext-f}
+ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
+ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_fc_compiler_gnu
+
+ac_ext=${ac_fc_srcext-f}
+ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
+ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_fc_compiler_gnu
 { $as_echo "$as_me:$LINENO: checking for Fortran flag to compile .f files" >&5
 $as_echo_n "checking for Fortran flag to compile .f files... " >&6; }
 if test "${ac_cv_fc_srcext_f+set}" = set; then
@@ -3041,6 +3114,8 @@ case ${promote} in
 esac
 { $as_echo "$as_me:$LINENO: Building precision ${precision} version." >&5
 $as_echo "$as_me: Building precision ${precision} version." >&6;}
+PRECISION=${precision}
+
 SUFFIX=_${precision}
 
 
@@ -3075,6 +3150,10 @@ $as_echo "$as_me: WARNING: Precision promotion flags for $FC unknown and not set
 esac
 
 
+# ==========================================================
+# NOTE: The section below deals ONLY with the TESTS.
+#       No library build options are affected here.
+
 # Determine the I/O endian-type to use in testing.
 # Check whether --enable-big-endian-test was given.
 if test "${enable_big_endian_test+set}" = set; then
@@ -3104,6 +3183,7 @@ fi
 
 { $as_echo "$as_me:$LINENO: Building ${ENDIAN_TYPE}-endian tests" >&5
 $as_echo "$as_me: Building ${ENDIAN_TYPE}-endian tests" >&6;}
+# ==========================================================
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
