@@ -30,7 +30,7 @@ all: $(EXE_FILE)
 check: $(EXE_FILE)
 	@echo "========================================"; \
 	echo "  Running @ENDIAN_TYPE@-endian precision @PRECISION@ tests..."; \
-	$(EXE_FILE); \
+	./$(EXE_FILE); \
 	echo  "========================================"
 
 clean:
