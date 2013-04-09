@@ -78,9 +78,6 @@ NOTE: On many systems the Gnu C compiler, gcc, is usually detected before other 
       so one should example the configure output to ensure the correct C compiler was
       found. Alternatively, just specify the compiler on the command line.
 
-Use the configure script method of generating the makefiles if you want to link to a
-different version of the sigio library, or a version in a different location, e.g.
-
 
 
 2. Building the library
