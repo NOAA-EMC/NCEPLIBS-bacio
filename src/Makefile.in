@@ -6,7 +6,7 @@
 package = @PACKAGE_NAME@
 version = @PACKAGE_VERSION@
 tarname = @PACKAGE_TARNAME@
-distdir = $(tarname)-$(version)@SUFFIX@
+distdir = $(tarname)_$(version)@SUFFIX@
 
 # Prefix-specific substitution variables
 prefix = @prefix@
@@ -66,7 +66,7 @@ install: install_include install_lib
 
 nco_install_lib:
 	$(INSTALL) -d $(DESTDIR)$(installdir)
-	$(INSTALL_DATA) lib$(package)$(SUFFIX).a $(DESTDIR)$(installdir)/lib$(package)-$(version)$(SUFFIX).a
+	$(INSTALL_DATA) lib$(package)$(SUFFIX).a $(DESTDIR)$(installdir)/lib$(package)_$(version)$(SUFFIX).a
 
 nco_install_include:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/incmod/$(distdir)

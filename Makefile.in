@@ -6,7 +6,7 @@
 package = @PACKAGE_NAME@
 version = @PACKAGE_VERSION@
 tarname = @PACKAGE_TARNAME@
-distdir = $(tarname)-$(version)@SUFFIX@
+distdir = $(tarname)_$(version)@SUFFIX@
 
 # Prefix-specific substitution variables
 prefix      = @prefix@

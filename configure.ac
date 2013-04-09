@@ -3,7 +3,7 @@ AC_REVISION($Id: $)
 
 
 ## Initialise autoconf
-AC_INIT([bacio], [2.0.1], [ncep.list.emc.nceplibs.support@noaa.gov])
+AC_INIT([bacio], [v2.0.2], [ncep.list.emc.nceplibs.support@noaa.gov])
 
 
 # Output info for user
