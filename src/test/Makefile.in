@@ -13,16 +13,11 @@ SRC_FILES = test_baciof-@ENDIAN_TYPE@_endian.f90 \
 OBJ_FILES = ${SRC_FILES:.f90=.o} \
             $(EXE_FILE).o
 
-# Auxillary definitions for test program compilation and linking
-AUX_FCFLAGS = -I..
-AUX_LDFLAGS = -L..
-AUX_LIBS = -l$(package)
-
 # Tools-specific substitution variables
 FC      = @FC@
-FCFLAGS = @FCFLAGS@ @ENDIAN_FCFLAGS@ -I.. -c
-LDFLAGS = @LDFLAGS@ -L..
-LIBS    = @LIBS@ -l$(package)
+FCFLAGS = -I.. @FCFLAGS@ @ENDIAN_FCFLAGS@ -c
+LDFLAGS = -L.. @LDFLAGS@
+LIBS    = -l$(package) @LIBS@
 
 # The targets
 all: $(EXE_FILE)
