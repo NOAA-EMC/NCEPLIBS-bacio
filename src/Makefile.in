@@ -14,15 +14,21 @@ prefix = @prefix@
 # Mixed package and prefix substitution variables
 installdir = $(prefix)/$(distdir)
 
-# Compiler substitution variables
-FC = @FC@
+# Tool-specific substitution variables
+FC      = @FC@
 FCFLAGS = @FCFLAGS@ -c
-CC = @CC@
-CFLAGS = @CFLAGS@ -c
+CC      = @CC@
+CFLAGS  = @CFLAGS@ -c
+AR      = @AR@
+ARFLAGS = @ARFLAGS@
+RANLIB  = @RANLIB@
 INSTALL         = @INSTALL@
 INSTALL_DATA    = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT  = @INSTALL_SCRIPT@
+
+# The library name
+LIBRARY = lib$(package).a
 
 # The file definitions. This include must occur before targets.
 include make.filelist
@@ -30,15 +36,19 @@ include make.filelist
 # The targets
 all: library
 
-library: $(OBJ_FILES)
-	ar -crvs lib$(package).a $(OBJ_FILES)
+$(LIBRARY): $(OBJ_FILES)
+	$(AR) $(ARFLAGS) $@ $(OBJ_FILES)
+	$(RANLIB) $@
+        
+library: $(LIBRARY)
 
 clean:
 	cd test && $(MAKE) $@
 	-rm *.o *.mod *.a
 
-distclean: clean
+distclean: 
 	cd test && $(MAKE) $@
+	-rm *.o *.mod *.a
 	-rm Makefile
 
 check: library

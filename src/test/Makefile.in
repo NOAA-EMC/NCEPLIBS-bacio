@@ -5,6 +5,12 @@
 # Package-specific substitution variables
 package = @PACKAGE_NAME@
 
+# Tool-specific substitution variables
+FC      = @FC@
+FCFLAGS = -I.. @FCFLAGS@ @ENDIAN_FCFLAGS@ -c
+LDFLAGS = -L.. @LDFLAGS@
+LIBS    = -l$(package) @LIBS@
+
 # The file definitions.
 EXE_FILE = test_runner
 SRC_FILES = test_baciof-@ENDIAN_TYPE@_endian.f90 \
@@ -12,12 +18,6 @@ SRC_FILES = test_baciof-@ENDIAN_TYPE@_endian.f90 \
             test_wryte.f90
 OBJ_FILES = ${SRC_FILES:.f90=.o} \
             $(EXE_FILE).o
-
-# Tools-specific substitution variables
-FC      = @FC@
-FCFLAGS = -I.. @FCFLAGS@ @ENDIAN_FCFLAGS@ -c
-LDFLAGS = -L.. @LDFLAGS@
-LIBS    = -l$(package) @LIBS@
 
 # The targets
 all: $(EXE_FILE)
@@ -29,16 +29,17 @@ check: $(EXE_FILE)
 	echo  "========================================"
 
 clean:
-	-rm $(OBJ_FILES) $(EXE_FILE) data_*
+	-rm *.o $(EXE_FILE) data_*
 
-distclean: clean
+distclean:
+	-rm *.o $(EXE_FILE) data_*
 	-rm Makefile
 
 $(EXE_FILE): $(OBJ_FILES)
 	$(FC) $(LDFLAGS) $(OBJ_FILES) -o $(EXE_FILE) $(LIBS)
 
 # Specify targets that do not generate filesystem objects
-.PHONY: all clean update distclean
+.PHONY: all clean check distclean
 
 # Include dependencies
 include make.dependencies
