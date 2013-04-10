@@ -3,11 +3,11 @@ AC_REVISION($Id: $)
 
 
 ## Initialise autoconf
-AC_INIT([bacio], [v2.0.2], [ncep.list.emc.nceplibs.support@noaa.gov])
+AC_INIT([nceplibs bacio], [v2.0.2], [ncep.list.emc.nceplibs.support@noaa.gov], [bacio])
 
 
 # Output info for user
-AC_MSG_NOTICE([bacio AC_PACKAGE_VERSION])
+AC_MSG_NOTICE([AC_PACKAGE_NAME AC_PACKAGE_VERSION])
 
 
 # Check for existence of unique file before proceeding
@@ -75,7 +75,6 @@ case ${promote} in
 esac
 AC_MSG_NOTICE([Building precision ${precision} version.])
 AC_SUBST(PRECISION,[${precision}])
-AC_SUBST(SUFFIX,[_${precision}])
 
 
 # Set the default type promotion compiler flags

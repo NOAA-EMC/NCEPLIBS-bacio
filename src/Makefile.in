@@ -3,10 +3,11 @@
 # src/ level makefile template
 
 # Package-specific substitution variables
-package = @PACKAGE_NAME@
-version = @PACKAGE_VERSION@
-tarname = @PACKAGE_TARNAME@
-distdir = $(tarname)_$(version)@SUFFIX@
+package   = @PACKAGE_NAME@
+version   = @PACKAGE_VERSION@
+tarname   = @PACKAGE_TARNAME@
+precision = @PRECISION@
+distdir   = $(tarname)_$(version)_$(precision)
 
 # Prefix-specific substitution variables
 prefix = @prefix@
@@ -28,7 +29,7 @@ INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT  = @INSTALL_SCRIPT@
 
 # The library name
-LIBRARY = lib$(package).a
+LIBRARY = lib$(tarname).a
 
 # The file definitions. This include must occur before targets.
 include make.filelist
@@ -60,19 +61,21 @@ install_include:
 
 install_lib:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/lib
-	$(INSTALL_DATA) lib$(package)$(SUFFIX).a $(DESTDIR)$(installdir)/lib
+	$(INSTALL_DATA) $(LIBRARY) $(DESTDIR)$(installdir)/lib
 
 install: install_include install_lib
+	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)
 
 nco_install_lib:
 	$(INSTALL) -d $(DESTDIR)$(installdir)
-	$(INSTALL_DATA) lib$(package)$(SUFFIX).a $(DESTDIR)$(installdir)/lib$(package)_$(version)$(SUFFIX).a
+	$(INSTALL_DATA) $(LIBRARY) $(DESTDIR)$(installdir)/lib$(distdir).a
 
 nco_install_include:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/incmod/$(distdir)
 	$(INSTALL_DATA) *.mod $(DESTDIR)$(installdir)/incmod/$(distdir)
 
 nco_install: nco_install_include nco_install_lib
+	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)
 
 uninstall:
 	-rm -fr $(DESTDIR)$(installdir)

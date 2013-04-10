@@ -3,18 +3,20 @@
 # src/test level makefile template
 
 # Package-specific substitution variables
-package = @PACKAGE_NAME@
+tarname     = @PACKAGE_TARNAME@
+precision   = @PRECISION@
+endian_type = @ENDIAN_TYPE@
 
 # Tool-specific substitution variables
 FC      = @FC@
 FCFLAGS = -I.. @FCFLAGS@ @ENDIAN_FCFLAGS@ -c
 LDFLAGS = -L.. @LDFLAGS@
-LIBS    = -l$(package) @LIBS@
+LIBS    = -l$(tarname) @LIBS@
 
 # The file definitions.
 EXE_FILE = test_runner
-SRC_FILES = test_baciof-@ENDIAN_TYPE@_endian.f90 \
-            test_bafrio-@ENDIAN_TYPE@_endian.f90 \
+SRC_FILES = test_baciof-$(endian_type)_endian.f90 \
+            test_bafrio-$(endian_type)_endian.f90 \
             test_wryte.f90
 OBJ_FILES = ${SRC_FILES:.f90=.o} \
             $(EXE_FILE).o
@@ -24,7 +26,7 @@ all: $(EXE_FILE)
 
 check: $(EXE_FILE)
 	@echo "========================================"; \
-	echo "  Running @ENDIAN_TYPE@-endian precision @PRECISION@ tests..."; \
+	echo "  Running $(endian_type)-endian precision $(precision) tests..."; \
 	./$(EXE_FILE); \
 	echo  "========================================"
 
