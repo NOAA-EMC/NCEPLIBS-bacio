@@ -7,7 +7,7 @@
        integer,parameter :: strl=40
        character(strl) arr,arr1
        character(255) cin
-       integer ios,flunit,i,arrylen
+       integer ios,flunit
        integer iskip,iread,nread
 !
 !--- indicate successful error status

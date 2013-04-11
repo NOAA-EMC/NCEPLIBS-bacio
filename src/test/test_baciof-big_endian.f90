@@ -14,7 +14,6 @@
     integer flunit,iret,i,j
     integer lenr1,lens1,leni1,lenc1
     integer iskip,iwrite,nwrite,iread,nread
-    integer(8) iskip8,iwrite8,nwrite8,iread8,nread8
     character(16) machine_endian
     logical do_byteswap
 
