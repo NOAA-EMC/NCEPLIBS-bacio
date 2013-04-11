@@ -138,9 +138,8 @@
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
   size_t count;
 
 /* Initialization(s) */
@@ -420,10 +419,8 @@
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
-  size_t count;
 
 /* Initialization(s) */
   *nactual = 0;
@@ -690,9 +687,8 @@
           long int * nactual, int * fdes, const char *fname, char *datary,
           int  namelen, int  datanamelen) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
   size_t count;
 
 /* Initialization(s) */
@@ -973,10 +969,8 @@
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
-  size_t count;
 
 /* Initialization(s) */
   *nactual = 0;

@@ -89,7 +89,6 @@
 !$$$
       USE BACIO_MODULE
       CHARACTER CFN*(*)
-      CHARACTER(80) CMSG
       integer(kind=8) IB,JB,NB,KA
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       IF(LU.LT.001.OR.LU.GT.FDDIM) THEN

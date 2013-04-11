@@ -382,7 +382,6 @@
       INTEGER(kind=8),PARAMETER:: LBCW=4
       INTEGER(kind=LBCW):: BCW
       INTEGER(kind=8):: KR
-      INTEGER(LBCW):: BCW2,LBCW2
       CHARACTER(16) :: MACHINE_ENDIAN
       LOGICAL :: DO_BYTESWAP
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
