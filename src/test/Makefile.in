@@ -31,11 +31,11 @@ check: $(EXE_FILE)
 	echo  "========================================"
 
 clean:
-	-rm *.o $(EXE_FILE) data_*
+	-rm *.o $(EXE_FILE) data_* 2>/dev/null
 
 distclean:
-	-rm *.o $(EXE_FILE) data_*
-	-rm Makefile
+	-rm *.o $(EXE_FILE) data_* 2>/dev/null
+	-rm Makefile 2>/dev/null
 
 $(EXE_FILE): $(OBJ_FILES)
 	$(FC) $(LDFLAGS) $(OBJ_FILES) -o $(EXE_FILE) $(LIBS)

@@ -45,12 +45,12 @@ library: $(LIBRARY)
 
 clean:
 	cd test && $(MAKE) $@
-	-rm *.o *.mod *.a
+	-rm *.o *.mod *.a 2>/dev/null
 
 distclean: 
 	cd test && $(MAKE) $@
-	-rm *.o *.mod *.a
-	-rm Makefile
+	-rm *.o *.mod *.a 2>/dev/null
+	-rm Makefile 2>/dev/null
 
 check: library
 	cd test && $(MAKE) $@
@@ -78,7 +78,7 @@ nco_install: nco_install_include nco_install_lib
 	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)
 
 uninstall:
-	-rm -fr $(DESTDIR)$(installdir)
+	-rm -fr $(DESTDIR)$(installdir) 2>/dev/null
 
 Makefile: Makefile.in ../config.status
 	cd .. && ./config.status src/$@
