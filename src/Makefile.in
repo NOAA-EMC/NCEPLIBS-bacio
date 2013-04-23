@@ -23,10 +23,8 @@ CFLAGS  = @CFLAGS@ -c
 AR      = @AR@
 ARFLAGS = @ARFLAGS@
 RANLIB  = @RANLIB@
-INSTALL         = @INSTALL@
-INSTALL_DATA    = @INSTALL_DATA@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
-INSTALL_SCRIPT  = @INSTALL_SCRIPT@
+INSTALL      = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
 
 # The library name
 LIBRARY = lib$(tarname).a
@@ -40,14 +38,14 @@ all: library
 $(LIBRARY): $(OBJ_FILES)
 	$(AR) $(ARFLAGS) $@ $(OBJ_FILES)
 	$(RANLIB) $@
-        
+
 library: $(LIBRARY)
 
 clean:
 	cd test && $(MAKE) $@
 	-rm *.o *.mod *.a 2>/dev/null
 
-distclean: 
+distclean:
 	cd test && $(MAKE) $@
 	-rm *.o *.mod *.a 2>/dev/null
 	-rm Makefile 2>/dev/null
@@ -55,31 +53,36 @@ distclean:
 check: library
 	cd test && $(MAKE) $@
 
-install_include:
+# ...Gnu-style installation
+install:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/include
 	$(INSTALL_DATA) *.mod $(DESTDIR)$(installdir)/include
-
-install_lib:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/lib
 	$(INSTALL_DATA) $(LIBRARY) $(DESTDIR)$(installdir)/lib
-
-install: install_include install_lib
 	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)
 
-nco_install_lib:
+# ...NCO-style installation
+nco_install: FORCE
 	$(INSTALL) -d $(DESTDIR)$(installdir)
 	$(INSTALL_DATA) $(LIBRARY) $(DESTDIR)$(installdir)/lib$(distdir).a
-
-nco_install_include:
 	$(INSTALL) -d $(DESTDIR)$(installdir)/incmod/$(distdir)
 	$(INSTALL_DATA) *.mod $(DESTDIR)$(installdir)/incmod/$(distdir)
+	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)/config.log.$(distdir)
 
-nco_install: nco_install_include nco_install_lib
-	$(INSTALL_DATA) ../config.log $(DESTDIR)$(installdir)
+FORCE:
+	@if [ -d $(DESTDIR)$(installdir) ]; then \
+          echo; \
+	  echo "*** NCO-style installation does not install into existing directories! ***"; \
+	  echo "*** $(DESTDIR)$(installdir) already exists! ***"; \
+          echo; \
+	  exit 1; \
+	fi
 
+# ...Universal uninstallation
 uninstall:
-	-rm -fr $(DESTDIR)$(installdir) 2>/dev/null
+	-rm -fr $(DESTDIR)$(installdir) >/dev/null 2>&1
 
+# ...Reconfig targets
 Makefile: Makefile.in ../config.status
 	cd .. && ./config.status src/$@
 
