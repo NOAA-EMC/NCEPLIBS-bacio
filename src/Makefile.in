@@ -99,8 +99,8 @@ include make.dependencies
 .SUFFIXES:
 .SUFFIXES: .f .c .o
 .f.o:
-	$(FC) $(EXTRA_FCFLAGS) $(FCFLAGS) $<
+	$(FC) $(FCFLAGS) $<
 
 .c.o:
-	$(CC) $(EXTRA_CFLAGS) $(CFLAGS) $<
+	$(CC) $(CFLAGS) $<
 
