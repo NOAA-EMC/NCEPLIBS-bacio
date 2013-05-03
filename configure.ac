@@ -3,7 +3,7 @@ AC_REVISION($Id: $)
 
 
 ## Initialise autoconf
-AC_INIT([nceplibs bacio], [v2.0.2], [ncep.list.emc.nceplibs.support@noaa.gov], [bacio])
+AC_INIT([nceplibs bacio], [v2.1.0], [ncep.list.emc.nceplibs.support@noaa.gov], [bacio])
 
 
 # Output info for user
@@ -89,7 +89,7 @@ case $FC in
     if test "x${precision}" = x8; then
       FCFLAGS="-fdefault-integer-8 -fdefault-real-8 $FCFLAGS"
     fi ;;
-  ifort|pgf95) 
+  ifort|pgf95)
     if test "x${precision}" = x8; then
       FCFLAGS="-i8 -r8 $FCFLAGS"
     fi ;;

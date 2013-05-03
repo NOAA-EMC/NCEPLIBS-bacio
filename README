@@ -47,7 +47,7 @@ promotion compiler switches.
 Some additional points:
 - Both GNU-type and NCO-type installs are performed.
 - The libraries are installed relative to the current directory. After
-  running the script you should see two new directories containing the 
+  running the script you should see two new directories containing the
   single (4) and double (8) precision libraries.
 - See section B.4 below for information about the installation directory
   structure
@@ -68,7 +68,7 @@ B. The more flexible way
 1. Configuration
 ----------------
 
-If you need more flexibility in the library build you can specify the necessary 
+If you need more flexibility in the library build you can specify the necessary
 information directly to the configure script that generates the makefiles. For
 example, on WCOSS/tide:
 
@@ -161,16 +161,16 @@ output from the (successful) test runs looks like:
 -------------------------
 
 Installation of the library *always* occurs into its own directory within the
-directory specified by the --prefix switch. The name of the installation 
+directory specified by the --prefix switch. The name of the installation
 directory follows the convention:
 
   <library name>_<version>_<precision>
 
-So, if the a library version (say, v2.0.2) build was configured with --prefix=$PWD
+So, if the a library version (say, v2.1.0) build was configured with --prefix=$PWD
 for the default precision (4) build, then the installation directory will be
 
-  ${PWD}/bacio_v2.0.2_4
- 
+  ${PWD}/bacio_v2.1.0_4
+
 
 
 NCO Install
@@ -181,21 +181,21 @@ type:
 
   $ make nco_install
 
-For a library version (say, v2.0.2) and the default precision (4), this will create
-a directory called "bacio_v2.0.2_4". That directory is organised according to the
+For a library version (say, v2.1.0) and the default precision (4), this will create
+a directory called "bacio_v2.1.0_4". That directory is organised according to the
 current NCO structure on CCS and WCOSS in /nwprod/lib, as shown below:
 
-  bacio_v2.0.2_4/
+  bacio_v2.1.0_4/
     |
-    |--libbacio_v2.0.2_4.a
+    |--libbacio_v2.1.0_4.a
     |
     `--incmod/
          |
-         `--bacio_v2.0.2_4/
+         `--bacio_v2.1.0_4/
               |
               `--bacio_module.mod
 
-The contents of the "bacio_v2.0.2_4" directory can then be moved into the official
+The contents of the "bacio_v2.1.0_4" directory can then be moved into the official
 /nwprod/lib location as needed.
 
 Let's assume the above install was moved into "/usrx/local/nceplibs", to use the
@@ -203,9 +203,9 @@ library in this structure in your own application, the usual environment variabl
 would be modified something like:
 
   libroot="/usrx/local/nceplibs"
-  FCFLAGS="-I${libroot}/incmod/bacio_v2.0.2_4 ${FCFLAGS}"
+  FCFLAGS="-I${libroot}/incmod/bacio_v2.1.0_4 ${FCFLAGS}"
   LDFLAGS="-L${libroot} ${LDFLAGS}"
-  LIBS="-lbacio_v2.0.2_4"
+  LIBS="-lbacio_v2.1.0_4"
 
 
 
@@ -216,10 +216,10 @@ To perform a GNU-type install, type:
 
   $ make install
 
-For a library version (say, v2.0.2) and the default precision (4), this will create
-a directory called "bacio_v2.0.2_4". That directory structure is shown below:
+For a library version (say, v2.1.0) and the default precision (4), this will create
+a directory called "bacio_v2.1.0_4". That directory structure is shown below:
 
-  bacio_v2.0.2_4/
+  bacio_v2.1.0_4/
     |
     |--include/
     |    |
@@ -237,8 +237,8 @@ library in this structure in your own application, the usual environment variabl
 would be modified something like:
 
   libroot="/usrx/local/nceplibs"
-  FCFLAGS="-I${libroot}/bacio_v2.0.2_4/include ${FCFLAGS}"
-  LDFLAGS="-L${libroot}/bacio_v2.0.2_4/lib ${LDFLAGS}"
+  FCFLAGS="-I${libroot}/bacio_v2.1.0_4/include ${FCFLAGS}"
+  LDFLAGS="-L${libroot}/bacio_v2.1.0_4/lib ${LDFLAGS}"
   LIBS="-lbacio"
 
 
@@ -250,14 +250,14 @@ To uninstall the library (assuming you haven't moved the installation directory
 contents somewhere else) you can type:
 
   $ make uninstall
-  
+
 This will delete the created installation directory. So, for a library version
-(say, v2.0.2) and the default precision (4), if your configure script invocation
+(say, v2.1.0) and the default precision (4), if your configure script invocation
 was something like
 
   $ ./configure --prefix=${PWD} ...other command line arguments...
 
-then the "uninstall" target will delete the "${PWD}/bacio_v2.0.2_4" directory.
+then the "uninstall" target will delete the "${PWD}/bacio_v2.1.0_4" directory.
 
 
 
@@ -265,7 +265,7 @@ then the "uninstall" target will delete the "${PWD}/bacio_v2.0.2_4" directory.
 5. Cleaning up
 --------------
 
-Two targets are provided for cleaning up after the build. To remove all the 
+Two targets are provided for cleaning up after the build. To remove all the
 build products type
 
   $ make clean
