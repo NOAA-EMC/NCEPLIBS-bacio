@@ -1,6 +1,8 @@
-    program test_bafrio
+  function test_bafrio() result(err_stat)
 !
     implicit none
+!
+    integer :: err_stat
 !
     integer,parameter :: im=20,jm=10,lm=5,kindr=4,kindr8=8
     character(255) cin
@@ -11,6 +13,11 @@
     integer flunit,iret,i,j
     integer*4 iskip,iwrite,nwrite,iread,nread
     integer*8 iskip8,iwrite8,nwrite8,iread8,nread8
+
+!
+!--- indicate successful error status
+    err_stat = 0
+    
      
      r2=0.;s2=0.;r3=0.;s3=0.
     do  i=1,im
@@ -39,7 +46,7 @@
      call bafrwrite(flunit,iskip,iwrite,nwrite,r1)
      if(nwrite.lt.iwrite) then
        print *,'aft bawrite,r1,nwrite=',nwrite ,'iwrite=',iwrite
-       stop
+       err_stat = 1; return
      endif
 
      iskip=iskip+nwrite
@@ -47,7 +54,7 @@
      call bafrwrite(flunit,iskip,iwrite,nwrite,s1)
      if(nwrite.lt.iwrite) then
        print *,'aft bawrite,r2,nwrite=',nwrite ,'iwrite=',iwrite
-       stop
+       err_stat = 1; return
      endif
 
      iskip=iskip+nwrite
@@ -55,7 +62,7 @@
      call bafrwrite(flunit,iskip,iwrite,nwrite,i1)
      if(nwrite.lt.iwrite) then
        print *,'aft bawrite,r2,nwrite=',nwrite ,'iwrite=',iwrite
-       stop
+       err_stat = 1; return
      endif
 
      iskip=iskip+nwrite
@@ -63,7 +70,7 @@
      call bafrwrite(flunit,iskip,iwrite,nwrite,astr1)
      if(nwrite.lt.iwrite) then
        print *,'aft bawrite,r2,nwrite=',nwrite ,'iwrite=',iwrite
-       stop
+       err_stat = 1; return
      endif
 
       call baclose(flunit,iret)
@@ -75,7 +82,7 @@
      call bafrread(flunit,iskip,iread,nread,r2)
      if(maxval(r1-r2)/=0.or.minval(r1-r2)/=0) then
        print *,'Wrong in test_bafriof, r4'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip=iskip+nread
@@ -83,7 +90,7 @@
      call bafrread(flunit,iskip,iread,nread,s2)
      if(maxval(s1-s2)/=0.or.minval(s1-s2)/=0) then
        print *,'Wrong in test_bafriof, r8'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip=iskip+nread
@@ -91,7 +98,7 @@
      call bafrread(flunit,iskip,iread,nread,i2)
      if(maxval(i1-i2)/=0.or.minval(i1-i2)/=0) then
        print *,'Wrong in test_bafriof, i4'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip=iskip+nread
@@ -99,7 +106,7 @@
      call bafrread(flunit,iskip,iread,nread,astr2)
      if(astr1/=astr2) then
        print *,'Wrong in test_bafriof, character str'
-       stop
+       err_stat = 1; return
      endif
 !
       call baclose(flunit,iret)
@@ -116,7 +123,7 @@
      call bafrwritel(flunit,iskip8,iwrite8,nwrite8,r1)
      if(nwrite8.lt.iwrite8) then
        print *,'aft bawritel,r1,nwrite8=',nwrite8,'iwrite8=',iwrite8
-       stop
+       err_stat = 1; return
      endif
 
      iskip8=iskip8+nwrite8
@@ -124,7 +131,7 @@
      call bafrwritel(flunit,iskip8,iwrite8,nwrite8,s1)
      if(nwrite8.lt.iwrite8) then
        print *,'aft bawritel,r2,nwrite8=',nwrite8 ,'iwrite8=',iwrite8
-       stop
+       err_stat = 1; return
      endif
 
      iskip8=iskip8+nwrite8
@@ -132,7 +139,7 @@
      call bafrwritel(flunit,iskip8,iwrite8,nwrite8,i1)
      if(nwrite8.lt.iwrite8) then
        print *,'aft bawrite,r2,nwrite8=',nwrite8 ,'iwrite8=',iwrite8
-       stop
+       err_stat = 1; return
      endif
 
      iskip8=iskip8+nwrite8
@@ -140,7 +147,7 @@
      call bafrwritel(flunit,iskip8,iwrite8,nwrite8,astr1)
      if(nwrite8.lt.iwrite8) then
        print *,'aft bawrite,r2,nwrite8=',nwrite8 ,'iwrite8=',iwrite8
-       stop
+       err_stat = 1; return
      endif
 !
       call baclose(flunit,iret)
@@ -154,7 +161,7 @@
      call bafrreadl(flunit,iskip8,iread8,nread8,r2)
      if(maxval(r1-r2)/=0.or.minval(r1-r2)/=0) then
        print *,'Wrong in test_bafriof, r4'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip8=iskip8+nread8
@@ -162,7 +169,7 @@
      call bafrreadl(flunit,iskip8,iread8,nread8,s2)
      if(maxval(s1-s2)/=0.or.minval(s1-s2)/=0) then
        print *,'Wrong in test_bafriof, r8'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip8=iskip8+nread8
@@ -170,7 +177,7 @@
      call bafrreadl(flunit,iskip8,iread8,nread8,i2)
      if(maxval(i1-i2)/=0.or.minval(i1-i2)/=0) then
        print *,'Wrong in test_bafriof, i4'
-       stop
+       err_stat = 1; return
      endif
 !
      iskip8=iskip8+nread8
@@ -178,7 +185,7 @@
      call bafrreadl(flunit,iskip8,iread8,nread8,astr2)
      if(astr1/=astr2) then
        print *,'Wrong in test_bafriof, character'
-       stop
+       err_stat = 1; return
      endif
 
 !
@@ -193,21 +200,21 @@
      close(flunit)
      if(maxval(r1-r3)/=0.or.minval(r1-r3)/=0) then
        print *,'Wrong in test_bafriof, Fortran r4'
-       stop
+       err_stat = 1; return
      endif
      if(maxval(s1-s3)/=0.or.minval(s1-s3)/=0) then
        print *,'Wrong in test_bafriof, Fortran r8'
-       stop
+       err_stat = 1; return
      endif
      if(maxval(i1-i3)/=0.or.minval(i1-i3)/=0) then
        print *,'Wrong in test_baciof, Fortran i4'
-       stop
+       err_stat = 1; return
      endif
      if(astr3/=astr1) then
        print *,'Wrong in test_baciof, Fortran string'
-       stop
+       err_stat = 1; return
      endif
 !
      print *,'BACIO: unit test test_bafrio_le ends normally'
 !
-     end program  test_bafrio
+  end function test_bafrio

@@ -1,0 +1,12 @@
+export FC="xlf2003"
+export FCFLAGS=" \
+ -qnosave \
+ -O3"
+ 
+export CC="xlc"
+export CFLAGS=" \
+ -q64 \
+ -O3"
+
+export LDFLAGS=""
+export LIBS=""
