@@ -29,7 +29,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdlib.h>
+#include <malloc.h>
 #include <ctype.h>
 #include <string.h>
 
@@ -92,7 +92,7 @@
 /* What is going on here is that although the Fortran caller will always */
 /*   be calling bacio, the called C routine name will change from system */
 /*   to system. */
-#if defined CRAY90
+#ifdef CRAY90
   #include <fortran.h>
   int BACIO
          (int * mode, int * start, int *newpos, int * size, int * no, 
@@ -100,46 +100,54 @@
           _fcd fcd_fname, _fcd fcd_datary) { 
   char *fname, *datary;
   int namelen;
-#elif defined HP
+#endif
+#ifdef HP
   int bacio
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined SGI
+#endif
+#ifdef SGI
   int bacio_
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined LINUXF90
+#endif
+#ifdef LINUX
+  int bacio_
+         (int * mode, int * start, int *newpos, int * size, int * no, 
+          int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen, int  datanamelen) {
+#endif
+#ifdef LINUXF90
   int BACIO
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined VPP5000
+#endif
+#ifdef VPP5000
   int bacio_
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined IBM4
+#endif
+#ifdef IBM4
   int bacio
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined IBM8
+#endif
+#ifdef IBM8
   long long int bacio
          (long long int * mode, long long int * start, long long int *newpos,
           long long int * size, long long int * no, 
           long long int * nactual, long long int * fdes, const char *fname,
           char *datary, 
           long long int  namelen, long long int  datanamelen) {
-#else /* Default is LINUX */
-  int bacio_
-         (int * mode, int * start, int *newpos, int * size, int * no, 
-          int * nactual, int * fdes, const char *fname, char *datary, 
-          int  namelen, int  datanamelen) {
 #endif
-  int i, jret, seekret;
+  int i, j, jret, seekret;
   char *realname;
+  int tcharval;
   size_t count;
 
 /* Initialization(s) */
@@ -373,7 +381,7 @@
     return 0;
   }
 } 
-#if defined CRAY90
+#ifdef CRAY90
   #include <fortran.h>
   int BANIO
          (int * mode, int * start, int *newpos, int * size, int * no, 
@@ -381,46 +389,55 @@
           _fcd fcd_fname, void *datary) { 
   char *fname;
   int namelen;
-#elif defined HP
+#endif
+#ifdef HP
   int banio
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined SGI
+#endif
+#ifdef SGI
   int banio_
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined LINUXF90
+#endif
+#ifdef LINUX
+  int banio_
+         (int * mode, int * start, int *newpos, int * size, int * no, 
+          int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen ) {
+#endif
+#ifdef LINUXF90
   int BANIO
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined VPP5000
+#endif
+#ifdef VPP5000
   int banio_
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined IBM4
+#endif
+#ifdef IBM4
   int banio
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined IBM8
+#endif
+#ifdef IBM8
   long long int banio
          (long long int * mode, long long int * start, long long int *newpos,
           long long int * size, long long int * no, 
           long long int * nactual, long long int * fdes, const char *fname,
           char *datary, 
           long long int  namelen ) {
-#else /* Default is LINUX */
-  int banio_
-         (int * mode, int * start, int *newpos, int * size, int * no, 
-          int * nactual, int * fdes, const char *fname, char *datary, 
-          int  namelen ) {
 #endif
-  int i, jret, seekret;
+  int i, j, jret, seekret;
   char *realname;
+  int tcharval;
+  size_t count;
 
 /* Initialization(s) */
   *nactual = 0;
@@ -641,7 +658,7 @@
             long int * nactual,   */ 
 /*          int * fdes, const char *fname, char *data, int  namelen,         */ 
 /*          int  datanamelen)                                                */
-#if defined CRAY90
+#ifdef CRAY90
   #include <fortran.h>
   int BACIOL
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
@@ -649,46 +666,54 @@
           _fcd fcd_fname, _fcd fcd_datary) { 
   char *fname, *datary;
   int namelen;
-#elif defined HP
+#endif
+#ifdef HP
   int baciol
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined SGI
+#endif
+#ifdef SGI
   int baciol_
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined LINUXF90
+#endif
+#ifdef LINUX
+  int baciol_
+         (int * mode, long int * start, long int *newpos, int * size, long int * no, 
+          long int * nactual, int * fdes, const char *fname, char *datary,
+          int  namelen, int  datanamelen) {
+#endif
+#ifdef LINUXF90
   int BACIOL
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined VPP5000
+#endif
+#ifdef VPP5000
   int baciol_
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined IBM4
+#endif
+#ifdef IBM4
   int baciol
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen, int  datanamelen) {
-#elif defined IBM8
+#endif
+#ifdef IBM8
   long long int baciol
          (long long int * mode, long long int * start, long long int *newpos,
           long long int * size, long long int * no, 
           long long int * nactual, long long int * fdes, const char *fname,
           char *datary, 
           long long int  namelen, long long int  datanamelen) {
-#else /* Default is LINUX */
-  int baciol_
-         (int * mode, long int * start, long int *newpos, int * size, long int * no, 
-          long int * nactual, int * fdes, const char *fname, char *datary,
-          int  namelen, int  datanamelen) {
 #endif
-  int i, jret, seekret;
+  int i, j, jret, seekret;
   char *realname;
+  int tcharval;
   size_t count;
 
 /* Initialization(s) */
@@ -923,7 +948,7 @@
     return 0;
   }
 } 
-#if defined CRAY90
+#ifdef CRAY90
   #include <fortran.h>
   int BANI0L
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
@@ -931,46 +956,55 @@
           _fcd fcd_fname, void *datary) { 
   char *fname;
   int namelen;
-#elif defined HP
+#endif
+#ifdef HP
   int baniol
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined SGI
+#endif
+#ifdef SGI
   int baniol_
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined LINUXF90
+#endif
+#ifdef LINUX
+  int baniol_
+         (int * mode, long int * start, long int *newpos, int * size, long int * no, 
+          long int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen ) {
+#endif
+#ifdef LINUXF90
   int BANIO
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined VPP5000
+#endif
+#ifdef VPP5000
   int baniol_
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined IBM4
+#endif
+#ifdef IBM4
   int baniol
          (int * mode, long int * start, long int *newpos, long int * size, int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
-#elif defined IBM8
+#endif
+#ifdef IBM8
   long long int baniol
          (long long int * mode, long long int * start, long long int *newpos,
           long long int * size, long long int * no, 
           long long int * nactual, long long int * fdes, const char *fname,
           char *datary, 
           long long int  namelen ) {
-#else /* Default is LINUX */
-  int baniol_
-         (int * mode, long int * start, long int *newpos, int * size, long int * no, 
-          long int * nactual, int * fdes, const char *fname, char *datary, 
-          int  namelen ) {
 #endif
-  int i, jret, seekret;
+  int i, j, jret, seekret;
   char *realname;
+  int tcharval;
+  size_t count;
 
 /* Initialization(s) */
   *nactual = 0;

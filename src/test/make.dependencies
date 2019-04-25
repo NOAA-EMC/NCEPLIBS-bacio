@@ -1,6 +1,0 @@
-test_baciof-big_endian.o : test_baciof-big_endian.f90 
-test_baciof-little_endian.o : test_baciof-little_endian.f90 
-test_bafrio-big_endian.o : test_bafrio-big_endian.f90 
-test_bafrio-little_endian.o : test_bafrio-little_endian.f90 
-test_runner.o : test_runner.f90 
-test_wryte.o : test_wryte.f90 

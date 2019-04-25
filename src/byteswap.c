@@ -1,37 +1,247 @@
-/*--------------------------------------------------------------------*/
-/* Documentation block                                                */
-/*                                                                    */
-/*   byteswap: to reverse the order of a sequence of bytes. it takes  */
-/*     an data array, the number of bytes to swap for each data       */
-/*     and the number of data elements in the data array to swap,     */
-/*     then swaps each data element, and returns with swapped data    */
-/*   Aug 2012      Jun Wang                                           */
-/*   input :                                                          */
-/*     char* data: input data array                                   */
-/*     int (or long long int) *nbyte: the number of bytes to swap     */
-/*                 for 4 byte data, the number of bytes is 4          */
-/*                 for 8 byte data, the number of bytes is 8          */
-/*                  the maximal number of bytes to swap is 256        */
-/*     int *nnum:  the number of data elements to swap                */
-/*   output :                                                         */
-/*                                                                    */
-/*     char* data: swapped  data array                                */
-/*--------------------------------------------------------------------*/
+#include <byteswap.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-#if defined IBM4
-  void byteswap
-         (char *data, int *nbyte, int *nnum) {
-#elif defined IBM8
-  void byteswap
-         (char *data, long long int *nbyte, long long int *nnum) {
-#else /* Default is LINUX */
+#define BLOCK_COUNT_64 (512*1024)
+#define BLOCK_COUNT_32 (1024*1024)
+#define BLOCK_COUNT_16 (2048*1024)
+#define LINUX
+
+/* This file contains various implementations of fast byteswapping
+   routines.  The main entry point, fast_byteswap, is the only one you
+   should need, and it should be modified to use whatever method is
+   fastest on your architecture.  
+
+   In all cases, the routines return 1 on success and 0 on failure.
+   They only fail if your data is non-aligned.  All routines require
+   that arrays of N-bit data be N-bit aligned.  If they are not, an
+   error will be sent to stderr and the routine will return non-zero.
+   To silence the error message, call fast_byteswap_errors(0).  */
+
+static int send_errors = 1 ; /* if non-zero, warn about non-aligned pointers */
+static int fast_count_calls = 0 ;
+void fast_byteswap_errors(int flag) { 
+  send_errors=flag;
+}
+
+/**********************************************************************/
+/* Simple single-value loops                                          */
+/**********************************************************************/
+
+static int simple_swap_64(void *data,size_t len) {
+  size_t i;
+  uint64_t *udata;
+  if( ((size_t)data)&0x5 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]= 
+      ( (udata[i]>>56)&0xff ) |
+      ( (udata[i]>>40)&0xff00 ) |
+      ( (udata[i]>>24)&0xff0000 ) |
+      ( (udata[i]>>8) &0xff000000 ) |
+      ( (udata[i]<<8) &0xff00000000 ) |
+      ( (udata[i]<<24)&0xff0000000000 ) |
+      ( (udata[i]<<40)&0xff000000000000 ) |
+      ( (udata[i]<<56)&0xff00000000000000 );
+  return 1;
+}
+
+static int simple_swap_32(void *data,size_t len) {
+  size_t i;
+  uint32_t *udata;
+  if( ((size_t)data)&0x3 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]= 
+      ( (udata[i]>>24)&0xff ) |
+      ( (udata[i]>>8)&0xff00 ) |
+      ( (udata[i]<<8)&0xff0000 ) |
+      ( (udata[i]<<24)&0xff000000 );
+  return 1;
+}
+
+static int simple_swap_16(void *data,size_t len) {
+  size_t i;
+  uint16_t *udata;
+  if( ((size_t)data)&0x1 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]= 
+      ( (udata[i]>>8)&0xff ) |
+      ( (udata[i]<<8)&0xff00 );
+  return 1;
+}
+
+/**********************************************************************/
+/* Use the GNU macros, which are specialized byteswap ASM instructions*/
+/**********************************************************************/
+
+static int macro_swap_64(void *data,size_t len) {
+  size_t i;
+  uint64_t *udata;
+  if( ((size_t)data)&0x5 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]=bswap_64(udata[i]);
+  return 1;
+}
+
+static int macro_swap_32(void *data,size_t len) {
+  size_t i;
+  uint32_t *udata;
+  if( ((size_t)data)&0x3 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]=bswap_32(udata[i]);
+  return 1;
+}
+
+static int macro_swap_16(void *data,size_t len) {
+  size_t i;
+  uint16_t *udata;
+  if( ((size_t)data)&0x1 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  udata=data;
+  for(i=0;i<len;i++)
+    udata[i]=bswap_16(udata[i]);
+  return 1;
+}
+
+/**********************************************************************/
+/* Use the GNU macros and do 1MB blocks at a time.  Control the block */
+/* size through the BLOCK_COUNT_* macros (top of file)                */
+/**********************************************************************/
+
+static int block_macro_swap_32(void *data,size_t len) {
+  size_t i,stop,j;
+  uint32_t *udata;
+  if( ((size_t)data)&0x3 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  /* Swap full blocks first: */
+  udata=data;
+  stop=len/BLOCK_COUNT_32*BLOCK_COUNT_32;
+  for(i=0;i<stop;i+=BLOCK_COUNT_32)
+    for(j=0;j<BLOCK_COUNT_32;j++)
+      udata[i+j]=bswap_32(udata[i+j]);
+  /* Swap remainder */
+  for(i=stop;i<len;i++)
+    udata[i]=bswap_32(udata[i]);
+  return 1;
+}
+
+static int block_macro_swap_16(void *data,size_t len) {
+  size_t i,stop,j;
+  uint16_t *udata;
+  if( ((size_t)data)&0x1 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  /* Swap full blocks first: */
+  udata=data;
+  stop=len/BLOCK_COUNT_16*BLOCK_COUNT_16;
+  for(i=0;i<stop;i+=BLOCK_COUNT_16)
+    for(j=0;j<BLOCK_COUNT_16;j++)
+      udata[i+j]=bswap_16(udata[i+j]);
+  /* Swap remainder */
+  for(i=stop;i<len;i++)
+    udata[i]=bswap_16(udata[i]);
+  return 1;
+}
+
+static int block_macro_swap_64(void *data,size_t len) {
+  uint64_t *udata;
+  size_t i,stop,j;
+  if( ((size_t)data)&0x5 != 0 ) {
+    if (send_errors)
+      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+    return 0;
+  }
+  /* Swap full blocks first: */
+  udata=data;
+  stop=len/BLOCK_COUNT_64*BLOCK_COUNT_64;
+  for(i=0;i<stop;i+=BLOCK_COUNT_64)
+    for(j=0;j<BLOCK_COUNT_64;j++)
+      udata[i+j]=bswap_64(udata[i+j]);
+  /* Swap remainder */
+  for(i=stop;i<len;i++)
+    udata[i]=bswap_64(udata[i]);
+  return 1;
+}
+
+
+
+int fast_byteswap(void *data,int bytes,size_t count) {
+  switch(bytes) {
+  case 1: return 1;
+  case 2: return simple_swap_16(data,count);
+  case 4: return simple_swap_32(data,count);
+  case 8: return macro_swap_64(data,count);
+  default: return 0;
+  }
+}
+/* Include the C library file for definition/control */
+/* Things that might be changed for new systems are there. */
+/* This source file should not (need to) be edited, merely recompiled */
+#include "clib.h"
+#include "stdio.h"
+#include "fast-byteswap.h"
+
+#ifdef LINUX
   void byteswap_
          (char *data, int *nbyte, int *nnum) {
+#endif
+#ifdef IBM4
+  void byteswap
+         (char *data, int *nbyte, int *nnum) {
+#endif
+#ifdef IBM8
+  void byteswap
+         (char *data, long long int *nbyte, long long int *nnum) {
 #endif
   int  i, j;
   char swap[256];
   int  nb=*nbyte;
   int  nn=*nnum;
+  size_t count=*nnum;
+  if( fast_count_calls == 0 ) { 
+fprintf (stderr, " FAST_BYTESWAP ALGORITHM HAS BEEN USED AND DATA ALIGNMENT IS CORRECT FOR  %9d  )\n",nb );
+fast_count_calls= 1 ;
+}
+
+if(fast_byteswap(data,nb,count)) {
+/**********     fprintf (stderr," FAST_BYTESWAP WORKED FOR  %9d %9d )\n",nb, count); *******/
+  /* it succeeded: data is now byteswapped */
+} else {
+ fprintf(stderr,"ERROR NOT ALIGNED SLOW CODE USED (nb and count %9d %9lu )\n",nb, count);
+/* It failed.  No data was byteswapped because it is not aligned */
 
 
   for (j=0; j<nn; j++) {
@@ -43,4 +253,4 @@
   }
 
 }
-
+}
