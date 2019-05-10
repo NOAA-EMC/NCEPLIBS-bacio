@@ -1,10 +1,11 @@
 SHELL=/bin/sh
 
 # sources, headers, objects, library and etc.
-SRCS_F = baciof.f bafrio.f chk_endianc.f
-SRCS_C = bacio.c byteswap.c
-DEPS = clib.h
-OBJS = $(SRCS_C:.c=.o) $(SRCS_F:.f=.o)
+SRCS_C   = bacio.c byteswap.c
+SRCS_F   = baciof.f bafrio.f chk_endianc.f
+DEPS     = clib.h
+OBJS     = $(patsubst %.c, %.o, $(SRCS_C)) \
+           $(patsubst %.f, %.o, $(SRCS_F))
 
 all: build
 
