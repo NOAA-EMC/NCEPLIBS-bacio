@@ -1,6 +1,7 @@
 # *** for WCOSS IBM phase1/phase2 (intel) ***
+ module purge
  module load ics/17.0.3
- module load bacio/2.0.2
+ module load bacio/v2.0.2
 
  export CC=icc
  export FC=ifort
