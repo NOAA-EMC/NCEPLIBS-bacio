@@ -1,36 +1,6 @@
 #!/bin/sh
 
- (( $# == 0 )) && {
-   echo "*** Usage: $0 wcoss|dell|cray|theia|intel_general|gnu_general [debug|build] [prefix=<installpath>] [[local]install[only]]" >&2
-   exit 1
- }
-
- sys=${1,,}
- [[ $sys == wcoss || $sys == dell || $sys == cray ||\
-    $sys == theia || $sys == intel_general || $sys == gnu_general ]] || {
-   echo "*** Usage: $0 wcoss|dell|cray|theia|intel_general|gnu_general [debug|build] [prefix=<installpath>] [[local]install[only]]" >&2
-   exit 1
- }
- debg=false
- inst=false
- skip=false
- local=false
- instloc="---"
- for n in 2 3 4; do
-   (( $# > (n-1) )) && {
-     [[ ${!n,,} == build ]] && debg=false
-     [[ ${!n,,} == debug ]] && debg=true
-     [[ ${!n,,} == install ]] && inst=true
-     [[ ${!n,,} == localinstall ]] && { local=true; inst=true; }
-     [[ ${!n,,} == installonly ]] && { inst=true; skip=true; }
-     [[ ${!n,,} == localinstallonly ]] && { local=true; inst=true; skip=true; }
-     [[ ${!n,,} == prefix=* ]] && {
-       local=false
-       instloc=${!n:$(expr length "prefix=")}
-     }
-   }
- done
-
+ source ./Conf/Analyse_args.sh
  source ./Conf/Collect_info.sh
  source ./Conf/Gen_cfunction.sh
  source ./Conf/Reset_version.sh
@@ -93,25 +63,25 @@ set -x
 #     Install libraries and source files 
 #
    $local && {
-              instloc=..
-              LIB_DIR4=$instloc
-              LIB_DIR8=$instloc
-              SRC_DIR=
-             } || {
-              [[ $instloc == --- ]] && {
-                LIB_DIR4=$(dirname ${BACIO_LIB4})
-                LIB_DIR8=$(dirname ${BACIO_LIB8})
-                SRC_DIR=$BACIO_SRC
-              } || {
-                LIB_DIR4=$instloc
-                LIB_DIR8=$instloc
-                SRC_DIR=$instloc/src
-                [[ $instloc == .. ]] && SRC_DIR=
-              }
-              [ -d $LIB_DIR4 ] || mkdir -p $LIB_DIR4
-              [ -d $LIB_DIR8 ] || mkdir -p $LIB_DIR8
-              [ -z $SRC_DIR ] || { [ -d $SRC_DIR ] || mkdir -p $SRC_DIR; }
-             }
+     instloc=..
+     LIB_DIR4=$instloc
+     LIB_DIR8=$instloc
+     SRC_DIR=
+   } || {
+     [[ $instloc == --- ]] && {
+       LIB_DIR4=$(dirname ${BACIO_LIB4})
+       LIB_DIR8=$(dirname ${BACIO_LIB8})
+       SRC_DIR=$BACIO_SRC
+     } || {
+       LIB_DIR4=$instloc
+       LIB_DIR8=$instloc
+       SRC_DIR=$instloc/src
+       [[ $instloc == .. ]] && SRC_DIR=
+     }
+     [ -d $LIB_DIR4 ] || mkdir -p $LIB_DIR4
+     [ -d $LIB_DIR8 ] || mkdir -p $LIB_DIR8
+     [ -z $SRC_DIR ] || { [ -d $SRC_DIR ] || mkdir -p $SRC_DIR; }
+   }
 
    make clean LIB=
    make install LIB=$bacioLib4 LIB_DIR=$LIB_DIR4 SRC_DIR=
