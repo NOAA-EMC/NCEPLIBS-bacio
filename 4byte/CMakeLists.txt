@@ -3,11 +3,11 @@ set(LIBNAME ${CMAKE_PROJECT_NAME}_${VERSION}_4)
 file(GLOB LIB_4_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.f)
 file(GLOB LIB_C_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.c)
 set_source_files_properties( ${LIB_C_SRC} PROPERTIES COMPILE_FLAGS ${CMAKE_C_FLAGS} )
-add_definitions( ${CMAKE_Fortran_4_FLAGS} )
+set_source_files_properties( ${LIB_4_SRC} PROPERTIES COMPILE_FLAGS ${CMAKE_Fortran_4_FLAGS} )
 add_library(${LIBNAME} STATIC ${LIB_4_SRC} ${LIB_C_SRC} )
 set(CMAKE_INCLUDE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include_4")
 set_target_properties(${LIBNAME} PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include_4")
-target_include_directories(${LIBNAME} PUBLIC "${CMAKE_CURRENTT_BINARY_DIR}/include_4")
+target_include_directories(${LIBNAME} PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/include_4")
 
 file(MAKE_DIRECTORY ${CMAKE_INCLUDE_OUTPUT_DIRECTORY})
 
