@@ -5,19 +5,8 @@
  ${USERMODE} && {
     echo "Environment set by user"
 # On theia/cray, user can load environment
-#   module load intel/18.0.1.163
-# Or set environment on specific platform
-    intel_version=2018.1.163
-    intel_topdir=/apps/intel/compilers_and_libraries_$intel_version
-    source $intel_topdir/linux/bin/compilervars.sh intel64
+    module load intel/18.0.1.163
  }
-
- ANCHORDIR=..
- export BACIO_VER=v2.0.2
- export COMP=ips
- export BACIO_SRC=
- export BACIO_LIB4=$ANCHORDIR/libbacio_${BACIO_VER}_4.a
- export BACIO_LIB8=$ANCHORDIR/libbacio_${BACIO_VER}_8.a
 
  export CC=icc
  export FC=ifort
@@ -47,3 +36,4 @@
  export USECC="YES"
  export USEFC="YES"
  export DEPS=""
+

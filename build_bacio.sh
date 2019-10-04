@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
  : ${THISDIR:=$(dirname $(readlink -f -n ${BASH_SOURCE[0]}))}
  CDIR=$PWD; cd $THISDIR
@@ -11,9 +11,11 @@
  if [[ ${sys} == "intel_general" ]]; then
    sys6=${sys:6}
    source ./Conf/Bacio_${sys:0:5}_${sys6^}.sh
+   rinst=false
  elif [[ ${sys} == "gnu_general" ]]; then
    sys4=${sys:4}
    source ./Conf/Bacio_${sys:0:3}_${sys4^}.sh
+   rinst=false
  else
    source ./Conf/Bacio_intel_${sys^}.sh
  fi
@@ -21,9 +23,14 @@
    echo "??? BACIO: compilers not set." >&2
    exit 1
  }
- [[ -z $BACIO_VER || -z $BACIO_LIB4 ]] && {
-   echo "??? BACIO: module/environment not set." >&2
-   exit 1
+ [[ -z ${BACIO_VER+x} || -z ${BACIO_LIB4+x} ]] && {
+   [[ -z ${libver+x} || -z ${libver} ]] && {
+     echo "??? BACIO: \"libver\" not set." >&2
+     exit
+   }
+   BACIO_LIB4=lib${libver}_4.a
+   BACIO_LIB8=lib${libver}_8.a
+   BACIO_VER=v${libver##*_v}
  }
 
 set -x
@@ -34,7 +41,6 @@ set -x
  cd src
 #################
 
- $skip || {
 #-------------------------------------------------------------------
 # Start building libraries
 #
@@ -59,7 +65,6 @@ set -x
    $debg && make debug FFLAGS="$FFLAGS8" LIB=$bacioLib8 &> $bacioInfo8 \
          || make build FFLAGS="$FFLAGS8" LIB=$bacioLib8 &> $bacioInfo8 
    make message MSGSRC="$(gen_cfunction $bacioInfo8 OneLine8 LibInfo8)" LIB=$bacioLib8
- }
 
  $inst && {
 #
@@ -67,17 +72,20 @@ set -x
 #
    $local && {
      instloc=..
-     LIB_DIR4=$instloc
-     LIB_DIR8=$instloc
+     LIB_DIR=$instloc/lib
+     [ -d $LIB_DIR ] || { mkdir -p $LIB_DIR; }
+     LIB_DIR4=$LIB_DIR
+     LIB_DIR8=$LIB_DIR
      SRC_DIR=
    } || {
-     [[ $instloc == --- ]] && {
+     $rinst && {
        LIB_DIR4=$(dirname ${BACIO_LIB4})
        LIB_DIR8=$(dirname ${BACIO_LIB8})
        SRC_DIR=$BACIO_SRC
      } || {
-       LIB_DIR4=$instloc
-       LIB_DIR8=$instloc
+       LIB_DIR=$instloc/lib
+       LIB_DIR4=$LIB_DIR
+       LIB_DIR8=$LIB_DIR
        SRC_DIR=$instloc/src
        [[ $instloc == .. ]] && SRC_DIR=
      }
