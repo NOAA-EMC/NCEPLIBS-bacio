@@ -39,6 +39,7 @@ AC_C_CONST
 # Find the Fortran compiler.
 AC_MSG_NOTICE([finding Fortran compiler])
 AC_PROG_F77
+AC_PROG_FC
 
 # Set up libtool.
 AC_MSG_NOTICE([setting up libtool])

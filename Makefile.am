@@ -5,7 +5,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 # Make targets will be run in each subdirectory. Order is significant.
-SUBDIRS = src
+SUBDIRS = src test
 
 EXTRA_DIST = README
 
