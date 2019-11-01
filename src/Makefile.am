@@ -9,7 +9,7 @@ libbacioc_la_SOURCES = bacio.c byteswap.c
 # This is the library we will install.
 lib_LTLIBRARIES = libbacio.la
 libbacio_la_SOURCES = baciof.f bafrio.f chk_endianc.f baciof.h	\
-fast-byteswap.h
+fast-byteswap.h clib.h
 
 # Add the C-base convenience library.
 libbacio_la_LIBADD = libbacioc.la
