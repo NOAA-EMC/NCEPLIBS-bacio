@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.15)
 project(bacio VERSION 2.1.0)
 set(${PROJECT_NAME}_VERSION ${PROJECT_VERSION} CACHE INTERNAL "${PROJECT_NAME} version number")
 enable_language(Fortran)
@@ -60,7 +60,7 @@ set_source_files_properties(${c_src} PROPERTIES COMPILE_DEFINITIONS "${c_definit
 # One target for real32 and one target for real64
 set(kinds "4" "8")
 foreach(kind ${kinds})
-  set(lib_name ${PROJECT_NAME}_${kind}) 
+  set(lib_name ${PROJECT_NAME}_${kind})
   set(versioned_lib_name ${PROJECT_NAME}_v${PROJECT_VERSION}_${kind})
   add_library(${lib_name} STATIC ${fortran_src} ${c_src})
 
