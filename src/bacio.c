@@ -29,7 +29,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#ifdef APPLE
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 #include <ctype.h>
 #include <string.h>
 
@@ -123,6 +127,12 @@
   int BACIO
          (int * mode, int * start, int *newpos, int * size, int * no, 
           int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen, int  datanamelen) {
+#endif
+#ifdef APPLE
+  int bacio_
+         (int * mode, int * start, int *newpos, int * size, int * no,
+          int * nactual, int * fdes, const char *fname, char *datary,
           int  namelen, int  datanamelen) {
 #endif
 #ifdef VPP5000
@@ -414,6 +424,12 @@
           int * nactual, int * fdes, const char *fname, char *datary, 
           int  namelen ) {
 #endif
+#ifdef APPLE
+  int banio_
+         (int * mode, int * start, int *newpos, int * size, int * no,
+          int * nactual, int * fdes, const char *fname, char *datary,
+          int  namelen ) {
+#endif
 #ifdef VPP5000
   int banio_
          (int * mode, int * start, int *newpos, int * size, int * no, 
@@ -689,6 +705,12 @@
   int BACIOL
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen, int  datanamelen) {
+#endif
+#ifdef APPLE
+  int baciol_
+         (int * mode, long int * start, long int *newpos, int * size, long int * no,
+          long int * nactual, int * fdes, const char *fname, char *datary,
           int  namelen, int  datanamelen) {
 #endif
 #ifdef VPP5000
@@ -979,6 +1001,12 @@
   int BANIO
          (int * mode, long int * start, long int *newpos, int * size, long int * no, 
           long int * nactual, int * fdes, const char *fname, char *datary, 
+          int  namelen ) {
+#endif
+#ifdef APPLE
+  int baniol_
+         (int * mode, long int * start, long int *newpos, int * size, long int * no,
+          long int * nactual, int * fdes, const char *fname, char *datary,
           int  namelen ) {
 #endif
 #ifdef VPP5000
