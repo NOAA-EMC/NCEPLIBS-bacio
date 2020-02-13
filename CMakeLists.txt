@@ -1,77 +1,50 @@
-cmake_minimum_required(VERSION 3.15)
-project(bacio VERSION 2.1.0)
-set(${PROJECT_NAME}_VERSION ${PROJECT_VERSION} CACHE INTERNAL "${PROJECT_NAME} version number")
-enable_language(Fortran)
+cmake_minimum_required( VERSION 3.15 )
 
-if (NOT CMAKE_BUILD_TYPE)
-  set (CMAKE_BUILD_TYPE RELEASE CACHE STRING
-    "Choose the type of build, options are: PRODUCTION Debug Release."
-    FORCE)
+project( bacio VERSION 2.1.0 LANGUAGES C Fortran )
+
+if( NOT "${CMAKE_BUILD_TYPE}" MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel|PRODUCTION)$" )
+  message( FATAL_ERROR "Please re-run CMake, specifying -DCMAKE_BUILD_TYPE=Debug , -DCMAKE_BUILD_TYPE=Release , -DCMAKE_BUILD_TYPE=RelWithDebInfo , -DCMAKE_BUILD_TYPE=MinSizeRel or -DCMAKE_BUILD_TYPE=PRODUCTION ." )
 endif()
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
-  set(IntelComp true)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU*" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang*")
-  set(GNUComp true)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "pgc*")
-  set(PGIComp true)
+if( NOT "${CMAKE_C_COMPILER_ID}" MATCHES "^(Intel|GNU|Clang|AppleClang|PGI)$" )
+  message( WARNING "Compiler not officially supported: ${CMAKE_C_COMPILER_ID}" )
 endif()
 
-STRING(COMPARE EQUAL ${CMAKE_BUILD_TYPE} "RelWithDebInfo" BUILD_RELEASE)
-if(NOT BUILD_RELEASE)
-  STRING(COMPARE EQUAL ${CMAKE_BUILD_TYPE} "RELEASE" BUILD_RELEASE)
-endif()
-STRING(COMPARE EQUAL ${CMAKE_BUILD_TYPE} "PRODUCTION" BUILD_PRODUCTION)
-STRING(COMPARE EQUAL ${CMAKE_BUILD_TYPE} "DEBUG" BUILD_DEBUG)
-
-if (APPLE)
-  set(c_definitions "UNDERSCORE" "APPLE")
-elseif(UNIX)
-  set(c_definitions "UNDERSCORE" "LINUX")
-endif(APPLE)
-
-if((BUILD_RELEASE) OR (BUILD_PRODUCTION))
-  if(IntelComp)
-    set(c_flags)
-    set(shared_fortran_flags "-fpp" "-free" "-xHOST" "-traceback" "-FR")
-    set(fortran_8_flag "-i8" "-r8")
-    set(fortran_4_flags) #no special flags for this case
-  elseif(GNUComp)
-    set(c_flags "-ggdb" "-Wall")
-    set(shared_fortran_flags "-ffree-form" "-fbacktrace" "-funroll-loops" "-ggdb" "-Wall") 
-    set(fortran_8_flags "-fdefault-integer-8" "-fdefault-real-8")
-    set(fortran_4_flags)
-  elseif(PGIComp)
-    set(c_flags "-g" "-fast")
-    set(shared_fortran_flags "-g" "-fast")
-    set(fortran_8_flags "-i8" "-r8")
-    set(fortran_4_flags)
-  else()
-    message("unknown compiler!")
-    exit()
-  endif()
+if( APPLE )
+  add_compile_definitions( UNDERSCORE APPLE )
+elseif( UNIX )
+  add_compile_definitions( UNDERSCORE LINUX )
 endif()
 
-file(GLOB fortran_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.f)
-file(GLOB c_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
+if( "${CMAKE_C_COMPILER_ID}" MATCHES "^(Intel)$" )
+  set( CMAKE_Fortran_FLAGS "-fpp -free -xHOST -traceback -FR")
+  set(fortran_8_flag "-i8" "-r8")
+elseif( "${CMAKE_C_COMPILER_ID}" MATCHES "^(GNU|Clang|AppleClang)$" )
+  set( CMAKE_C_FLAGS "-ggdb -Wall")
+  set( CMAKE_Fortran_FLAGS "-ggdb -Wall -ffree-form -fbacktrace -funroll-loops")
+  set(fortran_8_flags "-fdefault-integer-8" "-fdefault-real-8")
+elseif( "${CMAKE_C_COMPILER_ID}" MATCHES "^(PGI)$" )
+  set( CMAKE_C_FLAGS "-g -fast")
+  set( CMAKE_Fortran_FLAGS "-g -fast" )
+  set(fortran_8_flags "-i8" "-r8")
+endif()
+
+set( fortran_src src/baciof.f src/bafrio.f src/chk_endianc.f )
+set( c_src src/bacio.c src/byteswap.c )
 
 # One target for real32 and one target for real64
 set(kinds "4" "8")
 foreach(kind ${kinds})
   set(lib_name ${PROJECT_NAME}_${kind})
   set(versioned_lib_name ${PROJECT_NAME}_v${PROJECT_VERSION}_${kind})
+  #set( versioned_lib_name ${lib_name}.${PROJECT_VERSION} )
 
   add_library(${lib_name}_f OBJECT ${fortran_src})
   set_target_properties(${lib_name}_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
-  set_target_properties(${lib_name}_f PROPERTIES
-    COMPILE_OPTIONS "${shared_fortran_flags};${fortran_${kind}_flags}")
+  set_target_properties(${lib_name}_f PROPERTIES COMPILE_OPTIONS "${fortran_${kind}_flags}")
 
   add_library(${lib_name}_c OBJECT ${c_src})
   set_target_properties(${lib_name}_c PROPERTIES POSITION_INDEPENDENT_CODE ON)
-  set_target_properties(${lib_name}_c PROPERTIES
-    COMPILE_OPTIONS "${c_flags}")
-  set_target_properties(${lib_name}_c PROPERTIES
-    COMPILE_DEFINITIONS "${c_definitions}")
 
   set(module_dir "${CMAKE_CURRENT_BINARY_DIR}/include_${kind}")
   set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY "${module_dir}")
@@ -88,8 +61,9 @@ foreach(kind ${kinds})
     EXPORT ${PROJECT_NAME}-config
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib) 
+    ARCHIVE DESTINATION lib)
+
   install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 endforeach()
 
-install(EXPORT ${PROJECT_NAME}-config DESTINATION ${CMAKE_INSTALL_PREFIX})
+install( EXPORT ${PROJECT_NAME}-config DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME} )
