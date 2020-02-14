@@ -1,9 +1,6 @@
 # BACIO
--------
 
 Performs I/O for the NCEP models.
-
-## Getting Started
 
 
 ### Prerequisites
@@ -22,10 +19,10 @@ make install
 ```
 
 
-## Version
+### Version
 2.1.0
 
 
-## Authors
+### Authors
 
-* **NCEP/EMC** - NCEP.List.EMC.nceplibs.Developers@noaa.gov
+* **[NCEP/EMC](NCEP.List.EMC.nceplibs.Developers@noaa.gov)** 
