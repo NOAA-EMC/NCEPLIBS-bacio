@@ -37,7 +37,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
 elseif(CMAKE_C_COMPILER_ID MATCHES "^(PGI)$")
   set(CMAKE_C_FLAGS "-g -fast")
   set(CMAKE_Fortran_FLAGS "-g -fast")
-  set(fortran_8_flags "-i8   -r8")
+  set(fortran_8_flags "-i8 -r8")
 endif()
 
 set(fortran_src src/baciof.f src/bafrio.f src/chk_endianc.f)
@@ -52,21 +52,21 @@ foreach(kind ${kinds})
 
   add_library(${lib_name}_f OBJECT ${fortran_src})
   set_target_properties(${lib_name}_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
-  set_target_properties(${lib_name}_f PROPERTIES COMPILE_OPTIONS
+  set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
                                                  "${fortran_${kind}_flags}")
 
   add_library(${lib_name}_c OBJECT ${c_src})
   set_target_properties(${lib_name}_c PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-  set(module_dir "${CMAKE_CURRENT_BINARY_DIR}/include_${kind}")
+  set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
   set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
-                                                 "${module_dir}")
+                                                 ${module_dir})
 
   add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
                                  $<TARGET_OBJECTS:${lib_name}_c>)
 
   set_target_properties(${lib_name} PROPERTIES OUTPUT_NAME
-                                               "${versioned_lib_name}")
+                                               ${versioned_lib_name})
 
   target_include_directories(
     ${lib_name}
