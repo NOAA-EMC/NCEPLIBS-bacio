@@ -48,26 +48,22 @@ set(kinds "4" "8")
 foreach(kind ${kinds})
   set(lib_name ${PROJECT_NAME}_${kind})
   set(versioned_lib_name ${PROJECT_NAME}_v${PROJECT_VERSION}_${kind})
-  # set( versioned_lib_name ${lib_name}.${PROJECT_VERSION} )
+  set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
 
   add_library(${lib_name}_f OBJECT ${fortran_src})
   set_target_properties(${lib_name}_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
   set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
                                                  "${fortran_${kind}_flags}")
+  set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
+                                                 ${module_dir})
 
   add_library(${lib_name}_c OBJECT ${c_src})
   set_target_properties(${lib_name}_c PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-  set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
-  set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
-                                                 ${module_dir})
-
   add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
                                  $<TARGET_OBJECTS:${lib_name}_c>)
-
   set_target_properties(${lib_name} PROPERTIES OUTPUT_NAME
                                                ${versioned_lib_name})
-
   target_include_directories(
     ${lib_name}
     PUBLIC $<BUILD_INTERFACE:${module_dir}>
