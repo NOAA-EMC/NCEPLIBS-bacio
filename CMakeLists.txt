@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
+file(STRINGS "VERSION" pVersion)
+
 project(
   bacio
-  VERSION 2.1.0
+  VERSION ${pVersion}
   LANGUAGES C Fortran)
 
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
@@ -14,7 +16,7 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
                                                "MinSizeRel" "RelWithDebInfo")
 endif()
 
-if(NOT CMAKE_C_COMPILER_ID MATCHES "^(Intel|GNU|Clang|AppleClang|PGI)$")
+if(NOT CMAKE_C_COMPILER_ID MATCHES "^(Intel|GNU|Clang|AppleClang)$")
   message(WARNING "Compiler not officially supported: ${CMAKE_C_COMPILER_ID}")
 endif()
 
@@ -26,18 +28,13 @@ elseif(UNIX)
 endif()
 
 if(CMAKE_C_COMPILER_ID MATCHES "^(Intel)$")
-  set(CMAKE_Fortran_FLAGS "-fpp -free -xHOST -traceback -FR")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-g")
+  set(CMAKE_Fortran_FLAGS "-g -fpp -free -xHOST -traceback -FR")
   set(fortran_8_flags "-i8 -r8")
 elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
-  set(CMAKE_C_FLAGS "-ggdb -Wall")
-  set(CMAKE_Fortran_FLAGS "-ggdb -Wall -ffree-form -fbacktrace -funroll-loops")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-g")
+  set(CMAKE_C_FLAGS_DEBUG "-ggdb -Wall")
+  set(CMAKE_Fortran_FLAGS "-g -ffree-form -fbacktrace -funroll-loops")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-ggdb -Wall")
   set(fortran_8_flags "-fdefault-integer-8 -fdefault-real-8")
-elseif(CMAKE_C_COMPILER_ID MATCHES "^(PGI)$")
-  set(CMAKE_C_FLAGS "-g -fast")
-  set(CMAKE_Fortran_FLAGS "-g -fast")
-  set(fortran_8_flags "-i8 -r8")
 endif()
 
 set(fortran_src src/baciof.f src/bafrio.f src/chk_endianc.f)
