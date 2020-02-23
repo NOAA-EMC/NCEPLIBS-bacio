@@ -48,14 +48,12 @@ foreach(kind ${kinds})
   set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
 
   add_library(${lib_name}_f OBJECT ${fortran_src})
-  set_target_properties(${lib_name}_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
   set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
                                                  "${fortran_${kind}_flags}")
   set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
                                                  ${module_dir})
 
   add_library(${lib_name}_c OBJECT ${c_src})
-  set_target_properties(${lib_name}_c PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
   add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
                                  $<TARGET_OBJECTS:${lib_name}_c>)
