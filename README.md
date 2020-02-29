@@ -5,7 +5,7 @@ Performs I/O for the NCEP models.
 
 ### Prerequisites
 
-Compilers: GNU | Intel | Clang | AppleClang | PGI
+Compilers: GNU | Intel | Clang | AppleClang
 
 
 ### Installing
