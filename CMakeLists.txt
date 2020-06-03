@@ -12,6 +12,7 @@ include(GNUInstallDirs)
 ### Configuration options
 option(BUILD_STATIC_LIBS "Build static libraries" ON)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(ENABLE_TESTS "Build pfunit tests?" OFF)
 
 # Ensure at least one of BUILD_SHARED_LIBS and BUILD_STATIC_LIBS is set
 if(NOT (BUILD_STATIC_LIBS OR BUILD_SHARED_LIBS))
@@ -39,7 +40,7 @@ endif()
 
 add_subdirectory(src)
 
-if (${ENABLE_TESTS})
+if (ENABLE_TESTS)
   find_package(PFUNIT REQUIRED)
   enable_testing()
   add_subdirectory(tests)
