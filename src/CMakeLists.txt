@@ -23,7 +23,6 @@ set(c_src bacio.c byteswap.c)
 set(kinds "4" "8")
 foreach(kind ${kinds})
   set(lib_name ${PROJECT_NAME}_${kind})
-  set(versioned_lib_name ${PROJECT_NAME}_v${PROJECT_VERSION}_${kind})
   set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
 
   add_library(${lib_name}_f OBJECT ${fortran_src})
@@ -34,30 +33,13 @@ foreach(kind ${kinds})
 
   add_library(${lib_name}_c OBJECT ${c_src})
 
-  if(BUILD_STATIC_LIBS)
-    add_library(${lib_name}_static STATIC $<TARGET_OBJECTS:${lib_name}_f>
-      $<TARGET_OBJECTS:${lib_name}_c>)
-    set_target_properties(${lib_name}_static PROPERTIES OUTPUT_NAME
-      ${versioned_lib_name})
-    target_include_directories(${lib_name}_static INTERFACE
-      $<BUILD_INTERFACE:${module_dir}>
-      $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include_${kind}>)
-    list(APPEND LIB_TARGETS ${lib_name}_static)
-  endif()
-
-  if(BUILD_SHARED_LIBS)
-    add_library(${lib_name}_shared SHARED $<TARGET_OBJECTS:${lib_name}_f>
-      $<TARGET_OBJECTS:${lib_name}_c>)
-    set_target_properties(${lib_name}_shared PROPERTIES OUTPUT_NAME
-      ${versioned_lib_name})
-    target_include_directories(${lib_name}_shared INTERFACE
-      $<BUILD_INTERFACE:${module_dir}>
-      $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include_${kind}>)
-    list(APPEND LIB_TARGETS ${lib_name}_shared)
-  endif()
-  
+  add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
+    $<TARGET_OBJECTS:${lib_name}_c>)
+  target_include_directories(${lib_name} INTERFACE
+    $<BUILD_INTERFACE:${module_dir}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include_${kind}>)
+  list(APPEND LIB_TARGETS ${lib_name})
   install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
-
 endforeach()
 
 install(
