@@ -37,7 +37,7 @@ foreach(kind ${kinds})
     $<TARGET_OBJECTS:${lib_name}_c>)
   target_include_directories(${lib_name} INTERFACE
     $<BUILD_INTERFACE:${module_dir}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include_${kind}>)
+    $<INSTALL_INTERFACE:include_${kind}>)
   list(APPEND LIB_TARGETS ${lib_name})
   install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 endforeach()
