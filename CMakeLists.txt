@@ -37,6 +37,11 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
   set(fortran_8_flags "-fdefault-integer-8 -fdefault-real-8")
 endif()
 
+# For gfortran-10+ backward compatibility
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER 9.9)
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
+endif()
+
 set(fortran_src src/baciof.f src/bafrio.f src/chk_endianc.f)
 set(c_src src/bacio.c src/byteswap.c)
 
