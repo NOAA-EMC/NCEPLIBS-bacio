@@ -15,7 +15,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
 endif()
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
-  set(CMAKE_Fortran_FLAGS "-g -fpp -traceback -FR ${CMAKE_Fortran_FLAGS}")
+  set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
   set(fortran_8_flags "-i8 -r8")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^(GNU)$")
