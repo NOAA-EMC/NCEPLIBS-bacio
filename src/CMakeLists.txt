@@ -28,7 +28,7 @@ if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_V
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
 endif()
 
-set(fortran_src baciof.f90 bafrio.f90 chk_endianc.f90)
+set(fortran_src baciof.F90 bafrio.F90 chk_endianc.F90)
 set(c_src bacio.c byteswap.c)
 
 # One target for real32 and one target for real64
