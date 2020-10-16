@@ -1,3 +1,5 @@
+/** @file */
+
 // no byteswap.h on Apple
 #ifdef APPLE
 #include <libkern/OSByteOrder.h>
