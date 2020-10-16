@@ -1,3 +1,5 @@
+/** @file */
+
 /* Fortran-callable routines to read and write characther (bacio) and */
 /*   numeric (banio) data byte addressably                            */
 /* Robert Grumbine  16 March 1998                                        */

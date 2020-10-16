@@ -1,3 +1,5 @@
+!> @file
+
 !-----------------------------------------------------------------------
       MODULE BACIO_MODULE
 !$$$  F90-MODULE DOCUMENTATION BLOCK

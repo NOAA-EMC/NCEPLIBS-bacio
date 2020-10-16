@@ -1,3 +1,5 @@
+/** @file */
+
 /*     Include file to define variables for Fortran to C interface(s) */
 /*     revision history                               */
 

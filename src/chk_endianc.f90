@@ -1,4 +1,6 @@
-      subroutine chk_endianc(mendian)
+!> @file
+
+subroutine chk_endianc(mendian)
 !----------------------------------------------------------------------
 !$$$ documentation block
 !
