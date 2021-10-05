@@ -19,6 +19,8 @@ The NCEPLIBS-bacio library is used by:
 * [NCEPLIBS-grib_util](https://github.com/NOAA-EMC/NCEPLIBS-grib_util)
 * [UFS_UTILS](https://github.com/NOAA-EMC/UFS_UTILS)
 * [UPP](https://github.com/NOAA-EMC/UPP)
+* [ufs-weather-model](https://github.com/ufs-community/ufs-weather-model)
+* [UFS Short-Range Weather Application](https://github.com/ufs-community/ufs-srweather-app)
 
 ### Authors
 
