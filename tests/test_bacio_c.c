@@ -5,6 +5,11 @@
 
 #include <stdio.h>
 #include <clib.h>
+#include <string.h>
+
+int bacio_(int *mode, int *start, int *newpos, int *size, int *no,
+           int *nactual, int *fdes, const char *fname, char *datary,
+           int  namelen, int  datanamelen);
 
 int
 main()
@@ -23,8 +28,17 @@ main()
         namelen = strlen(fname);
         datanamelen = strlen(datary);
 
-        ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                      &fdes, fname, datary, namelen, datanamelen);
+        /* Create the file. */
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
+
+        /* Close the file. */
+        mode = BACLOSE;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
+        
     }
     printf("ok!\n");
     printf("SUCCESS!\n");
