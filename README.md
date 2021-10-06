@@ -10,7 +10,17 @@ This is part of the [NCEPLIBS](https://github.com/NOAA-EMC/NCEPLIBS)
 project.
 
 For more detailed documentation see
-https://noaa-emc.github.io/NCEPLIBS-bacio/
+https://noaa-emc.github.io/NCEPLIBS-bacio/.
+
+### Users
+
+The NCEPLIBS-bacio library is used by:
+* [NCEPLIBS-g2](https://github.com/NOAA-EMC/NCEPLIBS-g2)
+* [NCEPLIBS-grib_util](https://github.com/NOAA-EMC/NCEPLIBS-grib_util)
+* [UFS_UTILS](https://github.com/NOAA-EMC/UFS_UTILS)
+* [UPP](https://github.com/NOAA-EMC/UPP)
+* [ufs-weather-model](https://github.com/ufs-community/ufs-weather-model)
+* [UFS Short-Range Weather Application](https://github.com/ufs-community/ufs-srweather-app)
 
 ### Authors
 

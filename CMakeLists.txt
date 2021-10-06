@@ -12,8 +12,6 @@ project(
 
 include(GNUInstallDirs)
 
-option(ENABLE_TESTS "Build pfunit tests?" OFF)
-
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE
@@ -23,15 +21,11 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
                                                "MinSizeRel" "RelWithDebInfo")
 endif()
 
-if(NOT CMAKE_C_COMPILER_ID MATCHES "^(Intel|GNU|Clang|AppleClang)$")
-  message(WARNING "Compiler not officially supported: ${CMAKE_C_COMPILER_ID}")
-endif()
-
 add_subdirectory(src)
 
-if (ENABLE_TESTS)
-  find_package(PFUNIT REQUIRED)
-  enable_testing()
+# Turn on testing if desired.
+include(CTest)
+if (BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
