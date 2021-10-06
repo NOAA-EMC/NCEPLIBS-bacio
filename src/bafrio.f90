@@ -1,62 +1,48 @@
 !> @file
+!>
+!> This version of bafrio.f is revised to have byteswap in FORTRAN
+!> data file control words. It is designed to be run on on
+!> WCOSS(little endian machine) and to generate big endian files.
+!>
+!> It does byteswap on fortran record control words(4 byte integer
+!> before and after data field), not on data field itself. Users need
+!> to byteswap their data after(for reading)/before(for writing)
+!> calling subroutines this file. This is considered to be the best
+!> way to keep subroutine inerfaces intact for backward compatible.
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | iredell | Initial. 
+!> Aug, 2012 | Jun Wang | bafrio for big and little endian files
+!>
+!> @author Mark Iredell @date 1999-01-21
 
-!-----------------------------------------------------------------------
-!
-!  revision history:
-!
-!  Aug, 2012  Jun Wang    bafrio for big and little endian files
-!
-!  note:
-!     This version of bafrio.f is revised to have byteswap in FORTRAN
-!  data file control words. It is designed to be run on 
-!  on WCOSS(little endian machine) and to generate big endian files. 
-!     It does byteswap on fortran record control words(4 byte integer 
-!  before and after data field), not on data field itself. Users need
-!  to byteswap their data after(for reading)/before(for writing) 
-!  calling subroutines this file. This is considered to be the best 
-!  way to keep subroutine inerfaces intact for backward compatible.
-!
-!-----------------------------------------------------------------------
+!> This subprogram is calling bafrindexl to either read an unformatted
+!> fortran record and return its length and start byte of the next
+!> fortran record; or given the record length, without i/o it
+!> determines the start byte of the next fortran record. The difference
+!> between bafrindex and bafrindexl is the kind type of intergers in
+!> the argument list
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | IREDELL | Initial
+!> 2009-04-20 | J. WANG | Changes
+!>
+!> @param lu integer logical unit to read. if lu<=0, then determine ix
+!> from lx.
+!> @param ib integer fortran record start byte. (for the first fortran
+!> record, ib should be 0).
+!> @param lx integer record length in bytes if lu<=0. If lu>0, or
+!> lx=-1 for i/o error (probable end of file), or lx=-2 for i/o error
+!> (invalid fortran record).
+!> @param ix integer start byte for the next fortran record. (computed
+!> only if lx>=0).
+!>
+!> @author Mark Iredell @date 1999-01-21
       SUBROUTINE BAFRINDEX(LU,IB,LX,IX)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRINDEX      BYTE-ADDRESSABLE FORTRAN RECORD INDEX
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM IS CALLING BAFRINDEXL TO EITHER READ AN 
-!   UNFORMATTED FORTRAN RECORD
-!   AND RETURN ITS LENGTH AND START BYTE OF THE NEXT FORTRAN RECORD;
-!   OR GIVEN THE RECORD LENGTH, WITHOUT I/O IT DETERMINES THE START BYTE
-!   OF THE NEXT FORTRAN RECORD. THE DIFFERENCE BETWEEN BAFRINDEX AND 
-!   BAFRINDEXL IS THE KIND TYPE OF INTERGERS IN THE ARGUMENT LIST
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG
-!
-! USAGE:    CALL BAFRINDEX(LU,IB,LX,IX)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO READ
-!                  IF LU<=0, THEN DETERMINE IX FROM LX
-!     IB           INTEGER FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     LX           INTEGER RECORD LENGTH IN BYTES IF LU<=0
-!
-!   OUTPUT ARGUMENTS:
-!     LX           INTEGER RECORD LENGTH IN BYTES IF LU>0,
-!                  OR LX=-1 FOR I/O ERROR (PROBABLE END OF FILE),
-!                  OR LX=-2 FOR I/O ERROR (INVALID FORTRAN RECORD)
-!     IX           INTEGER START BYTE FOR THE NEXT FORTRAN RECORD
-!                  (COMPUTED ONLY IF LX>=0)
-!
-! SUBPROGRAMS CALLED:
-!   BAFRINDEXL     BYTE-ADDRESSABLE FORTRAN RECORD INDEX
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
-!
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU,IB
       INTEGER,INTENT(INOUT):: LX
@@ -71,44 +57,31 @@
 
       return
       end SUBROUTINE BAFRINDEX
-!-----------------------------------------------------------------------
+
+!> This subprogram either reads an unformatted fortran record and
+!> return its length and start byte of the next fortran record; or
+!> given the record length, without i/o it determines the start byte
+!> of the next fortran record.
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | IREDELL | Initial
+!> 2009-04-20 | J. WANG | Changes
+!>
+!> @param lu integer logical unit to read. if lu<=0, then determine ix
+!> from lx.
+!> @param ib integer fortran record start byte. (for the first fortran
+!> record, ib should be 0).
+!> @param lx integer record length in bytes if lu<=0. If lu>0, or
+!> lx=-1 for i/o error (probable end of file), or lx=-2 for i/o error
+!> (invalid fortran record).
+!> @param ix integer start byte for the next fortran record. (computed
+!> only if lx>=0).
+!>
+!> @author Mark Iredell @date 1999-01-21
+!>
       SUBROUTINE BAFRINDEXL(LU,IB,LX,IX)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRINDEXL      BYTE-ADDRESSABLE FORTRAN RECORD INDEX
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM EITHER READS AN UNFORMATTED FORTRAN RECORD
-!   AND RETURN ITS LENGTH AND START BYTE OF THE NEXT FORTRAN RECORD;
-!   OR GIVEN THE RECORD LENGTH, WITHOUT I/O IT DETERMINES THE START BYTE
-!   OF THE NEXT FORTRAN RECORD.
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG
-!
-! USAGE:    CALL BAFRINDEXL(LU,IB,LX,IX)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO READ
-!                  IF LU<=0, THEN DETERMINE IX FROM LX
-!     IB           INTEGER(8) FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     LX           INTEGER(8) RECORD LENGTH IN BYTES IF LU<=0
-!
-!   OUTPUT ARGUMENTS:
-!     LX           INTEGER(8) RECORD LENGTH IN BYTES IF LU>0,
-!                  OR LX=-1 FOR I/O ERROR (PROBABLE END OF FILE),
-!                  OR LX=-2 FOR I/O ERROR (INVALID FORTRAN RECORD)
-!     IX           INTEGER(8) START BYTE FOR THE NEXT FORTRAN RECORD
-!                  (COMPUTED ONLY IF LX>=0)
-!
-! SUBPROGRAMS CALLED:
-!   BAREADL        BYTE-ADDRESSABLE READ
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU
       INTEGER(KIND=8),INTENT(IN):: IB
@@ -164,45 +137,32 @@
       IF(LX.GE.0) IX=IB+LBCW+LX+LBCW
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRINDEXL
-!-----------------------------------------------------------------------
+
+!>   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
+!>
+!> THIS SUBPROGRAM IS CALLING BAFREAD TO REAS AN UNFORMATTED 
+!> FORTRAN RECORD. THE DIFFERENCE BETWEEN BAFRREAD AND BAFRREADL IS
+!>    THE KIND TYPE OF INTERGERS IN THE ARGUMENT LIST
+!>
+!> PROGRAM HISTORY LOG:
+!>   1999-01-21  IREDELL
+!>   2009-04-20  J. WANG
+!>
+!> @param LU INTEGER LOGICAL UNIT TO READ
+!> @param IB INTEGER FORTRAN RECORD START BYTE
+!>                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
+!> @param NB INTEGER NUMBER OF BYTES TO READ
+!> @param KA INTEGER NUMBER OF BYTES IN FORTRAN RECORD
+!>                  (IN WHICH CASE THE NEXT FORTRAN RECORD
+!>                  SHOULD HAVE A START BYTE OF IB+KA),
+!>                  OR KA=-1 FOR I/O ERROR (PROBABLE END OF FILE),
+!>                  OR KA=-2 FOR I/O ERROR (INVALID FORTRAN RECORD),
+!>                  OR KA=-3 FOR I/O ERROR (REQUEST LONGER THAN RECORD)
+!> @param A CHARACTER*1 (NB) DATA READ
+!>
+!> @author Mark Iredell @date 1999-01-21
+!>
       SUBROUTINE BAFRREAD(LU,IB,NB,KA,A)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRREAD       BYTE-ADDRESSABLE FORTRAN RECORD READ
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM IS CALLING BAFREAD TO REAS AN UNFORMATTED 
-!   FORTRAN RECORD. THE DIFFERENCE BETWEEN BAFRREAD AND BAFRREADL IS
-!    THE KIND TYPE OF INTERGERS IN THE ARGUMENT LIST
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG
-!
-! USAGE:    CALL BAFRREAD(LU,IB,NB,KA,A)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO READ
-!     IB           INTEGER FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     NB           INTEGER NUMBER OF BYTES TO READ
-!
-!   OUTPUT ARGUMENTS:
-!     KA           INTEGER NUMBER OF BYTES IN FORTRAN RECORD
-!                  (IN WHICH CASE THE NEXT FORTRAN RECORD
-!                  SHOULD HAVE A START BYTE OF IB+KA),
-!                  OR KA=-1 FOR I/O ERROR (PROBABLE END OF FILE),
-!                  OR KA=-2 FOR I/O ERROR (INVALID FORTRAN RECORD),
-!                  OR KA=-3 FOR I/O ERROR (REQUEST LONGER THAN RECORD)
-!     A            CHARACTER*1 (NB) DATA READ
-!
-! SUBPROGRAMS CALLED:
-!   BAFRREADL      BYTE-ADDRESSABLE READ
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
-!
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU,IB,NB
       INTEGER,INTENT(OUT):: KA
@@ -220,43 +180,29 @@
         CALL BAFRREADL(LU,LONG_IB,LONG_NB,LONG_KA,A)
         KA=LONG_KA
       END SUBROUTINE BAFRREAD
-!-----------------------------------------------------------------------
+
+!> This subprogram reads an unformatted fortran record.
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | Iredell | Initial
+!> 2009-04-20 | J. WANG | Changes
+!>
+!> @param lu integer logical unit to read.
+!> @param ib integer(8) fortran record start byte. (For the first
+!> fortran record, ib should be 0.)
+!> @param nb integer(8) number of bytes to read.
+!> @param ka integer(8) number of bytes in fortran record (in which
+!> case the next fortran record should have a start byte of ib+ka),
+!> - or ka=-1 for i/o error (probable end of file),
+!> - or ka=-2 for i/o error (invalid fortran record),
+!> - or ka=-3 for i/o error (request longer than record)
+!> @param a character*1 (nb) data read
+!>
+!> @author Mark Iredell @date 1999-01-21
+!>
       SUBROUTINE BAFRREADL(LU,IB,NB,KA,A)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRREADL      BYTE-ADDRESSABLE FORTRAN RECORD READ
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM READS AN UNFORMATTED FORTRAN RECORD
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG
-!
-! USAGE:    CALL BAFRREADL(LU,IB,NB,KA,A)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO READ
-!     IB           INTEGER(8) FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     NB           INTEGER(8) NUMBER OF BYTES TO READ
-!
-!   OUTPUT ARGUMENTS:
-!     KA           INTEGER(8) NUMBER OF BYTES IN FORTRAN RECORD
-!                  (IN WHICH CASE THE NEXT FORTRAN RECORD
-!                  SHOULD HAVE A START BYTE OF IB+KA),
-!                  OR KA=-1 FOR I/O ERROR (PROBABLE END OF FILE),
-!                  OR KA=-2 FOR I/O ERROR (INVALID FORTRAN RECORD),
-!                  OR KA=-3 FOR I/O ERROR (REQUEST LONGER THAN RECORD)
-!     A            CHARACTER*1 (NB) DATA READ
-!
-! SUBPROGRAMS CALLED:
-!   BAFRINDEXL     BYTE-ADDRESSABLE FORTRAN RECORD INDEX
-!   BAREADL        BYTE-ADDRESSABLE READ
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU
       INTEGER(kind=8),INTENT(IN):: IB,NB
@@ -284,44 +230,29 @@
       ENDIF
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRREADL
-!-----------------------------------------------------------------------
-      SUBROUTINE BAFRWRITE(LU,IB,NB,KA,A)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRWRITE      BYTE-ADDRESSABLE FORTRAN RECORD WRITE
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM IS CALLING BAFRWRITE TO WRITE AN UNFORMATTED 
-!    FORTRAN RECORD. THE DIFFERENCE BETWEEN BAFRWRITE AND BAFRWRITEL IS 
-!    THE KIND TYPE OF INTERGERS IN THE ARGUMENT LIST
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG
-!
-! USAGE:    CALL BAFRWRITE(LU,IB,NB,KA,A)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO WRITE
-!     IB           INTEGER FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     NB           INTEGER NUMBER OF BYTES TO WRITE
-!     A            CHARACTER*1 (NB) DATA TO WRITE
-!
-!   OUTPUT ARGUMENTS:
-!     KA           INTEGER NUMBER OF BYTES IN FORTRAN RECORD
-!                  (IN WHICH CASE THE NEXT FORTRAN RECORD
-!                  SHOULD HAVE A START BYTE OF IB+KA),
-!                  OR KA=-1 FOR I/O ERROR
-!
-! SUBPROGRAMS CALLED:
-!   BAWRITEL       BYTE-ADDRESSABLE WRITE
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
 
-!
+!> This subprogram is calling bafrwrite to write an unformatted
+!> fortran record. The difference between bafrwrite and bafrwritel is
+!> the kind type of intergers in the argument list
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | Iredell | Initial
+!> 2009-04-20 | J. WANG | Changes
+!>
+!> @param lu integer logical unit to read.
+!> @param ib integer(8) fortran record start byte. (For the first
+!> fortran record, ib should be 0.)
+!> @param nb integer(8) number of bytes to read.
+!> @param a character*1 (nb) data to write
+!> @param ka integer number of bytes in fortran record (in which case
+!> the next fortran record should have a start byte of ib+ka), or
+!> ka=-1 for i/o error.
+!>
+!> @author Mark Iredell @date 1999-01-21
+!>
+      SUBROUTINE BAFRWRITE(LU,IB,NB,KA,A)
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU,IB,NB
       INTEGER,INTENT(OUT):: KA
@@ -341,40 +272,28 @@
         KA=LONG_KA
 !
       END SUBROUTINE BAFRWRITE
-!-----------------------------------------------------------------------
+
+!> This subprogram writes an unformatted fortran record.
+!>
+!>
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | Iredell | Initial
+!> 2009-04-20 | J. WANG | Changes
+!>
+!> @param lu integer logical unit to read.
+!> @param ib integer(8) fortran record start byte. (For the first
+!> fortran record, ib should be 0.)
+!> @param nb integer(8) number of bytes to read.
+!> @param a character*1 (nb) data to write
+!> @param ka integer number of bytes in fortran record (in which case
+!> the next fortran record should have a start byte of ib+ka), or
+!> ka=-1 for i/o error.
+!>
+!> @author Mark Iredell @date 1999-01-21
+!>
       SUBROUTINE BAFRWRITEL(LU,IB,NB,KA,A)
-!$$$  SUBPROGRAM DOCUMENTATION BLOCK
-!
-! SUBPROGRAM: BAFRWRITEL     BYTE-ADDRESSABLE FORTRAN RECORD WRITE
-!   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
-!
-! ABSTRACT: THIS SUBPROGRAM WRITES AN UNFORMATTED FORTRAN RECORD
-!
-! PROGRAM HISTORY LOG:
-!   1999-01-21  IREDELL
-!   2009-04-20  J. WANG 
-!
-! USAGE:    CALL BAFRWRITEL(LU,IB,NB,KA,A)
-!   INPUT ARGUMENTS:
-!     LU           INTEGER LOGICAL UNIT TO WRITE
-!     IB           INTEGER(8) FORTRAN RECORD START BYTE
-!                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!     NB           INTEGER(8) NUMBER OF BYTES TO WRITE
-!     A            CHARACTER*1 (NB) DATA TO WRITE
-!
-!   OUTPUT ARGUMENTS:
-!     KA           INTEGER(8) NUMBER OF BYTES IN FORTRAN RECORD
-!                  (IN WHICH CASE THE NEXT FORTRAN RECORD
-!                  SHOULD HAVE A START BYTE OF IB+KA),
-!                  OR KA=-1 FOR I/O ERROR
-!
-! SUBPROGRAMS CALLED:
-!   BAWRITEL       BYTE-ADDRESSABLE WRITE
-!
-! ATTRIBUTES:
-!   LANGUAGE: FORTRAN 90
-!
-!$$$
       IMPLICIT NONE
       INTEGER,INTENT(IN):: LU
       INTEGER(KIND=8),INTENT(IN):: IB,NB
