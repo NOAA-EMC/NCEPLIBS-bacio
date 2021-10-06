@@ -172,14 +172,14 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END
 
-!> This baread is calling bareadl() to read a given number of 
+!> This subroutine calls bareadl() to read a given number of 
 !> bytes from an unblocked file, skipping a given number of bytes.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | J. Wang | Modifications.
+!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param lu integer unit to read.
 !> @param ib integer number of bytes to skip. (If ib<0, then the file
@@ -223,7 +223,7 @@
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | J. Wang | Modifications.
+!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param lu integer unit to read.
 !> @param ib integer(8) number of bytes to skip (if ib<0, then the
@@ -412,10 +412,10 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | M. Iredell | Initial.
-!> 95-10-31 | M. Iredell | workstation version
-!> 1998-06-04 | M. Iredell | bacio version
-!> 2009-04-20 | J. Wang | wrytel version
+!> 92-10-31 | Mark Iredell | Initial.
+!> 95-10-31 | Mark Iredell | workstation version
+!> 1998-06-04 | Mark Iredell | bacio version
+!> 2009-04-20 | Jun Wang | wrytel version
 !>
 !> @param lu integer unit to which to write.
 !> @param nb integer(4) number of bytes to write.
@@ -446,10 +446,10 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | M. Iredell | Initial.
-!> 95-10-31 | M. Iredell | workstation version
-!> 1998-06-04 | M. Iredell | bacio version
-!> 2009-04-20 | J. Wang | wrytel version
+!> 92-10-31 | Mark Iredell | Initial.
+!> 95-10-31 | Mark Iredell | workstation version
+!> 1998-06-04 | Mark Iredell | bacio version
+!> 2009-04-20 | Jun Wang | wrytel version
 !>
 !> @param lu integer unit to which to write.
 !> @param nb integer(8) number of bytes to write.
