@@ -58,11 +58,8 @@
  * first byte in the file, not 1.
  * @param newpos position in the file after a read or write has been
  * performed. You'll need this if you're doing 'seeking' read/write.
- * @param size is the size of the objects you are trying to read. Rely
- * on the values in the locale.inc file. Types are CHARACTER, INTEGER,
- * REAL, COMPLEX. Specify the correct value by using SIZEOF_type,
- * where type is one of these. (After having included the locale.inc
- * file).
+ * @param size is the size of the objects you are trying to
+ * read. Types are CHARACTER, INTEGER, REAL, COMPLEX.
  * @param no is the number of things to read or write (characters,
  * integers, whatever).
  * @param nactual is the number of things actually read or
