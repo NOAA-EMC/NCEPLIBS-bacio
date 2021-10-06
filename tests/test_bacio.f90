@@ -3,8 +3,8 @@ program test_bacio
   implicit none
 
   character(len=14) :: filename = 'test_bacio.bin'
-  character(len=4) :: data = 'test'
-  character(len=4) :: data_in
+  character :: data(4)
+  character :: data_in(4)
   integer :: lu = 1
   integer :: ka
   integer :: i
@@ -19,6 +19,7 @@ program test_bacio
   if (iret .ne. 0) stop 2
 
   ! Write some data.
+  data = 'test'
   call bawrite(lu, 0, 4, ka, data)
   if (iret .ne. 0) stop 2
   if (ka .ne. 4) stop 3
