@@ -172,8 +172,8 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END
 
-!> This baread is calling bareadl to read a given number of 
-!> bytes from an unblocked file,skipping a given number of bytes.
+!> This baread is calling bareadl() to read a given number of 
+!> bytes from an unblocked file, skipping a given number of bytes.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -327,15 +327,15 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAREADL
 
-!> This program is calling bawritel to write a given number of bytes to
-!> an unblocked file,skipping a given number of bytes.
+!> This program is calling bawritel() to write a given number of bytes to
+!> an unblocked file, skipping a given number of bytes.
 !>      
-!> @param LU INTEGER UNIT TO WRITE.
-!> @param IB INTEGER NUMBER OF BYTES TO SKIP.
-!>                  (IF IB<0, THEN THE FILE IS ACCESSED WITH NO SEEKING)
-!> @param NB INTEGER NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
-!> @param KA INTEGER NUMBER OF BYTES ACTUALLY WRITTEN.
+!> @param lu integer unit to write.
+!> @param ib integer number of bytes to skip.
+!>                  (if ib<0, then the file is accessed with no seeking)
+!> @param nb integer number of bytes to write.
+!> @param a character*1 (nb) data to write.
+!> @param ka integer number of bytes actually written.
 !>
 !> @note A baopen must have already been called.
 !>
@@ -406,16 +406,16 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE  BAWRITEL
 
-!> This subroutine is calling wrytel to write a given number of 
+!> This subroutine is calling wrytel() to write a given number of 
 !> bytes to an unblocked file.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | IREDELL | Initial.
-!> 95-10-31 | IREDELL | WORKSTATION VERSION
-!> 1998-06-04 | IREDELL | BACIO VERSION
-!> 2009-04-20 | J. WANG | WRYTEL VERSION
+!> 92-10-31 | M. Iredell | Initial.
+!> 95-10-31 | M. Iredell | workstation version
+!> 1998-06-04 | M. Iredell | bacio version
+!> 2009-04-20 | J. Wang | wrytel version
 !>
 !> @param lu integer unit to which to write.
 !> @param nb integer(4) number of bytes to write.
@@ -446,10 +446,10 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | IREDELL | Initial.
-!> 95-10-31 | IREDELL | WORKSTATION VERSION
-!> 1998-06-04 | IREDELL | BACIO VERSION
-!> 2009-04-20 | J. WANG | BACIOL VERSION
+!> 92-10-31 | M. Iredell | Initial.
+!> 95-10-31 | M. Iredell | workstation version
+!> 1998-06-04 | M. Iredell | bacio version
+!> 2009-04-20 | J. Wang | wrytel version
 !>
 !> @param lu integer unit to which to write.
 !> @param nb integer(8) number of bytes to write.
