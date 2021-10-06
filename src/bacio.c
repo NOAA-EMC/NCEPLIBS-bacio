@@ -1094,7 +1094,7 @@
  * for files > 2 Gb.
  *
  * @param mode integer specifying operations to be performed see the
- * clib.inc file for the values. Mode is obtained by adding together
+ * clib.h file for the values. Mode is obtained by adding together
  * the values corresponding to the operations The best method is to
  * include the clib.inc file and refer to the names for the operations
  * rather than rely on hard-coded values.

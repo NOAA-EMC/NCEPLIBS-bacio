@@ -172,14 +172,14 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END
 
-!> This baread is calling bareadl to read a given number of 
-!> bytes from an unblocked file,skipping a given number of bytes.
+!> This subroutine calls bareadl() to read a given number of 
+!> bytes from an unblocked file, skipping a given number of bytes.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | J. Wang | Modifications.
+!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param lu integer unit to read.
 !> @param ib integer number of bytes to skip. (If ib<0, then the file
@@ -211,19 +211,19 @@
 
       END SUBROUTINE BAREAD
 
-!> This subrouytine is using updated baciol i/o package to read a
+!> This subrouytine is using updated baciol() I/O package to read a
 !> given number of bytes from an unblocked file, skipping a given
 !> number of bytes.
 !>      
-!> The physical i/o is blocked into four 4096-byte buffers if the
-!> byte-addressable option 1 has been set to 1 by baseto.  This
+!> The physical I/O is blocked into four 4096-byte buffers if the
+!> byte-addressable option 1 has been set to 1 by baseto. This
 !> buffered reading is incompatible with no-seek reading.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | J. Wang | Modifications.
+!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param lu integer unit to read.
 !> @param ib integer(8) number of bytes to skip (if ib<0, then the
@@ -327,15 +327,15 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAREADL
 
-!> This program is calling bawritel to write a given number of bytes to
-!> an unblocked file,skipping a given number of bytes.
+!> This program is calling bawritel() to write a given number of bytes to
+!> an unblocked file, skipping a given number of bytes.
 !>      
-!> @param LU INTEGER UNIT TO WRITE.
-!> @param IB INTEGER NUMBER OF BYTES TO SKIP.
-!>                  (IF IB<0, THEN THE FILE IS ACCESSED WITH NO SEEKING)
-!> @param NB INTEGER NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
-!> @param KA INTEGER NUMBER OF BYTES ACTUALLY WRITTEN.
+!> @param lu integer unit to write.
+!> @param ib integer number of bytes to skip.
+!>                  (if ib<0, then the file is accessed with no seeking)
+!> @param nb integer number of bytes to write.
+!> @param a character*1 (nb) data to write.
+!> @param ka integer number of bytes actually written.
 !>
 !> @note A baopen must have already been called.
 !>
@@ -360,16 +360,16 @@
 
       END SUBROUTINE BAWRITE
 
-!> This subrouytine is using updated baciol i/o package to write a
+!> This subrouytine is using updated baciol() I/O package to write a
 !> given number of bytes to an unblocked file, skipping a given number
 !> of bytes.
 !>
-!> @param LU INTEGER UNIT TO WRITE.
-!> @param IB INTEGER(8) NUMBER OF BYTES TO SKIP.
-!>                  (IF IB<0, THEN THE FILE IS ACCESSED WITH NO SEEKING)
-!> @param NB INTEGER(8) NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
-!> @param KA INTEGER(8) NUMBER OF BYTES ACTUALLY WRITTEN.
+!> @param lu integer unit to write.
+!> @param ib integer(8) number of bytes to skip.
+!>                  (if ib<0, then the file is accessed with no seeking)
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
+!> @param ka integer(8) number of bytes actually written.
 !>
       SUBROUTINE BAWRITEL(LU,IB,NB,KA,A)
       USE BACIO_MODULE
@@ -406,16 +406,16 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE  BAWRITEL
 
-!> This subroutine is calling wrytel to write a given number of 
+!> This subroutine is calling wrytel() to write a given number of 
 !> bytes to an unblocked file.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | IREDELL | Initial.
-!> 95-10-31 | IREDELL | WORKSTATION VERSION
-!> 1998-06-04 | IREDELL | BACIO VERSION
-!> 2009-04-20 | J. WANG | WRYTEL VERSION
+!> 92-10-31 | Mark Iredell | Initial.
+!> 95-10-31 | Mark Iredell | workstation version
+!> 1998-06-04 | Mark Iredell | bacio version
+!> 2009-04-20 | Jun Wang | wrytel version
 !>
 !> @param lu integer unit to which to write.
 !> @param nb integer(4) number of bytes to write.
@@ -446,14 +446,14 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 92-10-31 | IREDELL | Initial.
-!> 95-10-31 | IREDELL | WORKSTATION VERSION
-!> 1998-06-04 | IREDELL | BACIO VERSION
-!> 2009-04-20 | J. WANG | BACIOL VERSION
+!> 92-10-31 | Mark Iredell | Initial.
+!> 95-10-31 | Mark Iredell | workstation version
+!> 1998-06-04 | Mark Iredell | bacio version
+!> 2009-04-20 | Jun Wang | wrytel version
 !>
-!> @param LU INTEGER UNIT TO WHICH TO WRITE.
-!> @param NB INTEGER(8) NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
+!> @param lu integer unit to which to write.
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
 !>
 !> @note A baopen must have already been called.
       SUBROUTINE WRYTEL(LU,NB,A)
