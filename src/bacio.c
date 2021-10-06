@@ -44,9 +44,6 @@
 #include <ctype.h>
 #include <string.h>
 
-/* Include the C library file for definition/control */
-/* Things that might be changed for new systems are there. */
-/* This source file should not (need to) be edited, merely recompiled */
 #include "clib.h"
 
 /** 

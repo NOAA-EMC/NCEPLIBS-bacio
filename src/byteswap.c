@@ -44,9 +44,6 @@ void fast_byteswap_errors(int flag) {
   send_errors=flag;
 }
 
-/**********************************************************************/
-/* Simple single-value loops                                          */
-/**********************************************************************/
 /**
  * Simple single-value loops.
  *
@@ -127,9 +124,6 @@ static int simple_swap_16(void *data,size_t len) {
   return 1;
 }
 
-/**********************************************************************/
-/* Use the GNU macros, which are specialized byteswap ASM instructions*/
-/**********************************************************************/
 /**
  * Use the GNU macros, which are specialized byteswap ASM
  * instructions.
@@ -198,11 +192,6 @@ static int macro_swap_16(void *data,size_t len) {
     udata[i]=bswap_16(udata[i]);
   return 1;
 }
-
-/**********************************************************************/
-/* Use the GNU macros and do 1MB blocks at a time.  Control the block */
-/* size through the BLOCK_COUNT_* macros (top of file)                */
-/**********************************************************************/
 
 /**
  * Use the GNU macros and do 1MB blocks at a time. Control the block

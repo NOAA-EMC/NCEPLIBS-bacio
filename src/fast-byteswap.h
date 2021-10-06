@@ -1,4 +1,6 @@
-/** @file */
+/** @file 
+ * @brief Header file for byteswap functions.
+ */
 
 #ifndef __FAST_BYTESWAP_H__
 #define __FAST_BYTESWAP_H__
