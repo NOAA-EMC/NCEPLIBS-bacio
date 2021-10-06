@@ -39,6 +39,6 @@ jobs:
     - name: upload-test-coverage
       uses: actions/upload-artifact@v2
       with:
-        name: g2-test-coverage
-        path: g2/build/*.html
+        name: bacio-test-coverage
+        path: bacio/build/*.html
         
