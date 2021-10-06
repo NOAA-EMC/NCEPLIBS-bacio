@@ -28,8 +28,8 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 1999-01-21 | IREDELL | Initial
-!> 2009-04-20 | J. WANG | Changes
+!> 1999-01-21 | Mark Iredell | Initial
+!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param lu integer logical unit to read. if lu<=0, then determine ix
 !> from lx.
@@ -66,8 +66,8 @@
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
-!> 1999-01-21 | IREDELL | Initial
-!> 2009-04-20 | J. WANG | Changes
+!> 1999-01-21 | Mark Iredell | Initial
+!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param lu integer logical unit to read. if lu<=0, then determine ix
 !> from lx.
@@ -138,27 +138,26 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRINDEXL
 
-!>   PRGMMR: IREDELL          ORG: W/NMC23     DATE: 1999-01-21
+!> This subprogram is calling bafread to reas an unformatted fortran
+!> record. The difference between bafrread() and bafrreadl() is the
+!> kind type of intergers in the argument list.
 !>
-!> THIS SUBPROGRAM IS CALLING BAFREAD TO REAS AN UNFORMATTED 
-!> FORTRAN RECORD. THE DIFFERENCE BETWEEN BAFRREAD AND BAFRREADL IS
-!>    THE KIND TYPE OF INTERGERS IN THE ARGUMENT LIST
+!> ### Program History Log
+!> Date | Programmer | Comments
+!> -----|------------|--------- 
+!> 1999-01-21 | Mark Iredell | Initial
+!> 2009-04-20 | Jun Wang | Changes
 !>
-!> PROGRAM HISTORY LOG:
-!>   1999-01-21  IREDELL
-!>   2009-04-20  J. WANG
-!>
-!> @param LU INTEGER LOGICAL UNIT TO READ
-!> @param IB INTEGER FORTRAN RECORD START BYTE
-!>                  (FOR THE FIRST FORTRAN RECORD, IB SHOULD BE 0)
-!> @param NB INTEGER NUMBER OF BYTES TO READ
-!> @param KA INTEGER NUMBER OF BYTES IN FORTRAN RECORD
-!>                  (IN WHICH CASE THE NEXT FORTRAN RECORD
-!>                  SHOULD HAVE A START BYTE OF IB+KA),
-!>                  OR KA=-1 FOR I/O ERROR (PROBABLE END OF FILE),
-!>                  OR KA=-2 FOR I/O ERROR (INVALID FORTRAN RECORD),
-!>                  OR KA=-3 FOR I/O ERROR (REQUEST LONGER THAN RECORD)
-!> @param A CHARACTER*1 (NB) DATA READ
+!> @param lu integer logical unit to read.
+!> @param ib integer fortran record start byte (for the first fortran
+!> record, ib should be 0).
+!> @param nb integer number of bytes to read.
+!> @param ka integer number of bytes in fortran record (in which case
+!> the next fortran record should have a start byte of ib+ka),
+!> - or ka=-1 for i/o error (probable end of file),
+!> - or ka=-2 for i/o error (invalid fortran record),
+!> - or ka=-3 for i/o error (request longer than record)
+!> @param a character*1 (nb) data read
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
@@ -187,7 +186,7 @@
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | J. WANG | Changes
+!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param lu integer logical unit to read.
 !> @param ib integer(8) fortran record start byte. (For the first
@@ -239,7 +238,7 @@
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | J. WANG | Changes
+!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param lu integer logical unit to read.
 !> @param ib integer(8) fortran record start byte. (For the first
@@ -280,7 +279,7 @@
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | J. WANG | Changes
+!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param lu integer logical unit to read.
 !> @param ib integer(8) fortran record start byte. (For the first
