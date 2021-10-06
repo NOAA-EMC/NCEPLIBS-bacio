@@ -32,6 +32,12 @@ main()
         namelen = strlen(fname);
         datanamelen = strlen(datary);
 
+        /* These won't work. */
+        mode = BAOPEN_WONLY | BAOPEN_RONLY;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)) != 255)
+            return ierr;
+
         /* Create the file. */
         mode = BAOPEN_WONLY;
         if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
