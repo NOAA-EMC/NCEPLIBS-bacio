@@ -1,20 +1,13 @@
 !> @file
+!> Find endianness of files.
+!> @author J. Wang @date Aug, 2012
 
+!> Obtain machine endianness.
+!>
+!> @param mendian character(16) machine endianness
+!>
+!> @author J. Wang @date Aug, 2012
 subroutine chk_endianc(mendian)
-!----------------------------------------------------------------------
-!$$$ documentation block
-!
-!  get_mendian:   to obtain machine endianness
-!
-!  programmer: J. Wang        date: Aug, 2012
-!
-!  Input:  
-!    no input argument
-!  OUTPUT: 
-!    mendian: character(16) machine endianness
-!
-!----------------------------------------------------------------------
-!
         implicit none
 !
         character(16),intent(out)  :: mendian
@@ -33,10 +26,12 @@ subroutine chk_endianc(mendian)
 !     ------------------------------------------------------------------
 !
       end subroutine chk_endianc
-!
-!
-!-----------------------------------------------------------------------
-!
+
+!> Obtain machine endianness.
+!>
+!> @param mendian character(16) machine endianness
+!>
+!> @author J. Wang @date Aug, 2012
       subroutine findendian(mendian)
 !
         implicit none

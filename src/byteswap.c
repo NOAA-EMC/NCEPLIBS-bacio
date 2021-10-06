@@ -1,4 +1,18 @@
-/** @file */
+/** @file 
+ *
+ * This file contains various implementations of fast byteswapping
+ * routines. The main entry point, fast_byteswap(), is the only one
+ * you should need, and it should be modified to use whatever method
+ * is fastest on your architecture.
+ *
+ * In all cases, the routines return 1 on success and 0 on failure.
+ * They only fail if your data is non-aligned. All routines require
+ * that arrays of N-bit data be N-bit aligned. If they are not, an
+ * error will be sent to stderr and the routine will return non-zero.
+ * To silence the error message, call fast_byteswap_errors(0).  
+ *
+ * @author Dexin Zhang, Jun Wang
+*/
 
 // no byteswap.h on Apple
 #ifdef APPLE
@@ -13,24 +27,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BLOCK_COUNT_64 (512*1024)
-#define BLOCK_COUNT_32 (1024*1024)
-#define BLOCK_COUNT_16 (2048*1024)
-#define LINUX
+#define BLOCK_COUNT_64 (512*1024) /**< Block Count 64. */
+#define BLOCK_COUNT_32 (1024*1024) /**< Block Count 32. */
+#define BLOCK_COUNT_16 (2048*1024) /**< Block Count 16. */
+#define LINUX /**< Define LINUX. */
 
-/* This file contains various implementations of fast byteswapping
-   routines.  The main entry point, fast_byteswap, is the only one you
-   should need, and it should be modified to use whatever method is
-   fastest on your architecture.  
+static int send_errors = 1; /**< if non-zero, warn about non-aligned pointers */
+static int fast_count_calls = 0; /**< Fast count calls. */
 
-   In all cases, the routines return 1 on success and 0 on failure.
-   They only fail if your data is non-aligned.  All routines require
-   that arrays of N-bit data be N-bit aligned.  If they are not, an
-   error will be sent to stderr and the routine will return non-zero.
-   To silence the error message, call fast_byteswap_errors(0).  */
-
-static int send_errors = 1 ; /* if non-zero, warn about non-aligned pointers */
-static int fast_count_calls = 0 ;
+/**
+ * Fast byteswap errors.
+ *
+ * @param flag flag
+ */
 void fast_byteswap_errors(int flag) { 
   send_errors=flag;
 }
@@ -38,7 +47,14 @@ void fast_byteswap_errors(int flag) {
 /**********************************************************************/
 /* Simple single-value loops                                          */
 /**********************************************************************/
-
+/**
+ * Simple single-value loops.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int simple_swap_64(void *data,size_t len) {
   size_t i;
   uint64_t *udata;
@@ -61,6 +77,14 @@ static int simple_swap_64(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Simple single-value loops.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int simple_swap_32(void *data,size_t len) {
   size_t i;
   uint32_t *udata;
@@ -79,6 +103,14 @@ static int simple_swap_32(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Simple single-value loops.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int simple_swap_16(void *data,size_t len) {
   size_t i;
   uint16_t *udata;
@@ -98,7 +130,15 @@ static int simple_swap_16(void *data,size_t len) {
 /**********************************************************************/
 /* Use the GNU macros, which are specialized byteswap ASM instructions*/
 /**********************************************************************/
-
+/**
+ * Use the GNU macros, which are specialized byteswap ASM
+ * instructions.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int macro_swap_64(void *data,size_t len) {
   size_t i;
   uint64_t *udata;
@@ -113,6 +153,15 @@ static int macro_swap_64(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Use the GNU macros, which are specialized byteswap ASM
+ * instructions.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int macro_swap_32(void *data,size_t len) {
   size_t i;
   uint32_t *udata;
@@ -127,6 +176,15 @@ static int macro_swap_32(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Use the GNU macros, which are specialized byteswap ASM
+ * instructions.
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int macro_swap_16(void *data,size_t len) {
   size_t i;
   uint16_t *udata;
@@ -146,6 +204,15 @@ static int macro_swap_16(void *data,size_t len) {
 /* size through the BLOCK_COUNT_* macros (top of file)                */
 /**********************************************************************/
 
+/**
+ * Use the GNU macros and do 1MB blocks at a time. Control the block
+ * size through the BLOCK_COUNT_* macros (top of file).
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int block_macro_swap_32(void *data,size_t len) {
   size_t i,stop,j;
   uint32_t *udata;
@@ -166,6 +233,15 @@ static int block_macro_swap_32(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Use the GNU macros and do 1MB blocks at a time. Control the block
+ * size through the BLOCK_COUNT_* macros (top of file).
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int block_macro_swap_16(void *data,size_t len) {
   size_t i,stop,j;
   uint16_t *udata;
@@ -186,6 +262,15 @@ static int block_macro_swap_16(void *data,size_t len) {
   return 1;
 }
 
+/**
+ * Use the GNU macros and do 1MB blocks at a time. Control the block
+ * size through the BLOCK_COUNT_* macros (top of file).
+ *
+ * @param data data
+ * @param len Length
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 static int block_macro_swap_64(void *data,size_t len) {
   uint64_t *udata;
   size_t i,stop,j;
@@ -206,8 +291,15 @@ static int block_macro_swap_64(void *data,size_t len) {
   return 1;
 }
 
-
-
+/**
+ * Fast byteswap.
+ *
+ * @param data data
+ * @param bytes Number of bytes
+ * @param count Count.
+ *
+ * @return 0 for error, 1 otherwise.
+ */
 int fast_byteswap(void *data,int bytes,size_t count) {
   switch(bytes) {
   case 1: return 1;
@@ -217,6 +309,7 @@ int fast_byteswap(void *data,int bytes,size_t count) {
   default: return 0;
   }
 }
+
 /* Include the C library file for definition/control */
 /* Things that might be changed for new systems are there. */
 /* This source file should not (need to) be edited, merely recompiled */
@@ -224,6 +317,14 @@ int fast_byteswap(void *data,int bytes,size_t count) {
 #include "stdio.h"
 #include "fast-byteswap.h"
 
+/**
+ * Byteswap.
+ *
+ * @param data Data
+ * @param nbyte Number of bytes.
+ * @param nnum NNUM
+ *
+ */
 #ifdef LINUX
   void byteswap_
          (char *data, int *nbyte, int *nnum) {

@@ -22,12 +22,12 @@
 /* Do not change things below here yourself */
 
 /*     IO-related (bacio.c, banio.c) */
-#define BAOPEN_RONLY              1
-#define BAOPEN_WONLY              2
-#define BAOPEN_RW                 4
-#define BACLOSE                   8
-#define BAREAD                   16
-#define BAWRITE                  32
-#define NOSEEK                   64
-#define BAOPEN_WONLY_TRUNC      128
-#define BAOPEN_WONLY_APPEND     256
+#define BAOPEN_RONLY              1 /**< Read only. */
+#define BAOPEN_WONLY              2 /**< Write only. */
+#define BAOPEN_RW                 4 /**< Read/write. */
+#define BACLOSE                   8 /**< Close. */
+#define BAREAD                   16 /**< Read. */
+#define BAWRITE                  32 /**< Write. */
+#define NOSEEK                   64 /**< No seek. */
+#define BAOPEN_WONLY_TRUNC      128 /**< Write only truncate. */
+#define BAOPEN_WONLY_APPEND     256 /**< Write only append. */
