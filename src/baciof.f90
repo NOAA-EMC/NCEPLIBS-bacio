@@ -211,12 +211,12 @@
 
       END SUBROUTINE BAREAD
 
-!> This subrouytine is using updated baciol i/o package to read a
+!> This subrouytine is using updated baciol() I/O package to read a
 !> given number of bytes from an unblocked file, skipping a given
 !> number of bytes.
 !>      
-!> The physical i/o is blocked into four 4096-byte buffers if the
-!> byte-addressable option 1 has been set to 1 by baseto.  This
+!> The physical I/O is blocked into four 4096-byte buffers if the
+!> byte-addressable option 1 has been set to 1 by baseto. This
 !> buffered reading is incompatible with no-seek reading.
 !>
 !> ### Program History Log
@@ -360,16 +360,16 @@
 
       END SUBROUTINE BAWRITE
 
-!> This subrouytine is using updated baciol i/o package to write a
+!> This subrouytine is using updated baciol() I/O package to write a
 !> given number of bytes to an unblocked file, skipping a given number
 !> of bytes.
 !>
-!> @param LU INTEGER UNIT TO WRITE.
-!> @param IB INTEGER(8) NUMBER OF BYTES TO SKIP.
-!>                  (IF IB<0, THEN THE FILE IS ACCESSED WITH NO SEEKING)
-!> @param NB INTEGER(8) NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
-!> @param KA INTEGER(8) NUMBER OF BYTES ACTUALLY WRITTEN.
+!> @param lu integer unit to write.
+!> @param ib integer(8) number of bytes to skip.
+!>                  (if ib<0, then the file is accessed with no seeking)
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
+!> @param ka integer(8) number of bytes actually written.
 !>
       SUBROUTINE BAWRITEL(LU,IB,NB,KA,A)
       USE BACIO_MODULE
@@ -451,9 +451,9 @@
 !> 1998-06-04 | IREDELL | BACIO VERSION
 !> 2009-04-20 | J. WANG | BACIOL VERSION
 !>
-!> @param LU INTEGER UNIT TO WHICH TO WRITE.
-!> @param NB INTEGER(8) NUMBER OF BYTES TO WRITE.
-!> @param A CHARACTER*1 (NB) DATA TO WRITE.
+!> @param lu integer unit to which to write.
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
 !>
 !> @note A baopen must have already been called.
       SUBROUTINE WRYTEL(LU,NB,A)
