@@ -41,6 +41,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: bacio-test-coverage
-        path: bacio/build/*.html
-        path: bacio/build/*.css
+        path: |
+          bacio/build/*.html
+          bacio/build/*.css
         
