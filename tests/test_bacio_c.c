@@ -374,118 +374,119 @@ main()
 
     }
     printf("ok!\n");
-    /* printf("Testing some other simple baciol_() calls..."); */
-    /* { */
-    /*     int mode; */
-    /*     int start = 0; */
-    /*     int bad_start = 100; */
-    /*     int newpos = 0, size = 4, no = 4, nactual, fdes; */
-    /*     const char fname[] = "test_baciol_c.bin"; */
-    /*     char datary[] = "test"; */
-    /*     char datary_in[8]; */
-    /*     int  namelen, datanamelen; */
-    /*     int i; */
-    /*     int ierr; */
+    printf("Testing some other simple baciol_() calls...");
+    {
+        int mode;
+        long int start = 0;
+        long int bad_start = 100;
+        long int newpos = 0, no = 4, nactual;
+        int size = 4, fdes;
+        const char fname[] = "test_baciol_c.bin";
+        char datary[] = "test";
+        char datary_in[8];
+        int  namelen, datanamelen;
+        int i;
+        int ierr;
 
-    /*     namelen = strlen(fname); */
-    /*     datanamelen = strlen(datary); */
+        namelen = strlen(fname);
+        datanamelen = strlen(datary);
 
-    /*     /\* Create the file. *\/ */
-    /*     mode = BAOPEN_WONLY_TRUNC; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Create the file. */
+        mode = BAOPEN_WONLY_TRUNC;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Write some data. *\/ */
-    /*     mode = BAWRITE | NOSEEK; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
-    /*     if (nactual != no) return ERR; */
+        /* Write some data. */
+        mode = BAWRITE | NOSEEK;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
+        if (nactual != no) return ERR;
 
 
-    /*     /\* Close the file. It now contains "test". *\/ */
-    /*     mode = BACLOSE; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Close the file. It now contains "test". */
+        mode = BACLOSE;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Reopen the file. *\/ */
-    /*     mode = BAOPEN_RW; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Reopen the file. */
+        mode = BAOPEN_RW;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Read the data we just wrote. *\/ */
-    /*     mode = BAREAD; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary_in, namelen, datanamelen))) */
-    /*         return ierr; */
-    /*     if (nactual != no) return ERR; */
-    /*     for (int i = 0; i < 4; i++) */
-    /*         if (datary[i] != datary_in[i]) return ERR; */
+        /* Read the data we just wrote. */
+        mode = BAREAD;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary_in, namelen, datanamelen)))
+            return ierr;
+        if (nactual != no) return ERR;
+        for (int i = 0; i < 4; i++)
+            if (datary[i] != datary_in[i]) return ERR;
 
-    /*     /\* Close the file. *\/ */
-    /*     mode = BACLOSE; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Close the file. */
+        mode = BACLOSE;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Reopen the file to append more data. *\/ */
-    /*     mode = BAOPEN_WONLY_APPEND; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Reopen the file to append more data. */
+        mode = BAOPEN_WONLY_APPEND;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Write some data. *\/ */
-    /*     mode = BAWRITE; */
-    /*     start = 4; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
-    /*     if (nactual != no) return ERR; */
-    /*     start = 0; */
+        /* Write some data. */
+        mode = BAWRITE;
+        start = 4;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
+        if (nactual != no) return ERR;
+        start = 0;
 
-    /*     /\* Close the file. *\/ */
-    /*     mode = BACLOSE; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Close the file. */
+        mode = BACLOSE;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Reopen the file. *\/ */
-    /*     mode = BAOPEN_RONLY; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Reopen the file. */
+        mode = BAOPEN_RONLY;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /*     /\* Try to Write some data - won't work, we opened read-only. *\/ */
-    /*     /\* mode = BAWRITE; *\/ */
-    /*     /\* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, *\/ */
-    /*     /\*                    &fdes, fname, datary, namelen, datanamelen)) != 249) *\/ */
-    /*     /\*     return ierr; *\/ */
+        /* Try to Write some data - won't work, we opened read-only. */
+        /* mode = BAWRITE; */
+        /* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen)) != 249) */
+        /*     return ierr; */
 
-    /*     /\* Read the data we just wrote. It now contains "testtest". *\/ */
-    /*     mode = BAREAD; */
-    /*     size = 8; */
-    /*     no = 8; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary_in, namelen, datanamelen))) */
-    /*         return ierr; */
-    /*     if (nactual != no) return ERR; */
-    /*     for (int i = 0; i < 4; i++) */
-    /*     { */
-    /*         if (datary[i] != datary_in[i]) return ERR; */
-    /*         if (datary[i] != datary_in[i + 4]) return ERR; */
-    /*     } */
+        /* Read the data we just wrote. It now contains "testtest". */
+        mode = BAREAD;
+        size = 8;
+        no = 8;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary_in, namelen, datanamelen)))
+            return ierr;
+        if (nactual != no) return ERR;
+        for (int i = 0; i < 4; i++)
+        {
+            if (datary[i] != datary_in[i]) return ERR;
+            if (datary[i] != datary_in[i + 4]) return ERR;
+        }
 
-    /*     /\* Close the file. *\/ */
-    /*     mode = BACLOSE; */
-    /*     if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-    /*                        &fdes, fname, datary, namelen, datanamelen))) */
-    /*         return ierr; */
+        /* Close the file. */
+        mode = BACLOSE;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
 
-    /* } */
-    /* printf("ok!\n"); */
+    }
+    printf("ok!\n");
     printf("SUCCESS!\n");
     return 0;
 }
