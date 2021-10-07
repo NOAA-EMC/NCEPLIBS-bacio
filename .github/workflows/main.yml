@@ -34,7 +34,7 @@ jobs:
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
         ctest --version --output-on-error
-        gcovr --root .. -v  --html-details --exclude ../tests -o test-coverage.html
+        gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles --print-summary -o test-coverage.html
         ls -l
 
     - name: upload-test-coverage
