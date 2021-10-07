@@ -20,25 +20,28 @@ jobs:
       uses: actions/checkout@v2
       with: 
         path: bacio
-        submodules: true
 
     - name: build
       run: |
         cd bacio
         mkdir build 
         cd build
-        cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address"
+        cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address" -DCMAKE_C_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address"
         make -j2
     
     - name: test
       run: |
+        set -e
         cd $GITHUB_WORKSPACE/bacio/build
         ctest --version --output-on-error
-        gcovr -r .. -v  --html-details -o test-coverage.html
+        gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles -o test-coverage.html
+        ls -l
 
     - name: upload-test-coverage
       uses: actions/upload-artifact@v2
       with:
         name: bacio-test-coverage
-        path: bacio/build/*.html
+        path: |
+          bacio/build/*.html
+          bacio/build/*.css
         

@@ -24,16 +24,17 @@ The NCEPLIBS-bacio library is used by:
 
 ### Authors
 
-NCEP/EMC Developers
+Robert Grumbine, Mark Iredell, Jun Wang, Dexin Zhang, other NCEP/EMC
+Developers
 
-Code Manager: Hang Lei
+Code Manager: Hang Lei, Ed Hartnett
 
 ### Installing
 
 ```
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/path/to/install /path/to/NCEPLIBS-bacio
+cmake -DCMAKE_INSTALL_PREFIX=/path/to/install ..
 make -j2
 make install
 ```

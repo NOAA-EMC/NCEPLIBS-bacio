@@ -16,3 +16,9 @@ function(c_test name)
 endfunction()
 
 c_test(test_bacio_c)
+
+add_executable(test_bafrio test_bafrio.f90)
+target_link_libraries(test_bafrio bacio_4)
+add_test(test_bafrio test_bafrio)
+
+

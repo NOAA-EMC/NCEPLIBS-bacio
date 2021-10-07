@@ -18,12 +18,12 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 
-!> This subprogram is calling bafrindexl to either read an unformatted
+!> This subprogram calls bafrindexl() to either read an unformatted
 !> fortran record and return its length and start byte of the next
-!> fortran record; or given the record length, without i/o it
-!> determines the start byte of the next fortran record. The difference
-!> between bafrindex and bafrindexl is the kind type of intergers in
-!> the argument list
+!> fortran record; or given the record length, without I/O it
+!> determines the start byte of the next fortran record. The
+!> difference between bafrindex() and bafrindexl() is the kind type of
+!> integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -138,9 +138,9 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRINDEXL
 
-!> This subprogram is calling bafread to reas an unformatted fortran
+!> This subprogram calls bafread() to read an unformatted fortran
 !> record. The difference between bafrread() and bafrreadl() is the
-!> kind type of intergers in the argument list.
+!> kind type of integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -230,9 +230,9 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRREADL
 
-!> This subprogram is calling bafrwrite to write an unformatted
-!> fortran record. The difference between bafrwrite and bafrwritel is
-!> the kind type of intergers in the argument list
+!> This subprogram calls bafrwrite() to write an unformatted fortran
+!> record. The difference between bafrwrite() and bafrwritel() is the
+!> kind type of integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -240,11 +240,11 @@
 !> 1999-01-21 | Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read.
+!> @param lu integer logical unit to write to.
 !> @param ib integer(8) fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
-!> @param nb integer(8) number of bytes to read.
-!> @param a character*1 (nb) data to write
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
 !> @param ka integer number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka), or
 !> ka=-1 for i/o error.
@@ -274,18 +274,17 @@
 
 !> This subprogram writes an unformatted fortran record.
 !>
-!>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
 !> 1999-01-21 | Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read.
+!> @param lu integer logical unit to write to.
 !> @param ib integer(8) fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
-!> @param nb integer(8) number of bytes to read.
-!> @param a character*1 (nb) data to write
+!> @param nb integer(8) number of bytes to write.
+!> @param a character*1 (nb) data to write.
 !> @param ka integer number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka), or
 !> ka=-1 for i/o error.
