@@ -1,6 +1,6 @@
 /** @file
  * @brief Fortran-callable routines to read and write characther
- * (bacio) and numeric (banio) data byte addressably.
+ * data byte addressably.
  *
  *  v1.1:
  * - Put diagnostic output under control of define VERBOSE or QUIET
