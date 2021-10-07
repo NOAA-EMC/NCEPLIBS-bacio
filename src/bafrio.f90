@@ -23,7 +23,7 @@
 !> fortran record; or given the record length, without I/O it
 !> determines the start byte of the next fortran record. The
 !> difference between bafrindex() and bafrindexl() is the kind type of
-!> intergers in the argument list.
+!> integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -138,9 +138,9 @@
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       END SUBROUTINE BAFRINDEXL
 
-!> This subprogram calls bafread() to reas an unformatted fortran
+!> This subprogram calls bafread() to read an unformatted fortran
 !> record. The difference between bafrread() and bafrreadl() is the
-!> kind type of intergers in the argument list.
+!> kind type of integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -232,7 +232,7 @@
 
 !> This subprogram calls bafrwrite() to write an unformatted fortran
 !> record. The difference between bafrwrite() and bafrwritel() is the
-!> kind type of intergers in the argument list.
+!> kind type of integers in the argument list.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
