@@ -27,7 +27,7 @@ jobs:
         cd bacio
         mkdir build 
         cd build
-        cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address"
+        cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address" -DCMAKE_C_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address"
         make -j2
     
     - name: test
