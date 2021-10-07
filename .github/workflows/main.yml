@@ -28,13 +28,12 @@ jobs:
         cd build
         cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address" -DCMAKE_C_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address"
         make -j2
-        ctest --version --output-on-error
     
     - name: test
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
-        ctest --version --output-on-error
+        make test
         gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles --print-summary -o test-coverage.html
         ls -l
 
