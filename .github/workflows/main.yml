@@ -33,7 +33,7 @@ jobs:
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
-        make --rerun-on-failure test 
+        tests/test_bacio_c
         gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles --print-summary -o test-coverage.html
         ls -l
 
