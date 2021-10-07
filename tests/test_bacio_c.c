@@ -80,7 +80,8 @@ main()
             return ierr;
 
         /* Try to reopen the file with a bad name - won't work. */
-        /* This currently causes a memory leak. See: 
+        /* This currently causes a memory leak. See: */
+        /* https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62 */
         /* mode = BAOPEN_RONLY; */
         /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
         /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
@@ -226,12 +227,6 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
 
-        /* Try to Write some data - won't work, we opened read-only. */
-        /* mode = BAWRITE; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 249) */
-        /*     return ierr; */
-
         /* Read the data we just wrote. It now contains "testtest". */
         mode = BAREAD;
         size = 8;
@@ -312,7 +307,7 @@ main()
             return ierr;
 
         /* Try to reopen the file with a bad name - won't work. */
-        /* This currently causes a memory leak. See: 
+        /* This currently causes a memory leak. See: https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62
         /* mode = BAOPEN_RONLY; */
         /* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
         /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
@@ -351,7 +346,7 @@ main()
 
         /* Try to write some data - won't work, we opened read-only.
          * - This error can only be reached if we open and write in
-         * the same operation. */
+         * the same operation - which can't be done from the Fortran API ;-). */
         /* mode = BAWRITE; */
         /* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
         /*                    &fdes, fname, datary, namelen, datanamelen)) != 249) */
@@ -458,12 +453,6 @@ main()
         if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
-
-        /* Try to Write some data - won't work, we opened read-only. */
-        /* mode = BAWRITE; */
-        /* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 249) */
-        /*     return ierr; */
 
         /* Read the data we just wrote. It now contains "testtest". */
         mode = BAREAD;
