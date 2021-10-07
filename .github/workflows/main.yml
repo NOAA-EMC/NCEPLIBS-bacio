@@ -43,4 +43,5 @@ jobs:
       with:
         name: bacio-test-coverage
         path: bacio/build/*.html
+        path: bacio/build/*.css
         
