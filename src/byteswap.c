@@ -30,7 +30,6 @@
 #define BLOCK_COUNT_64 (512*1024) /**< Block Count 64. */
 #define BLOCK_COUNT_32 (1024*1024) /**< Block Count 32. */
 #define BLOCK_COUNT_16 (2048*1024) /**< Block Count 16. */
-#define LINUX /**< Define LINUX. */
 
 static int send_errors = 1; /**< if non-zero, warn about non-aligned pointers */
 static int fast_count_calls = 0; /**< Fast count calls. */
