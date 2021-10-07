@@ -1,5 +1,5 @@
 !> @file
-!> Find endianness of files.
+!> Find endianness of files on a machine.
 !> @author J. Wang @date Aug, 2012
 
 !> Obtain machine endianness.
