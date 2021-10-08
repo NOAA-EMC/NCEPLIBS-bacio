@@ -42,18 +42,18 @@ main()
         bad_namelen = strlen(bad_fname);
         datanamelen = strlen(datary);
 
-        /* This won't work - bad mode. */
-        mode = BAOPEN_WONLY | BAOPEN_RONLY;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)) != 255)
-            return ERR;
-        return ERR;
+        /* /\* This won't work - bad mode. *\/ */
+        /* mode = BAOPEN_WONLY | BAOPEN_RONLY; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen)) != 255) */
+        /*     return ERR; */
+        /* return ERR; */
 
-        /* This won't work - bad mode. */
-        mode = BAREAD | BAWRITE;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)) != 254)
-            return ERR;
+        /* /\* This won't work - bad mode. *\/ */
+        /* mode = BAREAD | BAWRITE; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen)) != 254) */
+        /*     return ERR; */
         
         /* Create the file. */
         mode = BAOPEN_WONLY;
@@ -61,12 +61,12 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
 
-        /* Write some data. */
-        mode = BAWRITE;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)))
-            return ierr;
-        if (nactual != no) return ERR;
+        /* /\* Write some data. *\/ */
+        /* mode = BAWRITE; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen))) */
+        /*     return ierr; */
+        /* if (nactual != no) return ERR; */
 
         /* Close the file. */
         mode = BACLOSE;
