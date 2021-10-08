@@ -51,38 +51,6 @@ fast_byteswap_errors(int flag)
  * @return 0 for error, 1 otherwise.
  */
 static int
-simple_swap_64(void *data,size_t len)
-{
-  size_t i;
-  uint64_t *udata;
-  if( ((size_t)data)&0x5 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=
-      ( (udata[i]>>56)&0xff ) |
-      ( (udata[i]>>40)&0xff00 ) |
-      ( (udata[i]>>24)&0xff0000 ) |
-      ( (udata[i]>>8) &0xff000000 ) |
-      ( (udata[i]<<8) &0xff00000000 ) |
-      ( (udata[i]<<24)&0xff0000000000 ) |
-      ( (udata[i]<<40)&0xff000000000000 ) |
-      ( (udata[i]<<56)&0xff00000000000000 );
-  return 1;
-}
-
-/**
- * Simple single-value loops.
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
 simple_swap_32(void *data,size_t len)
 {
   size_t i;
@@ -150,56 +118,6 @@ macro_swap_64(void *data,size_t len)
   udata=data;
   for(i=0;i<len;i++)
     udata[i]=bswap_64(udata[i]);
-  return 1;
-}
-
-/**
- * Use the GNU macros, which are specialized byteswap ASM
- * instructions.
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
-macro_swap_32(void *data,size_t len)
-{
-  size_t i;
-  uint32_t *udata;
-  if( ((size_t)data)&0x3 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=bswap_32(udata[i]);
-  return 1;
-}
-
-/**
- * Use the GNU macros, which are specialized byteswap ASM
- * instructions.
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
-macro_swap_16(void *data,size_t len)
-{
-  size_t i;
-  uint16_t *udata;
-  if( ((size_t)data)&0x1 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=bswap_16(udata[i]);
   return 1;
 }
 
