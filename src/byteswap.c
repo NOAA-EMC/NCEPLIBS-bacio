@@ -322,8 +322,6 @@ fast_byteswap(void *data,int bytes,size_t count)
 }
 
 /* Include the C library file for definition/control */
-/* Things that might be changed for new systems are there. */
-/* This source file should not (need to) be edited, merely recompiled */
 #include "clib.h"
 #include "stdio.h"
 #include "fast-byteswap.h"
