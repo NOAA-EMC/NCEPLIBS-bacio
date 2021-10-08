@@ -44,12 +44,12 @@ main()
 
         /* This won't work - bad mode. */
         mode = BAOPEN_WONLY | BAOPEN_RONLY;
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 255) */
-        /*     return ERR; */
         ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
                       &fdes, fname, datary, namelen, datanamelen);
         print("ierr = %d\n", ierr);
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)) != 255)
+            return ERR;
 
         /* /\* This won't work - bad mode. *\/ */
         /* mode = BAREAD | BAWRITE; */
