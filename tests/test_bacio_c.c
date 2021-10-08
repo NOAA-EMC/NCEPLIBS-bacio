@@ -74,73 +74,73 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
 
-        /* Try to close the file again - won't work. */
-        mode = BACLOSE;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)) != 247)
-            return ierr;
+        /* /\* Try to close the file again - won't work. *\/ */
+        /* mode = BACLOSE; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen)) != 247) */
+        /*     return ierr; */
 
-        /* Try to reopen the file with a bad name - won't work. */
-        /* This currently causes a memory leak. See: */
-        /* https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62 */
+        /* /\* Try to reopen the file with a bad name - won't work. *\/ */
+        /* /\* This currently causes a memory leak. See: *\/ */
+        /* /\* https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62 *\/ */
+        /* /\* mode = BAOPEN_RONLY; *\/ */
+        /* /\* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, *\/ */
+        /* /\*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) *\/ */
+        /* /\*     return ierr; *\/ */
+
+        /* /\* Reopen the file. *\/ */
         /* mode = BAOPEN_RONLY; */
         /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
+        /*                    &fdes, fname, datary, namelen, datanamelen))) */
         /*     return ierr; */
 
-        /* Reopen the file. */
-        mode = BAOPEN_RONLY;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)))
-            return ierr;
-
-        /* This won't work - NULL data array. */
-        mode = BAREAD;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, NULL, namelen, datanamelen)) != 102)
-            return ERR;
-        
-        /* This won't work - bad fdes. */
-        mode = BAREAD;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &bad_fdes, fname, datary_in, namelen, datanamelen)) != 250)
-            return ERR;
-
-        /* This won't work - another bad fdes. */
-        mode = BAREAD;
-        bad_fdes = -10;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &bad_fdes, fname, datary_in, namelen, datanamelen)) != 252)
-            return ERR;
-
-        /* This won't work - seek too large. */
-        mode = BAREAD;
-        if ((ierr = bacio_(&mode, &bad_start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary_in, namelen, datanamelen)) != 246)
-            return ERR;
-
-        /* Try to write some data - won't work, we opened read-only.
-         * - This error can only be reached if we open and write in
-         * the same operation. */
-        /* mode = BAWRITE; */
+        /* /\* This won't work - NULL data array. *\/ */
+        /* mode = BAREAD; */
         /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 249) */
-        /*     return ierr; */
+        /*                    &fdes, fname, NULL, namelen, datanamelen)) != 102) */
+        /*     return ERR; */
         
-        /* Read the data we just wrote. */
-        mode = BAREAD;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary_in, namelen, datanamelen)))
-            return ierr;
-        if (nactual != no) return ERR;
-        for (int i = 0; i < 4; i++)
-            if (datary[i] != datary_in[i]) return ERR;
+        /* /\* This won't work - bad fdes. *\/ */
+        /* mode = BAREAD; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &bad_fdes, fname, datary_in, namelen, datanamelen)) != 250) */
+        /*     return ERR; */
 
-        /* Close the file. */
-        mode = BACLOSE;
-        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
-                           &fdes, fname, datary, namelen, datanamelen)))
-            return ierr;
+        /* /\* This won't work - another bad fdes. *\/ */
+        /* mode = BAREAD; */
+        /* bad_fdes = -10; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &bad_fdes, fname, datary_in, namelen, datanamelen)) != 252) */
+        /*     return ERR; */
+
+        /* /\* This won't work - seek too large. *\/ */
+        /* mode = BAREAD; */
+        /* if ((ierr = bacio_(&mode, &bad_start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary_in, namelen, datanamelen)) != 246) */
+        /*     return ERR; */
+
+        /* /\* Try to write some data - won't work, we opened read-only. */
+        /*  * - This error can only be reached if we open and write in */
+        /*  * the same operation. *\/ */
+        /* /\* mode = BAWRITE; *\/ */
+        /* /\* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, *\/ */
+        /* /\*                    &fdes, fname, datary, namelen, datanamelen)) != 249) *\/ */
+        /* /\*     return ierr; *\/ */
+        
+        /* /\* Read the data we just wrote. *\/ */
+        /* mode = BAREAD; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary_in, namelen, datanamelen))) */
+        /*     return ierr; */
+        /* if (nactual != no) return ERR; */
+        /* for (int i = 0; i < 4; i++) */
+        /*     if (datary[i] != datary_in[i]) return ERR; */
+
+        /* /\* Close the file. *\/ */
+        /* mode = BACLOSE; */
+        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
+        /*                    &fdes, fname, datary, namelen, datanamelen))) */
+        /*     return ierr; */
 
     }
     printf("ok!\n");
