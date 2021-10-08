@@ -6,6 +6,7 @@ program test_bacio
   character (len = 4) :: data
   character (len = 4) :: data_in
   character (len = 8) :: data_in_2
+  character (len = 12) :: data_in_3
   integer :: lu = 1
   integer :: ka
   integer(kind=8) :: ka8, ib8, nb8, lu8
@@ -44,11 +45,11 @@ program test_bacio
   call baclose(0, iret)
   if (iret .ne. 6) stop 10
   call baclose(FDDIM + 1, iret)
-  if (iret .ne. 6) stop 10
+  if (iret .ne. 6) stop 11
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 11
+  if (iret .ne. 0) stop 12
 
   ! Try to reopen the test file - won't work, bad lu.
   call baopenr(0, filename, iret)
@@ -103,32 +104,70 @@ program test_bacio
   call baclose(lu, iret)
   if (iret .ne. 0) stop 40
 
+  ! Try to reopen the test file for writing - won't work, bad lu.
+  call baopenw(0, filename, iret)
+  if (iret .ne. 6) stop 50
+  call baopenw(FDDIM + 1, filename, iret)
+  if (iret .ne. 6) stop 51
+
   ! Reopen the test file for writing.
   call baopenw(lu, filename, iret)
-  if (iret .ne. 0) stop 50
+  if (iret .ne. 0) stop 52
 
   ! Append the data to the existing file.
   call bawritel(lu, 4_8, 4_8, ka8, data)
-  if (ka8 .ne. 4) stop 5
+  if (ka8 .ne. 4) stop 53
   
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 40
+  if (iret .ne. 0) stop 54
 
   ! Reopen the test file.
   call baopenr(lu, filename, iret)
-  if (iret .ne. 0) stop 22
+  if (iret .ne. 0) stop 55
 
   ! Reread with l function.
   ib8 = 0
   nb8 = 8
   call bareadl(lu, ib8, nb8, ka8, data_in_2)
-  if (ka8 .ne. 8) stop 33
-  if (data_in_2 .ne. 'testtest') stop 34
+  if (ka8 .ne. 8) stop 60
+  if (data_in_2 .ne. 'testtest') stop 61
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 60
+  if (iret .ne. 0) stop 62
 
+  ! Try to reopen the test file for writing with append - won't work, bad lu.
+  call baopenwa(0, filename, iret)
+  if (iret .ne. 6) stop 62
+  call baopenwa(FDDIM + 1, filename, iret)
+  if (iret .ne. 6) stop 64
+
+  ! Reopen the test file for writing with append.
+  call baopenwa(lu, filename, iret)
+  if (iret .ne. 0) stop 65
+
+  ! Append the data to the existing file.
+  call bawritel(lu, 0_8, 4_8, ka8, data)
+  if (ka8 .ne. 4) stop 70
+  
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 71
+
+  ! Reopen the test file.
+  call baopenr(lu, filename, iret)
+  if (iret .ne. 0) stop 72
+
+  ! Reread with l function.
+  ib8 = 0
+  nb8 = 12
+  call bareadl(lu, ib8, nb8, ka8, data_in_3)
+  if (ka8 .ne. 12) stop 73
+  if (data_in_3 .ne. 'testtesttest') stop 74
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 75
   print *, 'SUCCESS!'
 end program test_bacio
