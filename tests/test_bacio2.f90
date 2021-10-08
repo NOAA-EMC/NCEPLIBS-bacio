@@ -111,7 +111,11 @@ program test_bacio2
 
   ! Initialize our data.
   data = 'joey'
-  lu = 2 ! Without this, test fails because read buffer contians previous results.
+
+  ! Without changing the lu, the test fails because read buffer
+  ! contians previous results. See
+  ! https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/65.
+  lu = 2 
 
   ! Create a test file.
   call baopen(lu, filename, iret)
