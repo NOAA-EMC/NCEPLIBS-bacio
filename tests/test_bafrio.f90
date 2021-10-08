@@ -1,3 +1,7 @@
+! This is a test program for the NCEPLIBS-bacio library. It tests the
+! formatted file functionality of bacio.
+!
+! Ed Hartnett 10/6/21
 program test_bafrio
   use bacio_module
   implicit none
@@ -43,6 +47,9 @@ program test_bafrio
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 30
+
+  print *, 'Testing bafrindexl calls...'
+  
 
   print *, 'SUCCESS!'
 end program test_bafrio
