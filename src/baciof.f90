@@ -17,7 +17,8 @@
       INCLUDE 'baciof.h'
       END
 
-!> Set options for byte-addressable I/O.
+!> Set options for byte-addressable I/O. There is currently only one
+!> valid option.
 !>
 !> All options default to 0.
 !>      
