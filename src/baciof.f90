@@ -1,11 +1,10 @@
 !> @file
-!> @brief Byte-Addressable I/O Module.
+!> @brief Contains subroutines to read/write binary files.
 !> @author Mark Iredell @date 98-06-04
 
-!> @brief Byte-Addressable I/O Module.
+!> @brief Contains subroutines to read/write binary files.
 !>
-!> This is a module to share file descriptors in the byte-addessable
-!> I/O package.
+!> This is a module to do binary file I/O.
 !>
 !> @author Mark Iredell @date 98-06-04
       MODULE BACIO_MODULE
@@ -17,8 +16,8 @@
       INCLUDE 'baciof.h'
       END
 
-!> Set options for byte-addressable I/O. There is currently only one
-!> valid option.
+!> Set options for byte-addressable I/O. (There is currently only one
+!> valid option.)
 !>
 !> All options default to 0.
 !>      
@@ -29,8 +28,8 @@
 !> requested in much smaller chunks.  otherwise, each call to baread
 !> initiates a physical read.
 !>
-!> @param nopt integer option number.
-!> @param vopt integer option value.
+!> @param nopt option number.
+!> @param vopt option value.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BASETO(NOPT,VOPT)
@@ -43,10 +42,10 @@
 
 !> Open a byte-addressable file.
 !>
-!> @param lu integer unit to open
-!> @param cfn character filename to open (consisting of nonblank
+!> @param lu unit to open.
+!> @param cfn filename to open (consisting of nonblank
 !> printable characters).
-!> @param iret integer return code
+!> @param iret return code
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAOPEN(LU,CFN,IRET)
@@ -66,10 +65,10 @@
 
 !> Open a byte-addressable file for read only.
 !>
-!> @param lu integer unit to open.
-!> @param cfn character filename to open (consisting of nonblank
+!> @param lu unit to open.
+!> @param cfn filename to open (consisting of nonblank
 !> printable characters).
-!> @param iret integer return code.
+!> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAOPENR(LU,CFN,IRET)
@@ -89,10 +88,10 @@
 
 !> Open a byte-addressable file for write only.
 !>
-!> @param lu integer unit to open.
-!> @param cfn character filename to open (consisting of nonblank
+!> @param lu unit to open.
+!> @param cfn filename to open (consisting of nonblank
 !> printable characters).
-!> @param iret integer return code.
+!> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAOPENW(LU,CFN,IRET)
@@ -111,10 +110,10 @@
 
 !> Open a byte-addressable file for write only with truncation.
 !>
-!> @param lu integer unit to open.
-!> @param cfn character filename to open (consisting of nonblank
+!> @param lu unit to open.
+!> @param cfn filename to open (consisting of nonblank
 !> printable characters).
-!> @param iret integer return code.
+!> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAOPENWT(LU,CFN,IRET)
@@ -133,10 +132,10 @@
 
 !> Open a byte-addressable file for write only with append.
 !>
-!> @param lu integer unit to open.
-!> @param cfn character filename to open (consisting of nonblank
+!> @param lu unit to open.
+!> @param cfn filename to open (consisting of nonblank
 !> printable characters).
-!> @param iret integer return code.
+!> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAOPENWA(LU,CFN,IRET)
@@ -155,8 +154,8 @@
 
 !> Close a byte-addressable file.
 !>
-!> @param lu integer unit to close.
-!> @param iret integer return code.
+!> @param lu unit to close.
+!> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BACLOSE(LU,IRET)
@@ -182,12 +181,13 @@
 !> 1998-06-04 | Mark Iredell | Initial.
 !> 2009-04-20 | Jun Wang | Modifications.
 !>
-!> @param lu integer unit to read.
-!> @param ib integer number of bytes to skip. (If ib<0, then the file
+!> @param lu unit to read.
+!> @param ib number of bytes to skip. (If ib<0, then the file
 !> is accessed with no seeking)
-!> @param nb integer number of bytes to read.
-!> @param ka integer number of bytes actually read.
-!> @param a character*1 (nb) data read.
+!> @param nb number of bytes to read.
+!> @param ka number of bytes actually read.
+!> @param a Buffer where data are copied to from file. Must be of
+!> sufficient size to hold data.
 !>
 !> @note A baopen() must have already been called.
 !>
@@ -226,12 +226,13 @@
 !> 1998-06-04 | Mark Iredell | Initial.
 !> 2009-04-20 | Jun Wang | Modifications.
 !>
-!> @param lu integer unit to read.
-!> @param ib integer(8) number of bytes to skip (if ib<0, then the
+!> @param[in] lu unit to read.
+!> @param[in] ib number of bytes to skip (if ib<0, then the
 !> file is accessed with no seeking).
-!> @param nb integer(8) number of bytes to read.
-!> @param ka integer(8) number of bytes actually read.
-!> @param a character*1 (nb) data read.
+!> @param[in] nb number of bytes to read.
+!> @param ka[out] number of bytes actually read.
+!> @param a[out] Buffer where data are copied to from file. Must be of
+!> sufficient size to hold data.
 !>
 !> @note A baopen() must have already been called.
 !>
@@ -331,12 +332,12 @@
 !> This program is calling bawritel() to write a given number of bytes to
 !> an unblocked file, skipping a given number of bytes.
 !>      
-!> @param lu integer unit to write.
-!> @param ib integer number of bytes to skip.
-!>                  (if ib<0, then the file is accessed with no seeking)
-!> @param nb integer number of bytes to write.
-!> @param a character*1 (nb) data to write.
-!> @param ka integer number of bytes actually written.
+!> @param[in] lu unit to write.
+!> @param[in] ib number of bytes to skip. (If ib<0, then the file is
+!> accessed with no seeking.)
+!> @param[in] nb number of bytes to write.
+!> @param[out] ka integer number of bytes actually written.
+!> @param[in] a data to write.
 !>
 !> @note A baopen() must have already been called.
 !>
@@ -361,16 +362,15 @@
 
       END SUBROUTINE BAWRITE
 
-!> This subrouytine is using updated baciol() I/O package to write a
-!> given number of bytes to an unblocked file, skipping a given number
-!> of bytes.
+!> This subrouytine writes a given number of bytes to an unblocked
+!> file, skipping a given number of bytes.
 !>
-!> @param lu integer unit to write.
-!> @param ib integer(8) number of bytes to skip.
-!>                  (if ib<0, then the file is accessed with no seeking)
-!> @param nb integer(8) number of bytes to write.
-!> @param a character*1 (nb) data to write.
-!> @param ka integer(8) number of bytes actually written.
+!> @param[in] lu unit to write.
+!> @param]in] ib number of bytes to skip. (If ib < 0, then the
+!> file is accessed with no seeking).
+!> @param[in] nb number of bytes to write.
+!> @param[out] ka number of bytes actually written.
+!> @param[in] a (nb) data to write.
 !>
       SUBROUTINE BAWRITEL(LU,IB,NB,KA,A)
       USE BACIO_MODULE
@@ -418,9 +418,9 @@
 !> 1998-06-04 | Mark Iredell | bacio version
 !> 2009-04-20 | Jun Wang | wrytel version
 !>
-!> @param lu integer unit to which to write.
-!> @param nb integer(4) number of bytes to write.
-!> @param a character*1 (nb) data to write.
+!> @param[in] lu unit to which to write.
+!> @param[in] nb number of bytes to write.
+!> @param[in] a data to write.
 !>
 !> @note A baopen() must have already been called.
       SUBROUTINE WRYTE(LU,NB,A)
@@ -452,9 +452,9 @@
 !> 1998-06-04 | Mark Iredell | bacio version
 !> 2009-04-20 | Jun Wang | wrytel version
 !>
-!> @param lu integer unit to which to write.
-!> @param nb integer(8) number of bytes to write.
-!> @param a character*1 (nb) data to write.
+!> @param[in] lu unit to which to write.
+!> @param[in] nb number of bytes to write.
+!> @param[in] a data to write.
 !>
 !> @note A baopen() must have already been called.
       SUBROUTINE WRYTEL(LU,NB,A)
