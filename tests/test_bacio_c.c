@@ -46,7 +46,10 @@ main()
         mode = BAOPEN_WONLY | BAOPEN_RONLY;
         if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
                            &fdes, fname, datary, namelen, datanamelen)) != 255)
-            return ierr;
+        {
+            printf("ierr = %d\n", ierr);
+            return ERR;
+        }
 
         /* This won't work - bad mode. */
         mode = BAREAD | BAWRITE;
@@ -59,6 +62,12 @@ main()
         if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
+
+        /* Try to write some data - won't work, null data pointer. */
+        mode = BAWRITE;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, NULL, namelen, datanamelen)) != 102)
+            return ERR;
 
         /* Write some data. */
         mode = BAWRITE;
