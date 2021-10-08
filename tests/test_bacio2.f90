@@ -11,6 +11,9 @@ program test_bacio2
   character (len = 4) :: data_in
   character (len = 8) :: data_in_2
   character (len = 12) :: data_in_3
+  integer, parameter :: lots = 5000
+  character (len = lots) :: lots_of_data
+  integer :: i
   integer :: lu = 1
   integer :: ka
   integer(kind=8) :: ka8, ib8, nb8, lu8
@@ -141,6 +144,41 @@ program test_bacio2
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 306
+
+  print *, 'Testing buffered with lots of data - error messages are expected...'
+
+  lu = 3
+
+  ! Create a test file for lots of data.
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 300
+
+  ! Write lots of data.
+  call bawritel(lu, 0_8, 5000_8, ka8, lots_of_data)
+  if (ka8 .ne. 5000) stop 301
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 302
+
+  ! Reopen the test file.
+  call baopenr(lu, filename, iret)
+  if (iret .ne. 0) stop 200
+
+  ! Turn on buffered reads.
+  call baseto(1, 1)
+
+  ! Read some data.
+  call baread(lu, 0, 4, ka, data_in)
+  if (ka .ne. 4) stop 201
+
+  ! Read some more data.
+  call baread(lu, 4092, 4, ka, data_in)
+  if (ka .ne. 4) stop 201
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 203
 
   print *, 'SUCCESS!'
 end program test_bacio2
