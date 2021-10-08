@@ -27,10 +27,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BLOCK_COUNT_64 (512*1024) /**< Block Count 64. */
-#define BLOCK_COUNT_32 (1024*1024) /**< Block Count 32. */
-#define BLOCK_COUNT_16 (2048*1024) /**< Block Count 16. */
-
 static int send_errors = 1; /**< if non-zero, warn about non-aligned pointers */
 static int fast_count_calls = 0; /**< Fast count calls. */
 
@@ -204,99 +200,6 @@ macro_swap_16(void *data,size_t len)
   udata=data;
   for(i=0;i<len;i++)
     udata[i]=bswap_16(udata[i]);
-  return 1;
-}
-
-/**
- * Use the GNU macros and do 1MB blocks at a time. Control the block
- * size through the BLOCK_COUNT_* macros (top of file).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
-block_macro_swap_32(void *data,size_t len)
-{
-  size_t i,stop,j;
-  uint32_t *udata;
-  if( ((size_t)data)&0x3 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_32*BLOCK_COUNT_32;
-  for(i=0;i<stop;i+=BLOCK_COUNT_32)
-    for(j=0;j<BLOCK_COUNT_32;j++)
-      udata[i+j]=bswap_32(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_32(udata[i]);
-  return 1;
-}
-
-/**
- * Use the GNU macros and do 1MB blocks at a time. Control the block
- * size through the BLOCK_COUNT_* macros (top of file).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
-block_macro_swap_16(void *data,size_t len)
-{
-  size_t i,stop,j;
-  uint16_t *udata;
-  if( ((size_t)data)&0x1 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_16*BLOCK_COUNT_16;
-  for(i=0;i<stop;i+=BLOCK_COUNT_16)
-    for(j=0;j<BLOCK_COUNT_16;j++)
-      udata[i+j]=bswap_16(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_16(udata[i]);
-  return 1;
-}
-
-/**
- * Use the GNU macros and do 1MB blocks at a time. Control the block
- * size through the BLOCK_COUNT_* macros (top of file).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- */
-static int
-block_macro_swap_64(void *data,size_t len)
-{
-  uint64_t *udata;
-  size_t i,stop,j;
-  if( ((size_t)data)&0x5 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_64*BLOCK_COUNT_64;
-  for(i=0;i<stop;i+=BLOCK_COUNT_64)
-    for(j=0;j<BLOCK_COUNT_64;j++)
-      udata[i+j]=bswap_64(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_64(udata[i]);
   return 1;
 }
 
