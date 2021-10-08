@@ -6,6 +6,9 @@
 add_executable(test_bacio test_bacio.f90)
 target_link_libraries(test_bacio bacio_4)
 add_test(test_bacio test_bacio)
+add_executable(test_bacio2 test_bacio2.f90)
+target_link_libraries(test_bacio2 bacio_4)
+add_test(test_bacio2 test_bacio2)
 
 function(c_test name)
   add_executable(${name} ${name}.c)

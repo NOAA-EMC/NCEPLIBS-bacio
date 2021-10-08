@@ -1,7 +1,7 @@
 ! This is a test for the Fortran API of the NCEPLIBS-bacio library.
 !
-! Ed Hartnett 10/5/21
-program test_bacio
+! Ed Hartnett 10/8/21
+program test_bacio2
   use bacio_module
   implicit none
 
@@ -206,4 +206,4 @@ program test_bacio
   if (iret .ne. 0) stop 71
 
   print *, 'SUCCESS!'
-end program test_bacio
+end program test_bacio2

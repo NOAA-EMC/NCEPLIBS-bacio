@@ -189,7 +189,7 @@
 !> @param ka integer number of bytes actually read.
 !> @param a character*1 (nb) data read.
 !>
-!> @note A baopen must have already been called.
+!> @note A baopen() must have already been called.
 !>
 !> @author Mark Iredell @date 98-06-04      
       SUBROUTINE BAREAD(LU,IB,NB,KA,A)
@@ -233,7 +233,7 @@
 !> @param ka integer(8) number of bytes actually read.
 !> @param a character*1 (nb) data read.
 !>
-!> @note A baopen must have already been called.
+!> @note A baopen() must have already been called.
 !>
 !> @author Mark Iredell @date 98-06-04
       SUBROUTINE BAREADL(LU,IB,NB,KA,A)
@@ -338,7 +338,7 @@
 !> @param a character*1 (nb) data to write.
 !> @param ka integer number of bytes actually written.
 !>
-!> @note A baopen must have already been called.
+!> @note A baopen() must have already been called.
 !>
       SUBROUTINE BAWRITE(LU,IB,NB,KA,A)
         IMPLICIT NONE
@@ -422,7 +422,7 @@
 !> @param nb integer(4) number of bytes to write.
 !> @param a character*1 (nb) data to write.
 !>
-!> @note A baopen must have already been called.
+!> @note A baopen() must have already been called.
       SUBROUTINE WRYTE(LU,NB,A)
       USE BACIO_MODULE
 !
@@ -456,7 +456,7 @@
 !> @param nb integer(8) number of bytes to write.
 !> @param a character*1 (nb) data to write.
 !>
-!> @note A baopen must have already been called.
+!> @note A baopen() must have already been called.
       SUBROUTINE WRYTEL(LU,NB,A)
       USE BACIO_MODULE
 !
