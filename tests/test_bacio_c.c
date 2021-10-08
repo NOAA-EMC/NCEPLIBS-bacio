@@ -296,6 +296,12 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
 
+        /* Try to write some data - won't work, null data pointer. */
+        mode = BAWRITE;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                            &fdes, fname, NULL, namelen, datanamelen)) != 102)
+            return ERR;
+
         /* Write some data. */
         mode = BAWRITE;
         if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
