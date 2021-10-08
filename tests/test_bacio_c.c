@@ -42,12 +42,12 @@ main()
         bad_namelen = strlen(bad_fname);
         datanamelen = strlen(datary);
 
-        /* /\* This won't work - bad mode. *\/ */
-        /* mode = BAOPEN_WONLY | BAOPEN_RONLY; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 255) */
-        /*     return ERR; */
-        /* return ERR; */
+        /* This won't work - bad mode. */
+        mode = BAOPEN_WONLY | BAOPEN_RONLY;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)) != 255)
+            return ERR;
+        return ERR;
 
         /* /\* This won't work - bad mode. *\/ */
         /* mode = BAREAD | BAWRITE; */
