@@ -19,11 +19,11 @@ program test_bacio2
 
   print *, 'Testing bacio.'
   
-  print *, 'Testing simple wryte() calls - error messages are expected...'
-
   ! Delete the test file, if it remains from previous runs.
   open(unit = 1234, iostat = stat, file = filename, status='old')
   if (stat == 0) close(1234, status='delete')  
+
+  print *, 'Testing simple wryte() calls - error messages are expected...'
 
   ! Initialize our data.
   data = 'fred'
@@ -103,6 +103,36 @@ program test_bacio2
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 203
+
+  print *, 'Testing wryte() calls with negative seek - error messages are expected...'
+
+  ! Initialize our data.
+  data = 'joey'
+
+  ! Create a test file.
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 300
+
+  ! Write some data.
+  call bawritel(lu, -1_8, 4_8, ka, data)
+  if (ka .ne. 4) stop 301
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 302
+
+  ! Reopen the test file.
+  call baopenr(lu, filename, iret)
+  if (iret .ne. 0) stop 303
+
+  ! Read some data.
+  call baread(lu, 0, 4, ka, data_in)
+  if (ka .ne. 4) stop 304
+  if (data_in .ne. data) stop 305
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 306
 
   print *, 'SUCCESS!'
 end program test_bacio2

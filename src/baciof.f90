@@ -230,8 +230,8 @@
 !> @param[in] ib number of bytes to skip (if ib<0, then the
 !> file is accessed with no seeking).
 !> @param[in] nb number of bytes to read.
-!> @param ka[out] number of bytes actually read.
-!> @param a[out] Buffer where data are copied to from file. Must be of
+!> @param[out] ka number of bytes actually read.
+!> @param[out] a Buffer where data are copied to from file. Must be of
 !> sufficient size to hold data.
 !>
 !> @note A baopen() must have already been called.
@@ -366,11 +366,11 @@
 !> file, skipping a given number of bytes.
 !>
 !> @param[in] lu unit to write.
-!> @param]in] ib number of bytes to skip. (If ib < 0, then the
+!> @param[in] ib number of bytes to skip. (If ib < 0, then the
 !> file is accessed with no seeking).
 !> @param[in] nb number of bytes to write.
 !> @param[out] ka number of bytes actually written.
-!> @param[in] a (nb) data to write.
+!> @param[in] a data to write.
 !>
       SUBROUTINE BAWRITEL(LU,IB,NB,KA,A)
       USE BACIO_MODULE
