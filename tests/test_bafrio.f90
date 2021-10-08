@@ -22,10 +22,16 @@ program test_bafrio
   call baopen(lu, filename, iret)
   if (iret .ne. 0) stop 2
 
-  ! Write some data.
   data = 'test'
+
+  ! Try to write some data - will fail.
+  call bafrwrite(lu, -2, 4, ka, data)
+  if (ka .ne. 0) stop 3
+  call bafrwrite(lu, 0, -4, ka, data)
+  if (ka .ne. 0) stop 3
+
+  ! Write some data.
   call bafrwrite(lu, 0, 4, ka, data)
-  if (iret .ne. 0) stop 2
   if (ka .ne. 12) stop 3
 
   ! Close the test file.
@@ -38,7 +44,6 @@ program test_bafrio
 
   ! Read some data.
   call bafrread(lu, 0, 4, ka, data_in)
-  if (iret .ne. 0) stop 21
   if (ka .ne. 12) stop 22
   if (data_in .ne. data) stop 23
 
