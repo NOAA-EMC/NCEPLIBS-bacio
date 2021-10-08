@@ -7,11 +7,11 @@ program test_bafrio
   implicit none
 
   character(len=15) :: filename = 'test_bafrio.bin'
-  character :: data(4)
-  character :: data_in(4)
+  character (len = 4) :: data
+  character (len = 4) :: data_in
   integer :: lu = 1
   integer :: ka
-  integer :: i
+  integer (kind = 8) :: ib8, lx8, ix8
   integer :: iret
 
   print *, 'Testing bafrio.'
@@ -40,16 +40,23 @@ program test_bafrio
   call bafrread(lu, 0, 4, ka, data_in)
   if (iret .ne. 0) stop 21
   if (ka .ne. 12) stop 22
-  do i = 1, 4
-     if (data_in(i) .ne. data(i)) stop 23
-  enddo
+  if (data_in .ne. data) stop 23
 
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 30
 
-  print *, 'Testing bafrindexl calls...'
+  print *, 'Testing bafrindex calls...'
+
+  ! Open the test file.
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 100
+
+  call bafrindex(lu, ib8, lx8, ix8)
   
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 120
 
   print *, 'SUCCESS!'
 end program test_bafrio

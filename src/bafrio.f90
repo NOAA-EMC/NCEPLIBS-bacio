@@ -75,7 +75,7 @@
 !> @param[inout] lx record length in bytes if lu<=0. If lu>0, or
 !> lx=-1 for i/o error (probable end of file), or lx=-2 for i/o error
 !> (invalid fortran record).
-!> @param ix[out] start byte for the next fortran record (computed
+!> @param[out] ix start byte for the next fortran record (computed
 !> only if lx>=0).
 !>
 !> @author Mark Iredell @date 1999-01-21
@@ -246,7 +246,7 @@
 !> @param[out] ka number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka), or
 !> ka=-1 for i/o error.
-!> @param a[in]  data to write.
+!> @param[in] a data to write.
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
