@@ -40,20 +40,20 @@ program test_bacio2
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 12
+  if (iret .ne. 0) stop 10
 
   ! Reopen the test file.
   call baopenr(lu, filename, iret)
-  if (iret .ne. 0) stop 22
+  if (iret .ne. 0) stop 11
 
   ! Read some data.
   call baread(lu, 0, 4, ka, data_in)
-  if (ka .ne. 4) stop 31
-  if (data_in .ne. data) stop 32
+  if (ka .ne. 4) stop 12
+  if (data_in .ne. data) stop 13
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 40
+  if (iret .ne. 0) stop 14
 
   print *, 'Testing simple wrytel() calls - error messages are expected...'
 
@@ -61,7 +61,7 @@ program test_bacio2
   
   ! Create a test file.
   call baopenwt(lu, filename, iret)
-  if (iret .ne. 0) stop 3
+  if (iret .ne. 0) stop 100
 
   ! Try to write some data - won't work, does nothing due to negative size.
   call wryte(lu, -4, data)
@@ -71,20 +71,38 @@ program test_bacio2
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 12
+  if (iret .ne. 0) stop 101
 
   ! Reopen the test file.
   call baopenr(lu, filename, iret)
-  if (iret .ne. 0) stop 22
+  if (iret .ne. 0) stop 102
 
   ! Read some data.
   call baread(lu, 0, 4, ka, data_in)
-  if (ka .ne. 4) stop 31
-  if (data_in .ne. data) stop 32
+  if (ka .ne. 4) stop 103
+  if (data_in .ne. data) stop 104
 
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 40
+  if (iret .ne. 0) stop 105
+
+  print *, 'Testing buffered reads - error messages are expected...'
+
+  ! Reopen the test file.
+  call baopenr(lu, filename, iret)
+  if (iret .ne. 0) stop 200
+
+  ! Turn on buffered reads.
+  call baseto(1, 1)
+
+  ! Read some data.
+  call baread(lu, 0, 4, ka, data_in)
+  if (ka .ne. 4) stop 201
+  if (data_in .ne. data) stop 202
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 203
 
   print *, 'SUCCESS!'
 end program test_bacio2
