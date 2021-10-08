@@ -48,11 +48,11 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)) != 255)
             return ierr;
 
-        /* /\* This won't work - bad mode. *\/ */
-        /* mode = BAREAD | BAWRITE; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen)) != 254) */
-        /*     return ERR; */
+        /* This won't work - bad mode. */
+        mode = BAREAD | BAWRITE;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)) != 254)
+            return ERR;
         
         /* Create the file. */
         mode = BAOPEN_WONLY;
