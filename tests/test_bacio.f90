@@ -4,13 +4,13 @@ program test_bacio
 
   character(len=14) :: filename = 'test_bacio.bin'
   character (len = 4) :: data
+  character (len = 4) :: new_data
   character (len = 4) :: data_in
   character (len = 8) :: data_in_2
   character (len = 12) :: data_in_3
   integer :: lu = 1
   integer :: ka
   integer(kind=8) :: ka8, ib8, nb8, lu8
-  integer :: i
   integer :: stat
   integer :: iret
 
@@ -68,18 +68,14 @@ program test_bacio
   ! Read some data.
   call baread(lu, 0, 4, ka, data_in)
   if (ka .ne. 4) stop 31
-  do i = 1, 4
-     if (data_in .ne. data) stop 32
-  enddo
+  if (data_in .ne. data) stop 32
 
   ! Reread with l function.
   ib8 = 0
   nb8 = 4
   call bareadl(lu, ib8, nb8, ka8, data_in)
   if (ka8 .ne. 4) stop 33
-  do i = 1, 4
-     if (data_in .ne. data) stop 34
-  enddo
+  if (data_in .ne. data) stop 34
 
   ! Try to reread with l function - won't work, negative bytes to
   ! skip, if blocked reading option is on.
@@ -169,5 +165,38 @@ program test_bacio
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 75
+
+  ! Try to reopen the test file for writing with truncate - won't work, bad lu.
+  call baopenwt(0, filename, iret)
+  if (iret .ne. 6) stop 62
+  call baopenwt(FDDIM + 1, filename, iret)
+  if (iret .ne. 6) stop 64
+
+  ! Reopen the test file for writing with truncate.
+  call baopenwt(lu, filename, iret)
+  if (iret .ne. 0) stop 65
+
+  ! Append the data to the existing file.
+  new_data = 'code'
+  call bawritel(lu, 0_8, 4_8, ka8, new_data)
+  if (ka8 .ne. 4) stop 70
+  
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 71
+
+  ! Reopen the test file.
+  call baopenr(lu, filename, iret)
+  if (iret .ne. 0) stop 22
+
+  ! Read some data.
+  call baread(lu, 0, 4, ka, data_in)
+  if (ka .ne. 4) stop 31
+  if (data_in .ne. new_data) stop 32
+
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 71
+
   print *, 'SUCCESS!'
 end program test_bacio
