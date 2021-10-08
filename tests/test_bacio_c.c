@@ -61,12 +61,12 @@ main()
                            &fdes, fname, datary, namelen, datanamelen)))
             return ierr;
 
-        /* /\* Write some data. *\/ */
-        /* mode = BAWRITE; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, fname, datary, namelen, datanamelen))) */
-        /*     return ierr; */
-        /* if (nactual != no) return ERR; */
+        /* Write some data. */
+        mode = BAWRITE;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, fname, datary, namelen, datanamelen)))
+            return ierr;
+        if (nactual != no) return ERR;
 
         /* Close the file. */
         mode = BACLOSE;
