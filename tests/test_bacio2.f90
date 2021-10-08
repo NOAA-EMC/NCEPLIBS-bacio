@@ -5,7 +5,7 @@ program test_bacio2
   use bacio_module
   implicit none
 
-  character(len=14) :: filename = 'test_bacio2.bin'
+  character(len=15) :: filename = 'test_bacio2.bin'
   character (len = 4) :: data
   character (len = 4) :: new_data
   character (len = 4) :: data_in
@@ -106,16 +106,20 @@ program test_bacio2
 
   print *, 'Testing wryte() calls with negative seek - error messages are expected...'
 
+  ! Turn off buffered reads.
+  call baseto(1, 1)
+
   ! Initialize our data.
   data = 'joey'
+  lu = 2 ! Without this, test fails because read buffer contians previous results.
 
   ! Create a test file.
   call baopen(lu, filename, iret)
   if (iret .ne. 0) stop 300
 
   ! Write some data.
-  call bawritel(lu, -1_8, 4_8, ka, data)
-  if (ka .ne. 4) stop 301
+  call bawritel(lu, -1_8, 4_8, ka8, data)
+  if (ka8 .ne. 4) stop 301
 
   ! Close the test file.
   call baclose(lu, iret)
