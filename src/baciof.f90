@@ -251,8 +251,8 @@
       CHARACTER Y(NY,MY)
       DATA LUX/0/
       SAVE JY,NS,NN,Y,LUX
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      IF(FD(LU).LE.0) THEN
+
+      IF(LU.LT.001.OR.LU.GT.FDDIM) THEN      
         KA=0
         RETURN
       ENDIF
@@ -383,8 +383,8 @@
 !
       INTEGER(kind=8) :: JB,LONG_0
       INTEGER :: IRET
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      IF(FD(LU).LE.0) THEN
+
+      IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
         KA=0
         RETURN
       ENDIF
@@ -465,8 +465,8 @@
       CHARACTER,INTENT(in)       :: A(NB)
       INTEGER(kind=8) :: LONG_0,JB,KA
       INTEGER :: IRET
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      IF(FD(LU).LE.0) THEN
+
+      IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
         RETURN
       ENDIF
       IF(NB.LE.0) THEN
