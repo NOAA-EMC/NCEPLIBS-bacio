@@ -219,6 +219,11 @@
 !> byte-addressable option 1 has been set to 1 by baseto. This
 !> buffered reading is incompatible with no-seek reading.
 !>
+!> @note The data in the I/O buffer is not cleared when the file is
+!> closed and reopened, or when any other operation on the file is
+!> done. So it may contian out-of-date data, if the data file has been
+!> changed after the buffers were filled. Use with caution.
+!>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|--------- 
