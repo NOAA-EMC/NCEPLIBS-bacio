@@ -252,7 +252,7 @@
       DATA LUX/0/
       SAVE JY,NS,NN,Y,LUX
 
-      IF(LU.LT.001.OR.LU.GT.FDDIM) THEN      
+      IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
         KA=0
         RETURN
       ENDIF
