@@ -12,7 +12,7 @@
  * To silence the error message, call fast_byteswap_errors(0).
  *
  * @author Dexin Zhang, Jun Wang
-*/
+ */
 
 // no byteswap.h on Apple
 #ifdef APPLE
@@ -43,7 +43,7 @@ static int fast_count_calls = 0; /**< Fast count calls. */
 void
 fast_byteswap_errors(int flag)
 {
-  send_errors=flag;
+    send_errors=flag;
 }
 
 /**
@@ -57,25 +57,25 @@ fast_byteswap_errors(int flag)
 static int
 simple_swap_64(void *data,size_t len)
 {
-  size_t i;
-  uint64_t *udata;
-  if( ((size_t)data)&0x5 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=
-      ( (udata[i]>>56)&0xff ) |
-      ( (udata[i]>>40)&0xff00 ) |
-      ( (udata[i]>>24)&0xff0000 ) |
-      ( (udata[i]>>8) &0xff000000 ) |
-      ( (udata[i]<<8) &0xff00000000 ) |
-      ( (udata[i]<<24)&0xff0000000000 ) |
-      ( (udata[i]<<40)&0xff000000000000 ) |
-      ( (udata[i]<<56)&0xff00000000000000 );
-  return 1;
+    size_t i;
+    uint64_t *udata;
+    if( ((size_t)data)&0x5 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=
+            ( (udata[i]>>56)&0xff ) |
+            ( (udata[i]>>40)&0xff00 ) |
+            ( (udata[i]>>24)&0xff0000 ) |
+            ( (udata[i]>>8) &0xff000000 ) |
+            ( (udata[i]<<8) &0xff00000000 ) |
+            ( (udata[i]<<24)&0xff0000000000 ) |
+            ( (udata[i]<<40)&0xff000000000000 ) |
+            ( (udata[i]<<56)&0xff00000000000000 );
+    return 1;
 }
 
 /**
@@ -89,21 +89,21 @@ simple_swap_64(void *data,size_t len)
 static int
 simple_swap_32(void *data,size_t len)
 {
-  size_t i;
-  uint32_t *udata;
-  if( ((size_t)data)&0x3 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=
-      ( (udata[i]>>24)&0xff ) |
-      ( (udata[i]>>8)&0xff00 ) |
-      ( (udata[i]<<8)&0xff0000 ) |
-      ( (udata[i]<<24)&0xff000000 );
-  return 1;
+    size_t i;
+    uint32_t *udata;
+    if( ((size_t)data)&0x3 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=
+            ( (udata[i]>>24)&0xff ) |
+            ( (udata[i]>>8)&0xff00 ) |
+            ( (udata[i]<<8)&0xff0000 ) |
+            ( (udata[i]<<24)&0xff000000 );
+    return 1;
 }
 
 /**
@@ -117,19 +117,19 @@ simple_swap_32(void *data,size_t len)
 static int
 simple_swap_16(void *data,size_t len)
 {
-  size_t i;
-  uint16_t *udata;
-  if( ((size_t)data)&0x1 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=
-      ( (udata[i]>>8)&0xff ) |
-      ( (udata[i]<<8)&0xff00 );
-  return 1;
+    size_t i;
+    uint16_t *udata;
+    if( ((size_t)data)&0x1 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=
+            ( (udata[i]>>8)&0xff ) |
+            ( (udata[i]<<8)&0xff00 );
+    return 1;
 }
 
 /**
@@ -144,17 +144,17 @@ simple_swap_16(void *data,size_t len)
 static int
 macro_swap_64(void *data,size_t len)
 {
-  size_t i;
-  uint64_t *udata;
-  if( ((size_t)data)&0x5 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=bswap_64(udata[i]);
-  return 1;
+    size_t i;
+    uint64_t *udata;
+    if( ((size_t)data)&0x5 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=bswap_64(udata[i]);
+    return 1;
 }
 
 /**
@@ -169,17 +169,17 @@ macro_swap_64(void *data,size_t len)
 static int
 macro_swap_32(void *data,size_t len)
 {
-  size_t i;
-  uint32_t *udata;
-  if( ((size_t)data)&0x3 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=bswap_32(udata[i]);
-  return 1;
+    size_t i;
+    uint32_t *udata;
+    if( ((size_t)data)&0x3 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=bswap_32(udata[i]);
+    return 1;
 }
 
 /**
@@ -194,17 +194,17 @@ macro_swap_32(void *data,size_t len)
 static int
 macro_swap_16(void *data,size_t len)
 {
-  size_t i;
-  uint16_t *udata;
-  if( ((size_t)data)&0x1 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  udata=data;
-  for(i=0;i<len;i++)
-    udata[i]=bswap_16(udata[i]);
-  return 1;
+    size_t i;
+    uint16_t *udata;
+    if( ((size_t)data)&0x1 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    udata=data;
+    for(i=0;i<len;i++)
+        udata[i]=bswap_16(udata[i]);
+    return 1;
 }
 
 /**
@@ -219,23 +219,23 @@ macro_swap_16(void *data,size_t len)
 static int
 block_macro_swap_32(void *data,size_t len)
 {
-  size_t i,stop,j;
-  uint32_t *udata;
-  if( ((size_t)data)&0x3 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_32*BLOCK_COUNT_32;
-  for(i=0;i<stop;i+=BLOCK_COUNT_32)
-    for(j=0;j<BLOCK_COUNT_32;j++)
-      udata[i+j]=bswap_32(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_32(udata[i]);
-  return 1;
+    size_t i,stop,j;
+    uint32_t *udata;
+    if( ((size_t)data)&0x3 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    /* Swap full blocks first: */
+    udata=data;
+    stop=len/BLOCK_COUNT_32*BLOCK_COUNT_32;
+    for(i=0;i<stop;i+=BLOCK_COUNT_32)
+        for(j=0;j<BLOCK_COUNT_32;j++)
+            udata[i+j]=bswap_32(udata[i+j]);
+    /* Swap remainder */
+    for(i=stop;i<len;i++)
+        udata[i]=bswap_32(udata[i]);
+    return 1;
 }
 
 /**
@@ -250,23 +250,23 @@ block_macro_swap_32(void *data,size_t len)
 static int
 block_macro_swap_16(void *data,size_t len)
 {
-  size_t i,stop,j;
-  uint16_t *udata;
-  if( ((size_t)data)&0x1 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_16*BLOCK_COUNT_16;
-  for(i=0;i<stop;i+=BLOCK_COUNT_16)
-    for(j=0;j<BLOCK_COUNT_16;j++)
-      udata[i+j]=bswap_16(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_16(udata[i]);
-  return 1;
+    size_t i,stop,j;
+    uint16_t *udata;
+    if( ((size_t)data)&0x1 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    /* Swap full blocks first: */
+    udata=data;
+    stop=len/BLOCK_COUNT_16*BLOCK_COUNT_16;
+    for(i=0;i<stop;i+=BLOCK_COUNT_16)
+        for(j=0;j<BLOCK_COUNT_16;j++)
+            udata[i+j]=bswap_16(udata[i+j]);
+    /* Swap remainder */
+    for(i=stop;i<len;i++)
+        udata[i]=bswap_16(udata[i]);
+    return 1;
 }
 
 /**
@@ -281,23 +281,23 @@ block_macro_swap_16(void *data,size_t len)
 static int
 block_macro_swap_64(void *data,size_t len)
 {
-  uint64_t *udata;
-  size_t i,stop,j;
-  if( ((size_t)data)&0x5 != 0 ) {
-    if (send_errors)
-      fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-    return 0;
-  }
-  /* Swap full blocks first: */
-  udata=data;
-  stop=len/BLOCK_COUNT_64*BLOCK_COUNT_64;
-  for(i=0;i<stop;i+=BLOCK_COUNT_64)
-    for(j=0;j<BLOCK_COUNT_64;j++)
-      udata[i+j]=bswap_64(udata[i+j]);
-  /* Swap remainder */
-  for(i=stop;i<len;i++)
-    udata[i]=bswap_64(udata[i]);
-  return 1;
+    uint64_t *udata;
+    size_t i,stop,j;
+    if( ((size_t)data)&0x5 != 0 ) {
+        if (send_errors)
+            fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+        return 0;
+    }
+    /* Swap full blocks first: */
+    udata=data;
+    stop=len/BLOCK_COUNT_64*BLOCK_COUNT_64;
+    for(i=0;i<stop;i+=BLOCK_COUNT_64)
+        for(j=0;j<BLOCK_COUNT_64;j++)
+            udata[i+j]=bswap_64(udata[i+j]);
+    /* Swap remainder */
+    for(i=stop;i<len;i++)
+        udata[i]=bswap_64(udata[i]);
+    return 1;
 }
 
 /**
@@ -312,13 +312,13 @@ block_macro_swap_64(void *data,size_t len)
 int
 fast_byteswap(void *data,int bytes,size_t count)
 {
-  switch(bytes) {
-  case 1: return 1;
-  case 2: return simple_swap_16(data,count);
-  case 4: return simple_swap_32(data,count);
-  case 8: return macro_swap_64(data,count);
-  default: return 0;
-  }
+    switch(bytes) {
+    case 1: return 1;
+    case 2: return simple_swap_16(data,count);
+    case 4: return simple_swap_32(data,count);
+    case 8: return macro_swap_64(data,count);
+    default: return 0;
+    }
 }
 
 /* Include the C library file for definition/control */

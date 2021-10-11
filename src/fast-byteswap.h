@@ -1,18 +1,18 @@
-/** @file 
+/** @file
  * @brief Header file for byteswap functions.
  */
 
 #ifndef __FAST_BYTESWAP_H__
 #define __FAST_BYTESWAP_H__
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdlib.h>
-
-void fast_byteswap_errors(int flag);
-int fast_byteswap(void *data,int bytes,size_t count);
+    void fast_byteswap_errors(int flag);
+    int fast_byteswap(void *data,int bytes,size_t count);
 
 #ifdef __cplusplus
 }
