@@ -17,11 +17,9 @@ endif()
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
   set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
-  set(fortran_8_flags "-i8 -r8")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^(GNU)$")
   set(CMAKE_Fortran_FLAGS "-g -fbacktrace -funroll-loops ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-Wall")
-  set(fortran_8_flags "-fdefault-integer-8 -fdefault-real-8")
 endif()
 
 if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
@@ -31,28 +29,24 @@ endif()
 set(fortran_src baciof.f90 bafrio.f90 chk_endianc.f90)
 set(c_src bacio.c byteswap.c)
 
-# One target for real32 and one target for real64
-set(kinds "4" "8")
-foreach(kind ${kinds})
-  set(lib_name ${PROJECT_NAME}_${kind})
-  set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_${kind})
+set(lib_name ${PROJECT_NAME}_4)
+set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_4)
 
-  add_library(${lib_name}_f OBJECT ${fortran_src})
-  set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
-    "${fortran_${kind}_flags}")
-  set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
-    ${module_dir})
+add_library(${lib_name}_f OBJECT ${fortran_src})
+set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
+  "${fortran_4_flags}")
+set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
+  ${module_dir})
 
-  add_library(${lib_name}_c OBJECT ${c_src})
+add_library(${lib_name}_c OBJECT ${c_src})
 
-  add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
-    $<TARGET_OBJECTS:${lib_name}_c>)
-  target_include_directories(${lib_name} INTERFACE
-    $<BUILD_INTERFACE:${module_dir}>
-    $<INSTALL_INTERFACE:include_${kind}>)
-  list(APPEND LIB_TARGETS ${lib_name})
-  install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
-endforeach()
+add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
+  $<TARGET_OBJECTS:${lib_name}_c>)
+target_include_directories(${lib_name} INTERFACE
+  $<BUILD_INTERFACE:${module_dir}>
+  $<INSTALL_INTERFACE:include_4>)
+list(APPEND LIB_TARGETS ${lib_name})
+install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 install(
   TARGETS ${LIB_TARGETS}

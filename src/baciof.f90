@@ -9,12 +9,32 @@
 !>
 !> @author Mark Iredell @date 98-06-04
 MODULE BACIO_MODULE
-  INTEGER,EXTERNAL:: BACIO !< BACIO
-  INTEGER,EXTERNAL:: BACIOL !< BACIOL
-  INTEGER,PARAMETER :: FDDIM=9999 !< FDDIM
-  INTEGER,DIMENSION(FDDIM),SAVE:: FD=FDDIM*0 !< FD
-  INTEGER,DIMENSION(20),SAVE:: BAOPTS=0 !< BAOPTS
-  INCLUDE 'baciof.h'
+
+  !> The bacio function in the C code.
+  INTEGER,EXTERNAL:: BACIO
+        
+  !> The baciol function in the C code.
+  INTEGER,EXTERNAL:: BACIOL
+  
+  !> Maximum number of open files in bacio library.
+  INTEGER,PARAMETER :: FDDIM = 9999 
+  
+  !> Array IDs of currently open files.
+  INTEGER,DIMENSION(FDDIM),SAVE:: FD = FDDIM*0 
+  
+  !> Array of option settings. Only the first element of the array
+  !> is used.
+  INTEGER,DIMENSION(20),SAVE:: BAOPTS = 0
+  
+  INTEGER,PARAMETER:: BACIO_OPENR = 1    !< Open file for read only.
+  INTEGER,PARAMETER:: BACIO_OPENW = 2    !< Open file for write only.
+  INTEGER,PARAMETER:: BACIO_OPENRW = 4   !< Open file for read or write.
+  INTEGER,PARAMETER:: BACIO_CLOSE = 8    !< Close file.
+  INTEGER,PARAMETER:: BACIO_READ = 16    !< Read from the file.
+  INTEGER,PARAMETER:: BACIO_WRITE = 32   !< Write to the file.
+  INTEGER,PARAMETER:: BACIO_NOSEEK = 64  !< Start I/O from previous spot.
+  INTEGER,PARAMETER:: BACIO_OPENWT = 128 !< Open for write only with truncation.
+  INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
 END MODULE BACIO_MODULE
 
 !> Set options for byte-addressable I/O.
@@ -168,6 +188,15 @@ END SUBROUTINE BACLOSE
 !> This subroutine calls bareadl() to read a given number of
 !> bytes from an unblocked file, skipping a given number of bytes.
 !>
+!> The physical I/O is blocked into four 4096-byte buffers if the
+!> byte-addressable option 1 has been set to 1 by baseto. This
+!> buffered reading is incompatible with no-seek reading.
+!>
+!> @note The data in the I/O buffer is not cleared when the file is
+!> closed and reopened, or when any other operation on the file is
+!> done. So it may contian out-of-date data, if the data file has been
+!> changed after the buffers were filled. Use with caution.
+!>
 !> ### Program History Log
 !> Date | Programmer | Comments
 !> -----|------------|---------
@@ -210,6 +239,11 @@ END SUBROUTINE BAREAD
 !> The physical I/O is blocked into four 4096-byte buffers if the
 !> byte-addressable option 1 has been set to 1 by baseto. This
 !> buffered reading is incompatible with no-seek reading.
+!>
+!> @note The data in the I/O buffer is not cleared when the file is
+!> closed and reopened, or when any other operation on the file is
+!> done. So it may contian out-of-date data, if the data file has been
+!> changed after the buffers were filled. Use with caution.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
