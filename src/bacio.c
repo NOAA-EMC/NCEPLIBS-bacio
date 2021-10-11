@@ -160,9 +160,8 @@
           char *datary,
           long long int  namelen, long long int  datanamelen) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
   size_t count;
 
 /* Initialization(s) */
@@ -515,9 +514,8 @@
           char *datary,
           long long int  namelen, long long int  datanamelen) {
 #endif
-  int i, j, jret, seekret;
+  int i, jret, seekret;
   char *realname;
-  int tcharval;
   size_t count;
 
 /* Initialization(s) */
