@@ -28,7 +28,6 @@
 #include <stdio.h>
 
 static int send_errors = 1; /**< If non-zero, warn about non-aligned pointers. */
-static int fast_count_calls = 0; /**< Fast count calls. */
 
 /**
  * Set a flag to turn warnings off for non-aligned pointers.
@@ -167,18 +166,7 @@ byteswap_(char *data, int *nbyte, int *nnum)
     int nn = *nnum;
     size_t count = *nnum;
     
-    if (fast_count_calls == 0)
-    {
-        fprintf(stderr, " FAST_BYTESWAP ALGORITHM HAS BEEN USED AND DATA ALIGNMENT IS CORRECT FOR  %9d  )\n", nb);
-        fast_count_calls = 1;
-    }
-
-    if (fast_byteswap(data, nb, count))
-    {
-        /**********     fprintf (stderr," FAST_BYTESWAP WORKED FOR  %9d %9d )\n",nb, count); *******/
-        /* it succeeded: data is now byteswapped */
-    }
-    else
+    if (!fast_byteswap(data, nb, count))
     {
         fprintf(stderr,"ERROR NOT ALIGNED SLOW CODE USED (nb and count %9d %9lu )\n",nb, count);
         /* It failed.  No data was byteswapped because it is not aligned */
