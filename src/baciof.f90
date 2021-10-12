@@ -441,6 +441,7 @@ END SUBROUTINE  BAWRITEL
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
+
 !> @note A baopen must have already been called.
 SUBROUTINE WRYTE(LU,NB,A)
   USE BACIO_MODULE
@@ -473,6 +474,7 @@ END SUBROUTINE WRYTE
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
+
 !> @note A baopen must have already been called.
 SUBROUTINE WRYTEL(LU,NB,A)
   USE BACIO_MODULE
