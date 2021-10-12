@@ -161,10 +161,10 @@ fast_byteswap(void *data,int bytes,size_t count)
 void
 byteswap_(char *data, int *nbyte, int *nnum)
 {
-    int  i, j;
+    int i, j;
     char swap[256];
-    int  nb = *nbyte;
-    int  nn = *nnum;
+    int nb = *nbyte;
+    int nn = *nnum;
     size_t count = *nnum;
     
     if (fast_count_calls == 0)
