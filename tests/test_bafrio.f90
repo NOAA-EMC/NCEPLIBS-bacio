@@ -1,13 +1,17 @@
+! This is a test program for the NCEPLIBS-bacio library. It tests the
+! formatted file functionality of bacio.
+!
+! Ed Hartnett 10/6/21
 program test_bafrio
   use bacio_module
   implicit none
 
   character(len=15) :: filename = 'test_bafrio.bin'
-  character :: data(4)
-  character :: data_in(4)
+  character (len = 4) :: data
+  character (len = 4) :: data_in
   integer :: lu = 1
   integer :: ka
-  integer :: i
+  integer (kind = 8) :: ib8, lx8, ix8
   integer :: iret
 
   print *, 'Testing bafrio.'
@@ -18,10 +22,16 @@ program test_bafrio
   call baopen(lu, filename, iret)
   if (iret .ne. 0) stop 2
 
-  ! Write some data.
   data = 'test'
+
+  ! Try to write some data - will fail.
+  call bafrwrite(lu, -2, 4, ka, data)
+  if (ka .ne. 0) stop 3
+  call bafrwrite(lu, 0, -4, ka, data)
+  if (ka .ne. 0) stop 3
+
+  ! Write some data.
   call bafrwrite(lu, 0, 4, ka, data)
-  if (iret .ne. 0) stop 2
   if (ka .ne. 12) stop 3
 
   ! Close the test file.
@@ -34,15 +44,24 @@ program test_bafrio
 
   ! Read some data.
   call bafrread(lu, 0, 4, ka, data_in)
-  if (iret .ne. 0) stop 21
   if (ka .ne. 12) stop 22
-  do i = 1, 4
-     if (data_in(i) .ne. data(i)) stop 23
-  enddo
+  if (data_in .ne. data) stop 23
 
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 30
+
+  print *, 'Testing bafrindex calls...'
+
+  ! Open the test file.
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 100
+
+  call bafrindex(lu, ib8, lx8, ix8)
+  
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 120
 
   print *, 'SUCCESS!'
 end program test_bafrio

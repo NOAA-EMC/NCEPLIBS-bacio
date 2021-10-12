@@ -4,11 +4,10 @@
 !> data file control words. It is designed to be run on on
 !> WCOSS(little endian machine) and to generate big endian files.
 !>
-!> It does byteswap on fortran record control words(4 byte integer
+!> It does byteswap on fortran record control words (4 byte integer
 !> before and after data field), not on data field itself. Users need
-!> to byteswap their data after(for reading)/before(for writing)
-!> calling subroutines this file. This is considered to be the best
-!> way to keep subroutine inerfaces intact for backward compatible.
+!> to byteswap their data after (for reading) or before (for writing)
+!> calling subroutines this file.
 !>
 !> ### Program History Log
 !> Date | Programmer | Comments
@@ -31,14 +30,14 @@
 !> 1999-01-21 | Mark Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read. if lu<=0, then determine ix
+!> @param[in] lu logical unit to read. if lu<=0, then determine ix
 !> from lx.
-!> @param ib integer fortran record start byte. (for the first fortran
+!> @param[in] ib fortran record start byte. (for the first fortran
 !> record, ib should be 0).
-!> @param lx integer record length in bytes if lu<=0. If lu>0, or
+!> @param[inout] lx record length in bytes if lu<=0. If lu>0, or
 !> lx=-1 for i/o error (probable end of file), or lx=-2 for i/o error
 !> (invalid fortran record).
-!> @param ix integer start byte for the next fortran record. (computed
+!> @param[out] ix start byte for the next fortran record. (computed
 !> only if lx>=0).
 !>
 !> @author Mark Iredell @date 1999-01-21
@@ -69,14 +68,14 @@ end SUBROUTINE BAFRINDEX
 !> 1999-01-21 | Mark Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read. if lu<=0, then determine ix
+!> @param[in] lu logical unit to read. if lu<=0, then determine ix
 !> from lx.
-!> @param ib integer fortran record start byte. (for the first fortran
+!> @param[in] ib fortran record start byte. (for the first fortran
 !> record, ib should be 0).
-!> @param lx integer record length in bytes if lu<=0. If lu>0, or
+!> @param[inout] lx record length in bytes if lu<=0. If lu>0, or
 !> lx=-1 for i/o error (probable end of file), or lx=-2 for i/o error
 !> (invalid fortran record).
-!> @param ix integer start byte for the next fortran record. (computed
+!> @param[out] ix start byte for the next fortran record (computed
 !> only if lx>=0).
 !>
 !> @author Mark Iredell @date 1999-01-21
@@ -147,16 +146,16 @@ END SUBROUTINE BAFRINDEXL
 !> 1999-01-21 | Mark Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read.
-!> @param ib integer fortran record start byte (for the first fortran
+!> @param[in] lu logical unit to read.
+!> @param[in] ib fortran record start byte (for the first fortran
 !> record, ib should be 0).
-!> @param nb integer number of bytes to read.
-!> @param ka integer number of bytes in fortran record (in which case
+!> @param[in] nb number of bytes to read.
+!> @param[out] ka number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka),
 !> - or ka=-1 for i/o error (probable end of file),
 !> - or ka=-2 for i/o error (invalid fortran record),
 !> - or ka=-3 for i/o error (request longer than record)
-!> @param a character*1 (nb) data read
+!> @param[out] a data read
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
@@ -187,16 +186,16 @@ END SUBROUTINE BAFRREAD
 !> 1999-01-21 | Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to read.
-!> @param ib integer(8) fortran record start byte. (For the first
+!> @param[in] lu logical unit to read.
+!> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
-!> @param nb integer(8) number of bytes to read.
-!> @param ka integer(8) number of bytes in fortran record (in which
+!> @param[in] nb number of bytes to read.
+!> @param[out] ka number of bytes in fortran record (in which
 !> case the next fortran record should have a start byte of ib+ka),
 !> - or ka=-1 for i/o error (probable end of file),
 !> - or ka=-2 for i/o error (invalid fortran record),
 !> - or ka=-3 for i/o error (request longer than record)
-!> @param a character*1 (nb) data read
+!> @param[out] a data read.
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
@@ -238,14 +237,14 @@ END SUBROUTINE BAFRREADL
 !> 1999-01-21 | Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to write to.
-!> @param ib integer(8) fortran record start byte. (For the first
+!> @param[in] lu logical unit to write to.
+!> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
-!> @param nb integer(8) number of bytes to write.
-!> @param a character*1 (nb) data to write.
-!> @param ka integer number of bytes in fortran record (in which case
+!> @param[in] nb number of bytes to write.
+!> @param[out] ka number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka), or
 !> ka=-1 for i/o error.
+!> @param[in] a data to write.
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
@@ -277,14 +276,14 @@ END SUBROUTINE BAFRWRITE
 !> 1999-01-21 | Iredell | Initial
 !> 2009-04-20 | Jun Wang | Changes
 !>
-!> @param lu integer logical unit to write to.
-!> @param ib integer(8) fortran record start byte. (For the first
+!> @param[in] lu logical unit to write to.
+!> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
-!> @param nb integer(8) number of bytes to write.
-!> @param a character*1 (nb) data to write.
-!> @param ka integer number of bytes in fortran record (in which case
+!> @param[in] nb number of bytes to write.
+!> @param[out] ka integer number of bytes in fortran record (in which case
 !> the next fortran record should have a start byte of ib+ka), or
 !> ka=-1 for i/o error.
+!> @param[in] a data to write.
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
