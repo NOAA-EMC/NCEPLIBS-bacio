@@ -88,7 +88,46 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md0"></a>
 bacio</h1>
-<p>This library performs binary I/O for the NCEP models, processing unformatted byte-addressable data records, and transforming the little endian files and big endian files. </p>
+<p>This library performs binary I/O for the NCEP models, processing formatted and unformatted byte-addressable data records, and helping transform little endian files into big endian files.</p>
+<h2><a class="anchor" id="autotoc_md1"></a>
+Fortran Library</h2>
+<p>The NCEPLIBS-bacio has Fortran functions to open, read or write, and close either formatted or unformatted Fortran files.</p>
+<h3><a class="anchor" id="autotoc_md2"></a>
+Opening or Creating a Data File</h3>
+<p>Open or create the file with one of the <a class="el" href="baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd" title="Open a byte-addressable file.">baopen()</a> family of functions.</p>
+<ul>
+<li><a class="el" href="baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd" title="Open a byte-addressable file.">baopen()</a> - Open a new or existing file for read/write.</li>
+<li><a class="el" href="baciof_8f90.html#aed44200e01d98cc6dd57d9122a61c362" title="Open a byte-addressable file for read only.">baopenr()</a> - Open an existing file for read-only.</li>
+<li><a class="el" href="baciof_8f90.html#ac7e1379ed7841362b2cd016b21fa5877" title="Open a byte-addressable file for write only.">baopenw()</a> - Open a new or existing file for write only.</li>
+<li><a class="el" href="baciof_8f90.html#a5fe2c33e211d7601f6208955fdd5f47f" title="Open a byte-addressable file for write only with truncation.">baopenwt()</a> - Open an existing file for write only, truncating current contents of the file.</li>
+<li><a class="el" href="baciof_8f90.html#a5fe2c33e211d7601f6208955fdd5f47f" title="Open a byte-addressable file for write only with truncation.">baopenwt()</a> - Open an existing file for write only, appending to the current contents of the file.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md3"></a>
+Reading or Writing Unformatted Records</h3>
+<p>To read from an unformatted file, use:</p><ul>
+<li><a class="el" href="baciof_8f90.html#a5e62fb3f855257cb06e44f22c3dc3ed1" title="This subroutine calls bareadl() to read a given number of bytes from an unblocked file,...">baread()</a> - Read from an unformatted file.</li>
+<li><a class="el" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0" title="This subrouytine is using updated baciol() I/O package to read a given number of bytes from an unbloc...">bareadl()</a> - Read from an unformatted file, with integer*8 function parameters.</li>
+</ul>
+<p>To write from an unformatted file, use:</p><ul>
+<li><a class="el" href="baciof_8f90.html#ad5cc3d70834fbf2e914ff39e0f4709c8" title="This program is calling bawritel() to write a given number of bytes to an unblocked file,...">bawrite()</a> - Write from an unformatted file.</li>
+<li><a class="el" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c" title="This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of byte...">bawritel()</a> - Write from an unformatted file, with integer*8 function parameters.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md4"></a>
+Reading or Writing Formatted Records</h3>
+<p>To read from an formatted file, use:</p><ul>
+<li><a class="el" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720" title="This subprogram calls bafread() to read an unformatted fortran record.">bafrread()</a> - Read from an unformatted file.</li>
+<li><a class="el" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6" title="This subprogram reads an unformatted fortran record.">bafrreadl()</a> - Read from an unformatted file, with integer*8 function parameters.</li>
+</ul>
+<p>To write from an formatted file, use:</p><ul>
+<li><a class="el" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34" title="This subprogram calls bafrwrite() to write an unformatted fortran record.">bafrwrite()</a> - Write from an unformatted file.</li>
+<li><a class="el" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96" title="This subprogram writes an unformatted fortran record.">bafrwritel()</a> - Write from an unformatted file, with integer*8 function parameters.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Closing the File</h3>
+<p>Close the data file with the <a class="el" href="baciof_8f90.html#acb0941b0e6f466cac92de223f86c3561" title="Close a byte-addressable file.">baclose()</a> function. All data files must be closed after use, to flush buffers and free resources.</p>
+<h2><a class="anchor" id="autotoc_md6"></a>
+C Backend</h2>
+<p>The Fortran functions all call the backend C function <a class="el" href="bacio_8c.html#afa339592efdc6c1aabd819f92b60d75c" title="Do bacio operation.">bacio_()</a>, which does the heavy lifting for the NCEPLIBS-bacio library. Users should use the Fortran API for NCEPLIBS-bacio. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -87,37 +87,23 @@ $(document).ready(function(){initNavTree('clib_8h_source.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <a href="clib_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/*     Include file to define variables for Fortran to C interface(s) */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/*     revision history                               */</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/*     Robert Grumbine 16 March 1998                  */</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">/*     NOSEEK added 25 March 1998                  */</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">/*     CRAY compatibility added 20 April 1998      */</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*     Aug2012  Jun Wang:  move system definition to makefile as a compiler option */</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/* The following line should be either undef or define VERBOSE */</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">/* The latter gives noisy debugging output, while the former */</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/*   relies solely on the return codes */</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#undef  VERBOSE</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">/* Declare the system type, supported options are: */</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">/* LINUX, SGI, HP, CRAY90, IBM4, IBM8, LINUXF90 */</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/*   ----move system definition to makefile as a compiler option--- */</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/* Do not change things below here yourself */</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/*     IO-related (bacio.c, banio.c) */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="clib_8h.html#a85a9724c845bf99535527764ca5c6d92">   25</a></span>&#160;<span class="preprocessor">#define BAOPEN_RONLY              1 </span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="clib_8h.html#a6e406515356ce8cdf9754098f335ed5b">   26</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY              2 </span></div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="clib_8h.html#aaf99e5a34e69059693f91ca98083986c">   27</a></span>&#160;<span class="preprocessor">#define BAOPEN_RW                 4 </span></div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="clib_8h.html#af0cb07e907489df8fae069d7478ff388">   28</a></span>&#160;<span class="preprocessor">#define BACLOSE                   8 </span></div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="clib_8h.html#a9420def008226bc4c65755cc7ec29430">   29</a></span>&#160;<span class="preprocessor">#define BAREAD                   16 </span></div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="clib_8h.html#a937d8326420fdd93ae52d6b06c1a924c">   30</a></span>&#160;<span class="preprocessor">#define BAWRITE                  32 </span></div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="clib_8h.html#acfc368d557918668471f9295ba861c89">   31</a></span>&#160;<span class="preprocessor">#define NOSEEK                   64 </span></div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="clib_8h.html#a98c4952a075cae59aba5a2a6264143d1">   32</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY_TRUNC      128 </span></div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="clib_8h.html#a71ec1c1c26a628bff03aa3fcb816c8a2">   33</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY_APPEND     256 </span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">/* The following line should be either undef or define VERBOSE. The</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * latter gives noisy debugging output, while the former relies solely</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * on the return codes. */</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#undef  VERBOSE</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/* IO-related (bacio.c, banio.c). */</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="clib_8h.html#a85a9724c845bf99535527764ca5c6d92">   22</a></span>&#160;<span class="preprocessor">#define BAOPEN_RONLY              1 </span></div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="clib_8h.html#a6e406515356ce8cdf9754098f335ed5b">   23</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY              2 </span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="clib_8h.html#aaf99e5a34e69059693f91ca98083986c">   24</a></span>&#160;<span class="preprocessor">#define BAOPEN_RW                 4 </span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="clib_8h.html#af0cb07e907489df8fae069d7478ff388">   25</a></span>&#160;<span class="preprocessor">#define BACLOSE                   8 </span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="clib_8h.html#a9420def008226bc4c65755cc7ec29430">   26</a></span>&#160;<span class="preprocessor">#define BAREAD                   16 </span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="clib_8h.html#a937d8326420fdd93ae52d6b06c1a924c">   27</a></span>&#160;<span class="preprocessor">#define BAWRITE                  32 </span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="clib_8h.html#acfc368d557918668471f9295ba861c89">   28</a></span>&#160;<span class="preprocessor">#define NOSEEK                   64 </span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="clib_8h.html#a98c4952a075cae59aba5a2a6264143d1">   29</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY_TRUNC      128 </span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="clib_8h.html#a71ec1c1c26a628bff03aa3fcb816c8a2">   30</a></span>&#160;<span class="preprocessor">#define BAOPEN_WONLY_APPEND     256 </span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

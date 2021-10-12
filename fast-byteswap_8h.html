@@ -88,6 +88,9 @@ $(document).ready(function(){initNavTree('fast-byteswap_8h.html',''); initResiza
 <div class="title">fast-byteswap.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Header file for byteswap functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 </div>
 <p><a href="fast-byteswap_8h_source.html">Go to the source code of this file.</a></p>
@@ -98,10 +101,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:a77815c1ecc8deff5f3256a1bf3b6c851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast byteswap.  <a href="fast-byteswap_8h.html#a77815c1ecc8deff5f3256a1bf3b6c851">More...</a><br /></td></tr>
 <tr class="separator:a77815c1ecc8deff5f3256a1bf3b6c851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d939ff5ad45fbb2202a079aae9231fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fast-byteswap_8h.html#a6d939ff5ad45fbb2202a079aae9231fc">fast_byteswap_errors</a> (int flag)</td></tr>
-<tr class="memdesc:a6d939ff5ad45fbb2202a079aae9231fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast byteswap errors.  <a href="fast-byteswap_8h.html#a6d939ff5ad45fbb2202a079aae9231fc">More...</a><br /></td></tr>
+<tr class="memdesc:a6d939ff5ad45fbb2202a079aae9231fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a flag to turn warnings off for non-aligned pointers.  <a href="fast-byteswap_8h.html#a6d939ff5ad45fbb2202a079aae9231fc">More...</a><br /></td></tr>
 <tr class="separator:a6d939ff5ad45fbb2202a079aae9231fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Header file for byteswap functions. </p>
+
+<p class="definition">Definition in file <a class="el" href="fast-byteswap_8h_source.html">fast-byteswap.h</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a77815c1ecc8deff5f3256a1bf3b6c851"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77815c1ecc8deff5f3256a1bf3b6c851">&#9670;&nbsp;</a></span>fast_byteswap()</h2>
 
@@ -145,11 +152,11 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00303">303</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00137">137</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00142">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00114">simple_swap_16()</a>, and <a class="el" href="byteswap_8c_source.html#l00088">simple_swap_32()</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00111">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00083">simple_swap_16()</a>, and <a class="el" href="byteswap_8c_source.html#l00054">simple_swap_32()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00330">byteswap_()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00162">byteswap_()</a>.</p>
 
 </div>
 </div>
@@ -169,17 +176,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fast byteswap errors. </p>
+<p>Set a flag to turn warnings off for non-aligned pointers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">flag</td><td>flag </td></tr>
+    <tr><td class="paramname">flag</td><td>Set to 0 to turn off warnings, non-zero to turn them on (the default). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00043">43</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00040">40</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">send_errors</a>.</p>
 
 </div>
 </div>

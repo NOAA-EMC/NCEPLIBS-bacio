@@ -83,7 +83,6 @@ $(document).ready(function(){initNavTree('byteswap_8c.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -102,32 +101,8 @@ $(document).ready(function(){initNavTree('byteswap_8c.html',''); initResizable()
 </div>
 <p><a href="byteswap_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:af15b53300c8f4d90b46698f13a77757d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#af15b53300c8f4d90b46698f13a77757d">BLOCK_COUNT_16</a>&#160;&#160;&#160;(2048*1024)</td></tr>
-<tr class="memdesc:af15b53300c8f4d90b46698f13a77757d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block Count 16.  <a href="byteswap_8c.html#af15b53300c8f4d90b46698f13a77757d">More...</a><br /></td></tr>
-<tr class="separator:af15b53300c8f4d90b46698f13a77757d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade37e96c05bfa41175ef10b196390553"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#ade37e96c05bfa41175ef10b196390553">BLOCK_COUNT_32</a>&#160;&#160;&#160;(1024*1024)</td></tr>
-<tr class="memdesc:ade37e96c05bfa41175ef10b196390553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block Count 32.  <a href="byteswap_8c.html#ade37e96c05bfa41175ef10b196390553">More...</a><br /></td></tr>
-<tr class="separator:ade37e96c05bfa41175ef10b196390553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27ef5715a105ee045060ed5fb48b7dc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a27ef5715a105ee045060ed5fb48b7dc3">BLOCK_COUNT_64</a>&#160;&#160;&#160;(512*1024)</td></tr>
-<tr class="memdesc:a27ef5715a105ee045060ed5fb48b7dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block Count 64.  <a href="byteswap_8c.html#a27ef5715a105ee045060ed5fb48b7dc3">More...</a><br /></td></tr>
-<tr class="separator:a27ef5715a105ee045060ed5fb48b7dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a157a956e14c5c44b3f73ef23a4776f64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a157a956e14c5c44b3f73ef23a4776f64">LINUX</a></td></tr>
-<tr class="memdesc:a157a956e14c5c44b3f73ef23a4776f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define LINUX.  <a href="byteswap_8c.html#a157a956e14c5c44b3f73ef23a4776f64">More...</a><br /></td></tr>
-<tr class="separator:a157a956e14c5c44b3f73ef23a4776f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4bdd343987ddf47f6bf98da9cb87471b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a4bdd343987ddf47f6bf98da9cb87471b">block_macro_swap_16</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:a4bdd343987ddf47f6bf98da9cb87471b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros and do 1MB blocks at a time.  <a href="byteswap_8c.html#a4bdd343987ddf47f6bf98da9cb87471b">More...</a><br /></td></tr>
-<tr class="separator:a4bdd343987ddf47f6bf98da9cb87471b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae817c13efdca114f616704dcc964f6f5"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#ae817c13efdca114f616704dcc964f6f5">block_macro_swap_32</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:ae817c13efdca114f616704dcc964f6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros and do 1MB blocks at a time.  <a href="byteswap_8c.html#ae817c13efdca114f616704dcc964f6f5">More...</a><br /></td></tr>
-<tr class="separator:ae817c13efdca114f616704dcc964f6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af14481d944a1f11a7e086ecf6837b93a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#af14481d944a1f11a7e086ecf6837b93a">block_macro_swap_64</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:af14481d944a1f11a7e086ecf6837b93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros and do 1MB blocks at a time.  <a href="byteswap_8c.html#af14481d944a1f11a7e086ecf6837b93a">More...</a><br /></td></tr>
-<tr class="separator:af14481d944a1f11a7e086ecf6837b93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa72910098983acc82fd9d51d0f3bae30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#aa72910098983acc82fd9d51d0f3bae30">byteswap_</a> (char *data, int *nbyte, int *nnum)</td></tr>
 <tr class="memdesc:aa72910098983acc82fd9d51d0f3bae30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byteswap.  <a href="byteswap_8c.html#aa72910098983acc82fd9d51d0f3bae30">More...</a><br /></td></tr>
 <tr class="separator:aa72910098983acc82fd9d51d0f3bae30"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,14 +110,8 @@ Functions</h2></td></tr>
 <tr class="memdesc:a77815c1ecc8deff5f3256a1bf3b6c851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast byteswap.  <a href="byteswap_8c.html#a77815c1ecc8deff5f3256a1bf3b6c851">More...</a><br /></td></tr>
 <tr class="separator:a77815c1ecc8deff5f3256a1bf3b6c851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d939ff5ad45fbb2202a079aae9231fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a6d939ff5ad45fbb2202a079aae9231fc">fast_byteswap_errors</a> (int flag)</td></tr>
-<tr class="memdesc:a6d939ff5ad45fbb2202a079aae9231fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast byteswap errors.  <a href="byteswap_8c.html#a6d939ff5ad45fbb2202a079aae9231fc">More...</a><br /></td></tr>
+<tr class="memdesc:a6d939ff5ad45fbb2202a079aae9231fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a flag to turn warnings off for non-aligned pointers.  <a href="byteswap_8c.html#a6d939ff5ad45fbb2202a079aae9231fc">More...</a><br /></td></tr>
 <tr class="separator:a6d939ff5ad45fbb2202a079aae9231fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1258dc52839b48b6d35bab60f2ee5e4a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a1258dc52839b48b6d35bab60f2ee5e4a">macro_swap_16</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:a1258dc52839b48b6d35bab60f2ee5e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros, which are specialized byteswap ASM instructions.  <a href="byteswap_8c.html#a1258dc52839b48b6d35bab60f2ee5e4a">More...</a><br /></td></tr>
-<tr class="separator:a1258dc52839b48b6d35bab60f2ee5e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af55008eeba4cbecc2ebf3d49765befe7"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#af55008eeba4cbecc2ebf3d49765befe7">macro_swap_32</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:af55008eeba4cbecc2ebf3d49765befe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros, which are specialized byteswap ASM instructions.  <a href="byteswap_8c.html#af55008eeba4cbecc2ebf3d49765befe7">More...</a><br /></td></tr>
-<tr class="separator:af55008eeba4cbecc2ebf3d49765befe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1799c229fae92a2a9716e72f9dc1408b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a1799c229fae92a2a9716e72f9dc1408b">macro_swap_64</a> (void *data, size_t len)</td></tr>
 <tr class="memdesc:a1799c229fae92a2a9716e72f9dc1408b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the GNU macros, which are specialized byteswap ASM instructions.  <a href="byteswap_8c.html#a1799c229fae92a2a9716e72f9dc1408b">More...</a><br /></td></tr>
 <tr class="separator:a1799c229fae92a2a9716e72f9dc1408b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,9 +121,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a770839b0d9773ec8b542cb1a4f604b01"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#a770839b0d9773ec8b542cb1a4f604b01">simple_swap_32</a> (void *data, size_t len)</td></tr>
 <tr class="memdesc:a770839b0d9773ec8b542cb1a4f604b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple single-value loops.  <a href="byteswap_8c.html#a770839b0d9773ec8b542cb1a4f604b01">More...</a><br /></td></tr>
 <tr class="separator:a770839b0d9773ec8b542cb1a4f604b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0fc9549d9a565ccbc15f296fcbf7f30"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="byteswap_8c.html#af0fc9549d9a565ccbc15f296fcbf7f30">simple_swap_64</a> (void *data, size_t len)</td></tr>
-<tr class="memdesc:af0fc9549d9a565ccbc15f296fcbf7f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple single-value loops.  <a href="byteswap_8c.html#af0fc9549d9a565ccbc15f296fcbf7f30">More...</a><br /></td></tr>
-<tr class="separator:af0fc9549d9a565ccbc15f296fcbf7f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -168,250 +134,11 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains various implementations of fast byteswapping routines. </p>
 <p>The main entry point, <a class="el" href="byteswap_8c.html#a77815c1ecc8deff5f3256a1bf3b6c851" title="Fast byteswap.">fast_byteswap()</a>, is the only one you should need, and it should be modified to use whatever method is fastest on your architecture.</p>
-<p>In all cases, the routines return 1 on success and 0 on failure. They only fail if your data is non-aligned. All routines require that arrays of N-bit data be N-bit aligned. If they are not, an error will be sent to stderr and the routine will return non-zero. To silence the error message, call fast_byteswap_errors(0). <br  />
-</p>
+<p>In all cases, the routines return 1 on success and 0 on failure. They only fail if your data is non-aligned. All routines require that arrays of N-bit data be N-bit aligned. If they are not, an error will be sent to stderr and the routine will return non-zero. To silence the error message, call fast_byteswap_errors(0).</p>
 <dl class="section author"><dt>Author</dt><dd>Dexin Zhang, Jun Wang </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af15b53300c8f4d90b46698f13a77757d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af15b53300c8f4d90b46698f13a77757d">&#9670;&nbsp;</a></span>BLOCK_COUNT_16</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLOCK_COUNT_16&#160;&#160;&#160;(2048*1024)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Block Count 16. </p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00032">32</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-</div>
-</div>
-<a id="ade37e96c05bfa41175ef10b196390553"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade37e96c05bfa41175ef10b196390553">&#9670;&nbsp;</a></span>BLOCK_COUNT_32</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLOCK_COUNT_32&#160;&#160;&#160;(1024*1024)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Block Count 32. </p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00031">31</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-</div>
-</div>
-<a id="a27ef5715a105ee045060ed5fb48b7dc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27ef5715a105ee045060ed5fb48b7dc3">&#9670;&nbsp;</a></span>BLOCK_COUNT_64</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLOCK_COUNT_64&#160;&#160;&#160;(512*1024)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Block Count 64. </p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00030">30</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-</div>
-</div>
-<a id="a157a956e14c5c44b3f73ef23a4776f64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a157a956e14c5c44b3f73ef23a4776f64">&#9670;&nbsp;</a></span>LINUX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LINUX</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Define LINUX. </p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00033">33</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a4bdd343987ddf47f6bf98da9cb87471b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bdd343987ddf47f6bf98da9cb87471b">&#9670;&nbsp;</a></span>block_macro_swap_16()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int block_macro_swap_16 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Use the GNU macros and do 1MB blocks at a time. </p>
-<p>Control the block size through the BLOCK_COUNT_* macros (top of file).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-<p>&lt; Block Count 16.</p>
-<p>&lt; Block Count 16.</p>
-<p>&lt; Block Count 16.</p>
-<p>&lt; Block Count 16.</p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00245">245</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00032">BLOCK_COUNT_16</a>, and <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
-
-</div>
-</div>
-<a id="ae817c13efdca114f616704dcc964f6f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae817c13efdca114f616704dcc964f6f5">&#9670;&nbsp;</a></span>block_macro_swap_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int block_macro_swap_32 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Use the GNU macros and do 1MB blocks at a time. </p>
-<p>Control the block size through the BLOCK_COUNT_* macros (top of file).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-<p>&lt; Block Count 32.</p>
-<p>&lt; Block Count 32.</p>
-<p>&lt; Block Count 32.</p>
-<p>&lt; Block Count 32.</p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00216">216</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00031">BLOCK_COUNT_32</a>, and <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
-
-</div>
-</div>
-<a id="af14481d944a1f11a7e086ecf6837b93a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af14481d944a1f11a7e086ecf6837b93a">&#9670;&nbsp;</a></span>block_macro_swap_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int block_macro_swap_64 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Use the GNU macros and do 1MB blocks at a time. </p>
-<p>Control the block size through the BLOCK_COUNT_* macros (top of file).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-<p>&lt; Block Count 64.</p>
-<p>&lt; Block Count 64.</p>
-<p>&lt; Block Count 64.</p>
-<p>&lt; Block Count 64.</p>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00274">274</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">BLOCK_COUNT_64</a>, and <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
-
-</div>
-</div>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aa72910098983acc82fd9d51d0f3bae30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa72910098983acc82fd9d51d0f3bae30">&#9670;&nbsp;</a></span>byteswap_()</h2>
 
@@ -454,9 +181,9 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00329">329</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00162">162</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00303">fast_byteswap()</a>, and <a class="el" href="byteswap_8c_source.html#l00036">fast_count_calls</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00137">fast_byteswap()</a>, and <a class="el" href="byteswap_8c_source.html#l00031">fast_count_calls</a>.</p>
 
 </div>
 </div>
@@ -503,11 +230,11 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00303">303</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00137">137</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00142">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00114">simple_swap_16()</a>, and <a class="el" href="byteswap_8c_source.html#l00088">simple_swap_32()</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00111">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00083">simple_swap_16()</a>, and <a class="el" href="byteswap_8c_source.html#l00054">simple_swap_32()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00330">byteswap_()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00162">byteswap_()</a>.</p>
 
 </div>
 </div>
@@ -527,117 +254,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fast byteswap errors. </p>
+<p>Set a flag to turn warnings off for non-aligned pointers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">flag</td><td>flag </td></tr>
+    <tr><td class="paramname">flag</td><td>Set to 0 to turn off warnings, non-zero to turn them on (the default). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00043">43</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00040">40</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
-
-</div>
-</div>
-<a id="a1258dc52839b48b6d35bab60f2ee5e4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1258dc52839b48b6d35bab60f2ee5e4a">&#9670;&nbsp;</a></span>macro_swap_16()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int macro_swap_16 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Use the GNU macros, which are specialized byteswap ASM instructions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00188">188</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
-
-</div>
-</div>
-<a id="af55008eeba4cbecc2ebf3d49765befe7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af55008eeba4cbecc2ebf3d49765befe7">&#9670;&nbsp;</a></span>macro_swap_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int macro_swap_32 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Use the GNU macros, which are specialized byteswap ASM instructions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00165">165</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">send_errors</a>.</p>
 
 </div>
 </div>
@@ -685,11 +312,11 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00142">142</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00111">111</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">send_errors</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00303">fast_byteswap()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00137">fast_byteswap()</a>.</p>
 
 </div>
 </div>
@@ -737,11 +364,11 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00114">114</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00083">83</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">send_errors</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00303">fast_byteswap()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00137">fast_byteswap()</a>.</p>
 
 </div>
 </div>
@@ -789,61 +416,11 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00088">88</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00054">54</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00030">send_errors</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00303">fast_byteswap()</a>.</p>
-
-</div>
-</div>
-<a id="af0fc9549d9a565ccbc15f296fcbf7f30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0fc9549d9a565ccbc15f296fcbf7f30">&#9670;&nbsp;</a></span>simple_swap_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int simple_swap_64 </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Simple single-value loops. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>data </td></tr>
-    <tr><td class="paramname">len</td><td>Length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for error, 1 otherwise. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00058">58</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
-
-<p class="reference">References <a class="el" href="byteswap_8c_source.html#l00035">send_errors</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00137">fast_byteswap()</a>.</p>
 
 </div>
 </div>
@@ -870,9 +447,9 @@ Variables</h2></td></tr>
 
 <p>Fast count calls. </p>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00036">36</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00031">31</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00330">byteswap_()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00162">byteswap_()</a>.</p>
 
 </div>
 </div>
@@ -898,9 +475,9 @@ Variables</h2></td></tr>
 
 <p>if non-zero, warn about non-aligned pointers </p>
 
-<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00035">35</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="byteswap_8c_source.html#l00030">30</a> of file <a class="el" href="byteswap_8c_source.html">byteswap.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00245">block_macro_swap_16()</a>, <a class="el" href="byteswap_8c_source.html#l00216">block_macro_swap_32()</a>, <a class="el" href="byteswap_8c_source.html#l00274">block_macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00043">fast_byteswap_errors()</a>, <a class="el" href="byteswap_8c_source.html#l00188">macro_swap_16()</a>, <a class="el" href="byteswap_8c_source.html#l00165">macro_swap_32()</a>, <a class="el" href="byteswap_8c_source.html#l00142">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00114">simple_swap_16()</a>, <a class="el" href="byteswap_8c_source.html#l00088">simple_swap_32()</a>, and <a class="el" href="byteswap_8c_source.html#l00058">simple_swap_64()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="byteswap_8c_source.html#l00040">fast_byteswap_errors()</a>, <a class="el" href="byteswap_8c_source.html#l00111">macro_swap_64()</a>, <a class="el" href="byteswap_8c_source.html#l00083">simple_swap_16()</a>, and <a class="el" href="byteswap_8c_source.html#l00054">simple_swap_32()</a>.</p>
 
 </div>
 </div>

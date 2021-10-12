@@ -89,14 +89,14 @@ $(document).ready(function(){initNavTree('bacio_8c.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 
-<p>Fortran-callable routines to read and write characther (bacio) and numeric (banio) data byte addressably.  
+<p>Fortran-callable routines to read and write characther data byte addressably.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;malloc.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;ctype.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="clib_8h_source.html">clib.h</a>&quot;</code><br />
@@ -111,15 +111,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5a0d52946382d65166f42d885d517324"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bacio_8c.html#a5a0d52946382d65166f42d885d517324">baciol_</a> (int *mode, long int *start, long int *newpos, int *size, long int *no, long int *nactual, int *fdes, const char *fname, char *datary, int namelen, int datanamelen)</td></tr>
 <tr class="memdesc:a5a0d52946382d65166f42d885d517324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do bacio operation, with new names for long int arguments, needed for files &gt; 2 Gb.  <a href="bacio_8c.html#a5a0d52946382d65166f42d885d517324">More...</a><br /></td></tr>
 <tr class="separator:a5a0d52946382d65166f42d885d517324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98de22bea8afd76a266a5bbc4f0db707"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bacio_8c.html#a98de22bea8afd76a266a5bbc4f0db707">banio_</a> (int *mode, int *start, int *newpos, int *size, int *no, int *nactual, int *fdes, const char *fname, char *datary, int namelen)</td></tr>
-<tr class="memdesc:a98de22bea8afd76a266a5bbc4f0db707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do banio operation.  <a href="bacio_8c.html#a98de22bea8afd76a266a5bbc4f0db707">More...</a><br /></td></tr>
-<tr class="separator:a98de22bea8afd76a266a5bbc4f0db707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75975d3289d1d533cfe16f2852558c96"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bacio_8c.html#a75975d3289d1d533cfe16f2852558c96">baniol_</a> (int *mode, long int *start, long int *newpos, int *size, long int *no, long int *nactual, int *fdes, const char *fname, char *datary, int namelen)</td></tr>
-<tr class="memdesc:a75975d3289d1d533cfe16f2852558c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do banio operation, with new names for long int arguments, needed for files &gt; 2 Gb.  <a href="bacio_8c.html#a75975d3289d1d533cfe16f2852558c96">More...</a><br /></td></tr>
-<tr class="separator:a75975d3289d1d533cfe16f2852558c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Fortran-callable routines to read and write characther (bacio) and numeric (banio) data byte addressably. </p>
+<div class="textblock"><p>Fortran-callable routines to read and write characther data byte addressably. </p>
 <p>v1.1:</p><ul>
 <li>Put diagnostic output under control of define VERBOSE or QUIET</li>
 <li>Add option of non-seeking read/write</li>
@@ -230,7 +224,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">mode</td><td>integer specifying operations to be performed see the clib.inc file for the values. Mode is obtained by adding together the values corresponding to the operations The best method is to include the clib.inc file and refer to the names for the operations rather than rely on hard-coded values. </td></tr>
     <tr><td class="paramname">start</td><td>byte number to start your operation from. 0 is the first byte in the file, not 1. </td></tr>
     <tr><td class="paramname">newpos</td><td>position in the file after a read or write has been performed. You'll need this if you're doing 'seeking' read/write. </td></tr>
-    <tr><td class="paramname">size</td><td>is the size of the objects you are trying to read. Rely on the values in the locale.inc file. Types are CHARACTER, INTEGER, REAL, COMPLEX. Specify the correct value by using SIZEOF_type, where type is one of these. (After having included the locale.inc file). </td></tr>
+    <tr><td class="paramname">size</td><td>is the size of the objects you are trying to read. Types are CHARACTER, INTEGER, REAL, COMPLEX. </td></tr>
     <tr><td class="paramname">no</td><td>is the number of things to read or write (characters, integers, whatever). </td></tr>
     <tr><td class="paramname">nactual</td><td>is the number of things actually read or written. Check that you got what you wanted. </td></tr>
     <tr><td class="paramname">fdes</td><td>is an integer 'file descriptor'. This is not a Fortran Unit Number You can use it, however, to refer to files you've previously opened. </td></tr>
@@ -245,7 +239,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call <a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2" title="BACIO.">bacio()</a>, not <a class="el" href="bacio_8c.html#afa339592efdc6c1aabd819f92b60d75c" title="Do bacio operation.">bacio_()</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call <a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2" title="The bacio function in the C code.">bacio()</a>, not <a class="el" href="bacio_8c.html#afa339592efdc6c1aabd819f92b60d75c" title="Do bacio operation.">bacio_()</a>.</dd></dl>
 <p>What is going on here is that although the Fortran caller will always be calling bacio, the called C routine name will change from system to system.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 All was well <br  />
  </dd>
@@ -284,44 +278,44 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Robert Grumbine </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>16 March 1998 </dd></dl>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Close.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; No seek ignore start parameter and do not call lseek().</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; No seek ignore start parameter and do not call lseek().</p>
+<p>&lt; Close an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Write to an open file.</p>
 
-<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l00132">132</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l00101">101</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00012">bacio_module::bacio</a>, <a class="el" href="clib_8h_source.html#l00028">BACLOSE</a>, <a class="el" href="bacio_8c_source.html#l00485">banio_()</a>, <a class="el" href="clib_8h_source.html#l00025">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00027">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00026">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00033">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00032">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00029">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00030">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00031">NOSEEK</a>.</p>
+<p class="reference">References <a class="el" href="clib_8h_source.html#l00025">BACLOSE</a>, <a class="el" href="clib_8h_source.html#l00022">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00024">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00023">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00030">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00029">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00026">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00027">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00028">NOSEEK</a>.</p>
 
 </div>
 </div>
@@ -426,7 +420,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call <a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2" title="BACIO.">bacio()</a>, not <a class="el" href="bacio_8c.html#afa339592efdc6c1aabd819f92b60d75c" title="Do bacio operation.">bacio_()</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call <a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2" title="The bacio function in the C code.">bacio()</a>, not <a class="el" href="bacio_8c.html#afa339592efdc6c1aabd819f92b60d75c" title="Do bacio operation.">bacio_()</a>.</dd></dl>
 <p>What is going on here is that although the Fortran caller will always be calling bacio, the called C routine name will change from system to system.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 All was well <br  />
  </dd>
@@ -465,394 +459,44 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Robert Grumbine </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>21 November 2008 </dd></dl>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Close.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; No seek ignore start parameter and do not call lseek().</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Write to an open file.</p>
+<p>&lt; No seek ignore start parameter and do not call lseek().</p>
+<p>&lt; Close an open file.</p>
+<p>&lt; Open file read only.</p>
+<p>&lt; Open or create file for Write only.</p>
+<p>&lt; Open or create a file for write only, truncating existing contents.</p>
+<p>&lt; Open or create a file for write only append.</p>
+<p>&lt; Open or create file for read/write.</p>
+<p>&lt; Read from an open file.</p>
+<p>&lt; Write to an open file.</p>
 
-<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l00817">817</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l00391">391</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="clib_8h_source.html#l00028">BACLOSE</a>, <a class="el" href="bacio_8c_source.html#l01172">baniol_()</a>, <a class="el" href="clib_8h_source.html#l00025">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00027">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00026">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00033">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00032">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00029">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00030">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00031">NOSEEK</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="bacio_8c_source.html#l00485">banio_()</a>.</p>
-
-</div>
-</div>
-<a id="a98de22bea8afd76a266a5bbc4f0db707"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98de22bea8afd76a266a5bbc4f0db707">&#9670;&nbsp;</a></span>banio_()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int banio_ </td>
-          <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>newpos</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>no</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>nactual</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>fdes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>fname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>datary</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>namelen</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Do banio operation. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>integer specifying operations to be performed see the clib.inc file for the values. Mode is obtained by adding together the values corresponding to the operations The best method is to include the clib.inc file and refer to the names for the operations rather than rely on hard-coded values. </td></tr>
-    <tr><td class="paramname">start</td><td>byte number to start your operation from. 0 is the first byte in the file, not 1. </td></tr>
-    <tr><td class="paramname">newpos</td><td>position in the file after a read or write has been performed. You'll need this if you're doing 'seeking' read/write. </td></tr>
-    <tr><td class="paramname">size</td><td>is the size of the objects you are trying to read. Rely on the values in the locale.inc file. Types are CHARACTER, INTEGER, REAL, COMPLEX. Specify the correct value by using SIZEOF_type, where type is one of these. (After having included the locale.inc file). </td></tr>
-    <tr><td class="paramname">no</td><td>is the number of things to read or write (characters, integers, whatever). </td></tr>
-    <tr><td class="paramname">nactual</td><td>is the number of things actually read or written. Check that you got what you wanted. </td></tr>
-    <tr><td class="paramname">fdes</td><td>is an integer 'file descriptor'. This is not a Fortran Unit Number You can use it, however, to refer to files you've previously opened. </td></tr>
-    <tr><td class="paramname">fname</td><td>is the name of the file. This only needs to be defined when you are opening a file. It must be (on the Fortran side) declared as CHARACTER*N, where N is a length greater than or equal to the length of the file name. CHARACTER*1 fname[80] (for example) will fail. </td></tr>
-    <tr><td class="paramname">datary</td><td>is the name of the entity (variable, vector, array) that you want to write data out from or read it in to. The fact that C is declaring it to be a char * does not affect your fortran. </td></tr>
-    <tr><td class="paramname">namelen</td><td>- Do NOT specify this. It is created automagically by the <br  />
- Fortran compiler <br  />
-</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call banio(), not <a class="el" href="bacio_8c.html#a98de22bea8afd76a266a5bbc4f0db707" title="Do banio operation.">banio_()</a>.</dd></dl>
-<p>What is going on here is that although the Fortran caller will always be calling banio(), the called C routine name will change from system to system.</p>
-<dl class="section return"><dt>Returns</dt><dd>0 All was well <br  />
- </dd>
-<dd>
-255 Tried to open read only <em>and</em> write only <br  />
- </dd>
-<dd>
-254 Tried to read and write in the same call <br  />
- </dd>
-<dd>
-253 Internal failure in name processing <br  />
- </dd>
-<dd>
-252 Failure in opening file <br  />
- </dd>
-<dd>
-251 Tried to read on a write-only file <br  />
- </dd>
-<dd>
-250 Failed in read to find the 'start' location <br  />
- </dd>
-<dd>
-249 Tried to write to a read only file <br  />
- </dd>
-<dd>
-248 Failed in write to find the 'start' location <br  />
- </dd>
-<dd>
-247 Error in close <br  />
- </dd>
-<dd>
-246 Read or wrote fewer data than requested <br  />
- </dd>
-<dd>
-102 Massive catastrophe &ndash; datary pointer is NULL <br  />
-</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Robert Grumbine </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>16 March 1998 </dd></dl>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Close.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-
-<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l00484">484</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
-
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="bacio_8c_source.html#l00818">baciol_()</a>, <a class="el" href="clib_8h_source.html#l00028">BACLOSE</a>, <a class="el" href="clib_8h_source.html#l00025">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00027">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00026">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00033">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00032">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00029">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00030">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00031">NOSEEK</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="bacio_8c_source.html#l00133">bacio_()</a>.</p>
-
-</div>
-</div>
-<a id="a75975d3289d1d533cfe16f2852558c96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75975d3289d1d533cfe16f2852558c96">&#9670;&nbsp;</a></span>baniol_()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int baniol_ </td>
-          <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long int *&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long int *&#160;</td>
-          <td class="paramname"><em>newpos</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long int *&#160;</td>
-          <td class="paramname"><em>no</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long int *&#160;</td>
-          <td class="paramname"><em>nactual</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>fdes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>fname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>datary</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>namelen</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Do banio operation, with new names for long int arguments, needed for files &gt; 2 Gb. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>integer specifying operations to be performed see the clib.inc file for the values. Mode is obtained by adding together the values corresponding to the operations The best method is to include the clib.inc file and refer to the names for the operations rather than rely on hard-coded values. </td></tr>
-    <tr><td class="paramname">start</td><td>byte number to start your operation from. 0 is the first byte in the file, not 1. </td></tr>
-    <tr><td class="paramname">newpos</td><td>position in the file after a read or write has been performed. You'll need this if you're doing 'seeking' read/write. </td></tr>
-    <tr><td class="paramname">size</td><td>is the size of the objects you are trying to read. Rely on the values in the locale.inc file. Types are CHARACTER, INTEGER, REAL, COMPLEX. Specify the correct value by using SIZEOF_type, where type is one of these. (After having included the locale.inc file). </td></tr>
-    <tr><td class="paramname">no</td><td>is the number of things to read or write (characters, integers, whatever). </td></tr>
-    <tr><td class="paramname">nactual</td><td>is the number of things actually read or written. Check that you got what you wanted. </td></tr>
-    <tr><td class="paramname">fdes</td><td>is an integer 'file descriptor'. This is not a Fortran Unit Number You can use it, however, to refer to files you've previously opened. </td></tr>
-    <tr><td class="paramname">fname</td><td>is the name of the file. This only needs to be defined when you are opening a file. It must be (on the Fortran side) declared as CHARACTER*N, where N is a length greater than or equal to the length of the file name. CHARACTER*1 fname[80] (for example) will fail. </td></tr>
-    <tr><td class="paramname">datary</td><td>is the name of the entity (variable, vector, array) that you want to write data out from or read it in to. The fact that C is declaring it to be a char * does not affect your fortran. </td></tr>
-    <tr><td class="paramname">namelen</td><td>- Do NOT specify this. It is created automagically by the <br  />
- Fortran compiler <br  />
-</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>In your Fortran code, call banio(), not <a class="el" href="bacio_8c.html#a98de22bea8afd76a266a5bbc4f0db707" title="Do banio operation.">banio_()</a>.</dd></dl>
-<p>What is going on here is that although the Fortran caller will always be calling banio(), the called C routine name will change from system to system.</p>
-<dl class="section return"><dt>Returns</dt><dd>0 All was well <br  />
- </dd>
-<dd>
-255 Tried to open read only <em>and</em> write only <br  />
- </dd>
-<dd>
-254 Tried to read and write in the same call <br  />
- </dd>
-<dd>
-253 Internal failure in name processing <br  />
- </dd>
-<dd>
-252 Failure in opening file <br  />
- </dd>
-<dd>
-251 Tried to read on a write-only file <br  />
- </dd>
-<dd>
-250 Failed in read to find the 'start' location <br  />
- </dd>
-<dd>
-249 Tried to write to a read only file <br  />
- </dd>
-<dd>
-248 Failed in write to find the 'start' location <br  />
- </dd>
-<dd>
-247 Error in close <br  />
- </dd>
-<dd>
-246 Read or wrote fewer data than requested <br  />
- </dd>
-<dd>
-102 Massive catastrophe &ndash; datary pointer is NULL <br  />
-</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Robert Grumbine </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>16 March 1998 </dd></dl>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Write.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write.</p>
-<p>&lt; No seek.</p>
-<p>&lt; Close.</p>
-<p>&lt; Read only.</p>
-<p>&lt; Write only.</p>
-<p>&lt; Write only truncate.</p>
-<p>&lt; Write only append.</p>
-<p>&lt; Read/write.</p>
-<p>&lt; Read.</p>
-<p>&lt; Write.</p>
-
-<p class="definition">Definition at line <a class="el" href="bacio_8c_source.html#l01171">1171</a> of file <a class="el" href="bacio_8c_source.html">bacio.c</a>.</p>
-
-<p class="reference">References <a class="el" href="clib_8h_source.html#l00028">BACLOSE</a>, <a class="el" href="clib_8h_source.html#l00025">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00027">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00026">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00033">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00032">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00029">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00030">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00031">NOSEEK</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="bacio_8c_source.html#l00818">baciol_()</a>.</p>
+<p class="reference">References <a class="el" href="clib_8h_source.html#l00025">BACLOSE</a>, <a class="el" href="clib_8h_source.html#l00022">BAOPEN_RONLY</a>, <a class="el" href="clib_8h_source.html#l00024">BAOPEN_RW</a>, <a class="el" href="clib_8h_source.html#l00023">BAOPEN_WONLY</a>, <a class="el" href="clib_8h_source.html#l00030">BAOPEN_WONLY_APPEND</a>, <a class="el" href="clib_8h_source.html#l00029">BAOPEN_WONLY_TRUNC</a>, <a class="el" href="clib_8h_source.html#l00026">BAREAD</a>, <a class="el" href="clib_8h_source.html#l00027">BAWRITE</a>, and <a class="el" href="clib_8h_source.html#l00028">NOSEEK</a>.</p>
 
 </div>
 </div>

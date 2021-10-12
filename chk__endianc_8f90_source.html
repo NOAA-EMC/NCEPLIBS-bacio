@@ -89,52 +89,36 @@ $(document).ready(function(){initNavTree('chk__endianc_8f90_source.html',''); in
 <a href="chk__endianc_8f90.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">   10</a></span>&#160;<span class="keyword">subroutine </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a>(mendian)</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keywordtype">implicit none</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keywordtype">character(16)</span>,<span class="keywordtype">intent(out)</span>  :: mendian</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">!----------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordtype">INTEGER</span>,<span class="keywordtype">PARAMETER</span> :: ASCII_0 = 48,ascii_1 = 49,ascii_2 = 50,    &amp;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;     &amp;                     ascii_3 = 51</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordtype">INTEGER(4)</span>        :: I</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        common// i</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">!***** code start</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">!     </span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        i = ascii_0 + ascii_1*256 + ascii_2*(256**2) + ascii_3*(256**3)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">call </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a>(mendian)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">!     ------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      <span class="keyword">end subroutine </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">   35</a></span>&#160;      <span class="keyword">subroutine </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a>(mendian)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">implicit none</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">!---</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">character(16)</span>,<span class="keywordtype">intent(out)</span>        :: mendian</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">!--- local vars</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">character</span>               :: i*4</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        common//  i</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">!     ------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">if</span>(i .eq. <span class="stringliteral">&#39;0123&#39;</span>) <span class="keywordflow">then</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;          mendian=<span class="stringliteral">&#39;little_endian&#39;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;          <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">elseif</span> (i .eq. <span class="stringliteral">&#39;3210&#39;</span>) <span class="keywordflow">then</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;          mendian=<span class="stringliteral">&#39;big_endian&#39;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;          <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;          mendian=<span class="stringliteral">&#39;mixed_endian&#39;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;          <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordflow">        endif</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">!     ------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keyword">end subroutine </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">implicit none</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keywordtype">character(16)</span>,<span class="keywordtype">intent(out)</span>  :: mendian</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">PARAMETER</span> :: ASCII_0 = 48,ascii_1 = 49,ascii_2 = 50,    &amp;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;       ascii_3 = 51</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordtype">INTEGER(4)</span> :: I</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  common// i</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  i = ascii_0 + ascii_1*256 + ascii_2*(256**2) + ascii_3*(256**3)</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keyword">call </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a>(mendian)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">end subroutine </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">   27</a></span>&#160;<span class="keyword">subroutine </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a>(mendian)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">implicit none</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">character(16)</span>,<span class="keywordtype">intent(out)</span>        :: mendian</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">character</span> :: i*4</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  common//  i</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span>(i .eq. <span class="stringliteral">&#39;0123&#39;</span>) <span class="keywordflow">then</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;     mendian=<span class="stringliteral">&#39;little_endian&#39;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;     <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">elseif</span> (i .eq. <span class="stringliteral">&#39;3210&#39;</span>) <span class="keywordflow">then</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;     mendian=<span class="stringliteral">&#39;big_endian&#39;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;     <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;     mendian=<span class="stringliteral">&#39;mixed_endian&#39;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;     <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordflow">  endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">end subroutine </span><a class="code" href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a></div>
 <div class="ttc" id="achk__endianc_8f90_html_a3ae79207cdcb24be892c06d13effb1c7"><div class="ttname"><a href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a></div><div class="ttdeci">subroutine chk_endianc(mendian)</div><div class="ttdoc">Obtain machine endianness.</div><div class="ttdef"><b>Definition:</b> <a href="chk__endianc_8f90_source.html#l00010">chk_endianc.f90:11</a></div></div>
-<div class="ttc" id="achk__endianc_8f90_html_a6f98e3444f3f988cff77e3f2b1d73ee5"><div class="ttname"><a href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a></div><div class="ttdeci">subroutine findendian(mendian)</div><div class="ttdoc">Obtain machine endianness.</div><div class="ttdef"><b>Definition:</b> <a href="chk__endianc_8f90_source.html#l00035">chk_endianc.f90:36</a></div></div>
+<div class="ttc" id="achk__endianc_8f90_html_a6f98e3444f3f988cff77e3f2b1d73ee5"><div class="ttname"><a href="chk__endianc_8f90.html#a6f98e3444f3f988cff77e3f2b1d73ee5">findendian</a></div><div class="ttdeci">subroutine findendian(mendian)</div><div class="ttdoc">Obtain machine endianness.</div><div class="ttdef"><b>Definition:</b> <a href="chk__endianc_8f90_source.html#l00027">chk_endianc.f90:28</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

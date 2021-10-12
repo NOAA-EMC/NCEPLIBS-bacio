@@ -25,7 +25,15 @@
 var NAVTREE =
 [
   [ "NCEPLIBS-bacio", "index.html", [
-    [ "bacio", "index.html#autotoc_md0", null ],
+    [ "bacio", "index.html#autotoc_md0", [
+      [ "Fortran Library", "index.html#autotoc_md1", [
+        [ "Opening or Creating a Data File", "index.html#autotoc_md2", null ],
+        [ "Reading or Writing Unformatted Records", "index.html#autotoc_md3", null ],
+        [ "Reading or Writing Formatted Records", "index.html#autotoc_md4", null ],
+        [ "Closing the File", "index.html#autotoc_md5", null ]
+      ] ],
+      [ "C Backend", "index.html#autotoc_md6", null ]
+    ] ],
     [ "Modules", "namespaces.html", [
       [ "Modules List", "namespaces.html", "namespaces_dup" ],
       [ "Module Members", "namespacemembers.html", [

@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('baciof_8f90.html',''); initResizable()
 </div><!--header-->
 <div class="contents">
 
-<p>Byte-Addressable I/O Module.  
+<p>Contains subroutines to read/write binary files.  
 <a href="#details">More...</a></p>
 
 <p><a href="baciof_8f90_source.html">Go to the source code of this file.</a></p>
@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('baciof_8f90.html',''); initResizable()
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Modules</h2></td></tr>
 <tr class="memitem:namespacebacio__module"><td class="memItemLeft" align="right" valign="top">module &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html">bacio_module</a></td></tr>
-<tr class="memdesc:namespacebacio__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte-Addressable I/O Module. <br /></td></tr>
+<tr class="memdesc:namespacebacio__module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains subroutines to read/write binary files. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -123,22 +123,22 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memdesc:a5fe2c33e211d7601f6208955fdd5f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a byte-addressable file for write only with truncation.  <a href="baciof_8f90.html#a5fe2c33e211d7601f6208955fdd5f47f">More...</a><br /></td></tr>
 <tr class="separator:a5fe2c33e211d7601f6208955fdd5f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e62fb3f855257cb06e44f22c3dc3ed1"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a5e62fb3f855257cb06e44f22c3dc3ed1">baread</a> (LU, IB, NB, KA, A)</td></tr>
-<tr class="memdesc:a5e62fb3f855257cb06e44f22c3dc3ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This baread is calling bareadl to read a given number of bytes from an unblocked file,skipping a given number of bytes.  <a href="baciof_8f90.html#a5e62fb3f855257cb06e44f22c3dc3ed1">More...</a><br /></td></tr>
+<tr class="memdesc:a5e62fb3f855257cb06e44f22c3dc3ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subroutine calls <a class="el" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0" title="This subrouytine is using updated baciol() I/O package to read a given number of bytes from an unbloc...">bareadl()</a> to read a given number of bytes from an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#a5e62fb3f855257cb06e44f22c3dc3ed1">More...</a><br /></td></tr>
 <tr class="separator:a5e62fb3f855257cb06e44f22c3dc3ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a697368b30db3732805779bd21c089fd0"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a> (LU, IB, NB, KA, A)</td></tr>
-<tr class="memdesc:a697368b30db3732805779bd21c089fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subrouytine is using updated baciol i/o package to read a given number of bytes from an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">More...</a><br /></td></tr>
+<tr class="memdesc:a697368b30db3732805779bd21c089fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subrouytine is using updated <a class="el" href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1" title="The baciol function in the C code.">baciol()</a> I/O package to read a given number of bytes from an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">More...</a><br /></td></tr>
 <tr class="separator:a697368b30db3732805779bd21c089fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46f06d5276a8281830797523a7aa7dd1"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a46f06d5276a8281830797523a7aa7dd1">baseto</a> (NOPT, VOPT)</td></tr>
 <tr class="memdesc:a46f06d5276a8281830797523a7aa7dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set options for byte-addressable I/O.  <a href="baciof_8f90.html#a46f06d5276a8281830797523a7aa7dd1">More...</a><br /></td></tr>
 <tr class="separator:a46f06d5276a8281830797523a7aa7dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5cc3d70834fbf2e914ff39e0f4709c8"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#ad5cc3d70834fbf2e914ff39e0f4709c8">bawrite</a> (LU, IB, NB, KA, A)</td></tr>
-<tr class="memdesc:ad5cc3d70834fbf2e914ff39e0f4709c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This program is calling bawritel to write a given number of bytes to an unblocked file,skipping a given number of bytes.  <a href="baciof_8f90.html#ad5cc3d70834fbf2e914ff39e0f4709c8">More...</a><br /></td></tr>
+<tr class="memdesc:ad5cc3d70834fbf2e914ff39e0f4709c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This program is calling <a class="el" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c" title="This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of byte...">bawritel()</a> to write a given number of bytes to an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#ad5cc3d70834fbf2e914ff39e0f4709c8">More...</a><br /></td></tr>
 <tr class="separator:ad5cc3d70834fbf2e914ff39e0f4709c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5047c57b0cc1f2101ab7ecc9084a7c9c"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a> (LU, IB, NB, KA, A)</td></tr>
-<tr class="memdesc:a5047c57b0cc1f2101ab7ecc9084a7c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subrouytine is using updated baciol i/o package to write a given number of bytes to an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">More...</a><br /></td></tr>
+<tr class="memdesc:a5047c57b0cc1f2101ab7ecc9084a7c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of bytes.  <a href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">More...</a><br /></td></tr>
 <tr class="separator:a5047c57b0cc1f2101ab7ecc9084a7c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69a1e7f6915d0fef92c0bc288ee356e6"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a69a1e7f6915d0fef92c0bc288ee356e6">wryte</a> (LU, NB, A)</td></tr>
-<tr class="memdesc:a69a1e7f6915d0fef92c0bc288ee356e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subroutine is calling wrytel to write a given number of bytes to an unblocked file.  <a href="baciof_8f90.html#a69a1e7f6915d0fef92c0bc288ee356e6">More...</a><br /></td></tr>
+<tr class="memdesc:a69a1e7f6915d0fef92c0bc288ee356e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This subroutine is calling <a class="el" href="baciof_8f90.html#a33d8e938b4c64dd7fc6eb229ac7da671" title="Write a given number of bytes to an unblocked file.">wrytel()</a> to write a given number of bytes to an unblocked file.  <a href="baciof_8f90.html#a69a1e7f6915d0fef92c0bc288ee356e6">More...</a><br /></td></tr>
 <tr class="separator:a69a1e7f6915d0fef92c0bc288ee356e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33d8e938b4c64dd7fc6eb229ac7da671"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="baciof_8f90.html#a33d8e938b4c64dd7fc6eb229ac7da671">wrytel</a> (LU, NB, A)</td></tr>
 <tr class="memdesc:a33d8e938b4c64dd7fc6eb229ac7da671"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a given number of bytes to an unblocked file.  <a href="baciof_8f90.html#a33d8e938b4c64dd7fc6eb229ac7da671">More...</a><br /></td></tr>
@@ -147,23 +147,50 @@ Functions/Subroutines</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="memItemLeft" align="right" valign="top">integer, external&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2">bacio_module::bacio</a></td></tr>
-<tr class="memdesc:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">BACIO.  <a href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2">More...</a><br /></td></tr>
+<tr class="memdesc:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bacio function in the C code.  <a href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2">More...</a><br /></td></tr>
 <tr class="separator:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703dd978f656d21459d5e8b845a7ad21"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a703dd978f656d21459d5e8b845a7ad21">bacio_module::bacio_close</a> = 8</td></tr>
+<tr class="memdesc:a703dd978f656d21459d5e8b845a7ad21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close file.  <a href="namespacebacio__module.html#a703dd978f656d21459d5e8b845a7ad21">More...</a><br /></td></tr>
+<tr class="separator:a703dd978f656d21459d5e8b845a7ad21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb04b9fc9d79b2e3c782b29bebd907d6"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#abb04b9fc9d79b2e3c782b29bebd907d6">bacio_module::bacio_noseek</a> = 64</td></tr>
+<tr class="memdesc:abb04b9fc9d79b2e3c782b29bebd907d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start I/O from previous spot.  <a href="namespacebacio__module.html#abb04b9fc9d79b2e3c782b29bebd907d6">More...</a><br /></td></tr>
+<tr class="separator:abb04b9fc9d79b2e3c782b29bebd907d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5587ae262da960da95263eb79f411ef8"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a5587ae262da960da95263eb79f411ef8">bacio_module::bacio_openr</a> = 1</td></tr>
+<tr class="memdesc:a5587ae262da960da95263eb79f411ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open file for read only.  <a href="namespacebacio__module.html#a5587ae262da960da95263eb79f411ef8">More...</a><br /></td></tr>
+<tr class="separator:a5587ae262da960da95263eb79f411ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6ded893fd5ccb0bdcaacac6cce55415"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#ad6ded893fd5ccb0bdcaacac6cce55415">bacio_module::bacio_openrw</a> = 4</td></tr>
+<tr class="memdesc:ad6ded893fd5ccb0bdcaacac6cce55415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open file for read or write.  <a href="namespacebacio__module.html#ad6ded893fd5ccb0bdcaacac6cce55415">More...</a><br /></td></tr>
+<tr class="separator:ad6ded893fd5ccb0bdcaacac6cce55415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb654cef6b3f313f084f0e496c4166f3"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#acb654cef6b3f313f084f0e496c4166f3">bacio_module::bacio_openw</a> = 2</td></tr>
+<tr class="memdesc:acb654cef6b3f313f084f0e496c4166f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open file for write only.  <a href="namespacebacio__module.html#acb654cef6b3f313f084f0e496c4166f3">More...</a><br /></td></tr>
+<tr class="separator:acb654cef6b3f313f084f0e496c4166f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a154df2a20cc47663ebed1684c0d02f30"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a154df2a20cc47663ebed1684c0d02f30">bacio_module::bacio_openwa</a> = 256</td></tr>
+<tr class="memdesc:a154df2a20cc47663ebed1684c0d02f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open for write only with append.  <a href="namespacebacio__module.html#a154df2a20cc47663ebed1684c0d02f30">More...</a><br /></td></tr>
+<tr class="separator:a154df2a20cc47663ebed1684c0d02f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1175bc6e3fbf57a347d0aa993d7a47ed"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a1175bc6e3fbf57a347d0aa993d7a47ed">bacio_module::bacio_openwt</a> = 128</td></tr>
+<tr class="memdesc:a1175bc6e3fbf57a347d0aa993d7a47ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open for write only with truncation.  <a href="namespacebacio__module.html#a1175bc6e3fbf57a347d0aa993d7a47ed">More...</a><br /></td></tr>
+<tr class="separator:a1175bc6e3fbf57a347d0aa993d7a47ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bdcbfb33b7a8cb800ba53e632382f13"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a1bdcbfb33b7a8cb800ba53e632382f13">bacio_module::bacio_read</a> = 16</td></tr>
+<tr class="memdesc:a1bdcbfb33b7a8cb800ba53e632382f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from the file.  <a href="namespacebacio__module.html#a1bdcbfb33b7a8cb800ba53e632382f13">More...</a><br /></td></tr>
+<tr class="separator:a1bdcbfb33b7a8cb800ba53e632382f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25698de9389972b55c1e563bc605446f"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a25698de9389972b55c1e563bc605446f">bacio_module::bacio_write</a> = 32</td></tr>
+<tr class="memdesc:a25698de9389972b55c1e563bc605446f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to the file.  <a href="namespacebacio__module.html#a25698de9389972b55c1e563bc605446f">More...</a><br /></td></tr>
+<tr class="separator:a25698de9389972b55c1e563bc605446f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca1e34162701c657c831fc0b9bcb1bf1"><td class="memItemLeft" align="right" valign="top">integer, external&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1">bacio_module::baciol</a></td></tr>
-<tr class="memdesc:aca1e34162701c657c831fc0b9bcb1bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">BACIOL.  <a href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1">More...</a><br /></td></tr>
+<tr class="memdesc:aca1e34162701c657c831fc0b9bcb1bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The baciol function in the C code.  <a href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1">More...</a><br /></td></tr>
 <tr class="separator:aca1e34162701c657c831fc0b9bcb1bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af25e115157a26f06373832f47309b6b6"><td class="memItemLeft" align="right" valign="top">integer, dimension(20), save&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">bacio_module::baopts</a> =0</td></tr>
-<tr class="memdesc:af25e115157a26f06373832f47309b6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAOPTS.  <a href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">More...</a><br /></td></tr>
+<tr class="memitem:af25e115157a26f06373832f47309b6b6"><td class="memItemLeft" align="right" valign="top">integer, dimension(20), save&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">bacio_module::baopts</a> = 0</td></tr>
+<tr class="memdesc:af25e115157a26f06373832f47309b6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of option settings.  <a href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">More...</a><br /></td></tr>
 <tr class="separator:af25e115157a26f06373832f47309b6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a633ee3686ed8898a3c21ffa24c9c293d"><td class="memItemLeft" align="right" valign="top">integer, dimension(fddim), save&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a633ee3686ed8898a3c21ffa24c9c293d">bacio_module::fd</a> =FDDIM*0</td></tr>
-<tr class="memdesc:a633ee3686ed8898a3c21ffa24c9c293d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FD.  <a href="namespacebacio__module.html#a633ee3686ed8898a3c21ffa24c9c293d">More...</a><br /></td></tr>
+<tr class="memitem:a633ee3686ed8898a3c21ffa24c9c293d"><td class="memItemLeft" align="right" valign="top">integer, dimension(fddim), save&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a633ee3686ed8898a3c21ffa24c9c293d">bacio_module::fd</a> = FDDIM*0</td></tr>
+<tr class="memdesc:a633ee3686ed8898a3c21ffa24c9c293d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array IDs of currently open files.  <a href="namespacebacio__module.html#a633ee3686ed8898a3c21ffa24c9c293d">More...</a><br /></td></tr>
 <tr class="separator:a633ee3686ed8898a3c21ffa24c9c293d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f8a43f9e14f6156d815081b4bd97f52"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a7f8a43f9e14f6156d815081b4bd97f52">bacio_module::fddim</a> =9999</td></tr>
-<tr class="memdesc:a7f8a43f9e14f6156d815081b4bd97f52"><td class="mdescLeft">&#160;</td><td class="mdescRight">FDDIM.  <a href="namespacebacio__module.html#a7f8a43f9e14f6156d815081b4bd97f52">More...</a><br /></td></tr>
+<tr class="memitem:a7f8a43f9e14f6156d815081b4bd97f52"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a7f8a43f9e14f6156d815081b4bd97f52">bacio_module::fddim</a> = 9999</td></tr>
+<tr class="memdesc:a7f8a43f9e14f6156d815081b4bd97f52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of open files in bacio library.  <a href="namespacebacio__module.html#a7f8a43f9e14f6156d815081b4bd97f52">More...</a><br /></td></tr>
 <tr class="separator:a7f8a43f9e14f6156d815081b4bd97f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Byte-Addressable I/O Module. </p>
+<div class="textblock"><p>Contains subroutines to read/write binary files. </p>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
@@ -198,17 +225,17 @@ Variables</h2></td></tr>
 <p>Close a byte-addressable file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to close. </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to close. </td></tr>
+    <tr><td class="paramname">iret</td><td>return code.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00161">161</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00175">175</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00031">bacio_module::bacio_close</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -247,18 +274,18 @@ Variables</h2></td></tr>
 <p>Open a byte-addressable file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to open </td></tr>
-    <tr><td class="paramname">cfn</td><td>character filename to open (consisting of nonblank printable characters). </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to open. </td></tr>
+    <tr><td class="paramname">cfn</td><td>filename to open (consisting of nonblank printable characters). </td></tr>
+    <tr><td class="paramname">iret</td><td>return code</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00051">51</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00070">70</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00030">bacio_module::bacio_openrw</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -297,18 +324,18 @@ Variables</h2></td></tr>
 <p>Open a byte-addressable file for read only. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to open. </td></tr>
-    <tr><td class="paramname">cfn</td><td>character filename to open (consisting of nonblank printable characters). </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to open. </td></tr>
+    <tr><td class="paramname">cfn</td><td>filename to open (consisting of nonblank printable characters). </td></tr>
+    <tr><td class="paramname">iret</td><td>return code.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00074">74</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00092">92</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00028">bacio_module::bacio_openr</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -347,18 +374,18 @@ Variables</h2></td></tr>
 <p>Open a byte-addressable file for write only. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to open. </td></tr>
-    <tr><td class="paramname">cfn</td><td>character filename to open (consisting of nonblank printable characters). </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to open. </td></tr>
+    <tr><td class="paramname">cfn</td><td>filename to open (consisting of nonblank printable characters). </td></tr>
+    <tr><td class="paramname">iret</td><td>return code.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00097">97</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00114">114</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00029">bacio_module::bacio_openw</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -397,18 +424,18 @@ Variables</h2></td></tr>
 <p>Open a byte-addressable file for write only with append. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to open. </td></tr>
-    <tr><td class="paramname">cfn</td><td>character filename to open (consisting of nonblank printable characters). </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to open. </td></tr>
+    <tr><td class="paramname">cfn</td><td>filename to open (consisting of nonblank printable characters). </td></tr>
+    <tr><td class="paramname">iret</td><td>return code.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00141">141</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00156">156</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00036">bacio_module::bacio_openwa</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -447,18 +474,18 @@ Variables</h2></td></tr>
 <p>Open a byte-addressable file for write only with truncation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to open. </td></tr>
-    <tr><td class="paramname">cfn</td><td>character filename to open (consisting of nonblank printable characters). </td></tr>
-    <tr><td class="paramname">iret</td><td>integer return code.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to open. </td></tr>
+    <tr><td class="paramname">cfn</td><td>filename to open (consisting of nonblank printable characters). </td></tr>
+    <tr><td class="paramname">iret</td><td>return code.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00119">119</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00135">135</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00014">bacio_module::fddim</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00035">bacio_module::bacio_openwt</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>, and <a class="el" href="baciof_8f90_source.html#l00019">bacio_module::fddim</a>.</p>
 
 </div>
 </div>
@@ -506,8 +533,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This baread is calling bareadl to read a given number of bytes from an unblocked file,skipping a given number of bytes. </p>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<p>This subroutine calls <a class="el" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0" title="This subrouytine is using updated baciol() I/O package to read a given number of bytes from an unbloc...">bareadl()</a> to read a given number of bytes from an unblocked file, skipping a given number of bytes. </p>
+<p>The physical I/O is blocked into four 4096-byte buffers if the byte-addressable option 1 has been set to 1 by baseto. This buffered reading is incompatible with no-seek reading.</p>
+<dl class="section note"><dt>Note</dt><dd>The data in the I/O buffer is not cleared when the file is closed and reopened, or when any other operation on the file is done. So it may contian out-of-date data, if the data file has been changed after the buffers were filled. Use with caution.</dd></dl>
+<h3><a class="anchor" id="autotoc_md7"></a>
 Program History Log</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -515,26 +544,25 @@ Program History Log</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">J. Wang   </td><td class="markdownTableBodyNone">Modifications.   </td></tr>
+<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">Jun Wang   </td><td class="markdownTableBodyNone">Modifications.   </td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to read. </td></tr>
-    <tr><td class="paramname">ib</td><td>integer number of bytes to skip. (If ib&lt;0, then the file is accessed with no seeking) </td></tr>
-    <tr><td class="paramname">nb</td><td>integer number of bytes to read. </td></tr>
-    <tr><td class="paramname">ka</td><td>integer number of bytes actually read. </td></tr>
-    <tr><td class="paramname">a</td><td>character*1 (nb) data read.</td></tr>
+    <tr><td class="paramname">lu</td><td>unit to read. </td></tr>
+    <tr><td class="paramname">ib</td><td>number of bytes to skip. (If ib&lt;0, then the file is accessed with no seeking) </td></tr>
+    <tr><td class="paramname">nb</td><td>number of bytes to read. </td></tr>
+    <tr><td class="paramname">ka</td><td>number of bytes actually read. </td></tr>
+    <tr><td class="paramname">a</td><td>Buffer where data are copied to from file. Must be of sufficient size to hold data.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>A baopen must have already been called.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <a class="el" href="baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd" title="Open a byte-addressable file.">baopen()</a> must have already been called.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>98-06-04 <br  />
- </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00194">194</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00217">217</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00239">bareadl()</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>.</p>
 
 </div>
 </div>
@@ -582,9 +610,10 @@ Program History Log</h3>
       </table>
 </div><div class="memdoc">
 
-<p>This subrouytine is using updated baciol i/o package to read a given number of bytes from an unblocked file, skipping a given number of bytes. </p>
-<p>The physical i/o is blocked into four 4096-byte buffers if the byte-addressable option 1 has been set to 1 by baseto. This buffered reading is incompatible with no-seek reading.</p>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<p>This subrouytine is using updated <a class="el" href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1" title="The baciol function in the C code.">baciol()</a> I/O package to read a given number of bytes from an unblocked file, skipping a given number of bytes. </p>
+<p>The physical I/O is blocked into four 4096-byte buffers if the byte-addressable option 1 has been set to 1 by baseto. This buffered reading is incompatible with no-seek reading.</p>
+<dl class="section note"><dt>Note</dt><dd>The data in the I/O buffer is not cleared when the file is closed and reopened, or when any other operation on the file is done. So it may contian out-of-date data, if the data file has been changed after the buffers were filled. Use with caution.</dd></dl>
+<h3><a class="anchor" id="autotoc_md8"></a>
 Program History Log</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -592,27 +621,27 @@ Program History Log</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">J. Wang   </td><td class="markdownTableBodyNone">Modifications.   </td></tr>
+<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">Jun Wang   </td><td class="markdownTableBodyNone">Modifications.   </td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to read. </td></tr>
-    <tr><td class="paramname">ib</td><td>integer(8) number of bytes to skip (if ib&lt;0, then the file is accessed with no seeking). </td></tr>
-    <tr><td class="paramname">nb</td><td>integer(8) number of bytes to read. </td></tr>
-    <tr><td class="paramname">ka</td><td>integer(8) number of bytes actually read. </td></tr>
-    <tr><td class="paramname">a</td><td>character*1 (nb) data read.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lu</td><td>unit to read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ib</td><td>number of bytes to skip (if ib&lt;0, then the file is accessed with no seeking). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>number of bytes to read. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ka</td><td>number of bytes actually read. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">a</td><td>Buffer where data are copied to from file. Must be of sufficient size to hold data.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>A baopen must have already been called.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <a class="el" href="baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd" title="Open a byte-addressable file.">baopen()</a> must have already been called.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00238">238</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00266">266</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baopts</a>, and <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00034">bacio_module::bacio_noseek</a>, <a class="el" href="baciof_8f90_source.html#l00032">bacio_module::bacio_read</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, <a class="el" href="baciof_8f90_source.html#l00026">bacio_module::baopts</a>, and <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="bafrio_8f90_source.html#l00085">bafrindexl()</a>, <a class="el" href="bafrio_8f90_source.html#l00206">bafrreadl()</a>, and <a class="el" href="baciof_8f90_source.html#l00195">baread()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="bafrio_8f90_source.html#l00084">bafrindexl()</a>, <a class="el" href="bafrio_8f90_source.html#l00203">bafrreadl()</a>, and <a class="el" href="baciof_8f90_source.html#l00218">baread()</a>.</p>
 
 </div>
 </div>
@@ -643,22 +672,23 @@ Program History Log</h3>
 </div><div class="memdoc">
 
 <p>Set options for byte-addressable I/O. </p>
+<p>(There is currently only one valid option.)</p>
 <p>All options default to 0.</p>
 <p>Option 1: Blocked reading option:</p>
 <p>If the option value is 1, then the reading is blocked into four 4096-byte buffers. This may be efficient if the reads will be requested in much smaller chunks. otherwise, each call to baread initiates a physical read.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">nopt</td><td>integer option number. </td></tr>
-    <tr><td class="paramname">vopt</td><td>integer option value.</td></tr>
+    <tr><td class="paramname">nopt</td><td>option number. </td></tr>
+    <tr><td class="paramname">vopt</td><td>option value.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00035">35</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00055">55</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baopts</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00026">bacio_module::baopts</a>.</p>
 
 </div>
 </div>
@@ -706,22 +736,22 @@ Program History Log</h3>
       </table>
 </div><div class="memdoc">
 
-<p>This program is calling bawritel to write a given number of bytes to an unblocked file,skipping a given number of bytes. </p>
+<p>This program is calling <a class="el" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c" title="This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of byte...">bawritel()</a> to write a given number of bytes to an unblocked file, skipping a given number of bytes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">LU</td><td>INTEGER UNIT TO WRITE. </td></tr>
-    <tr><td class="paramname">IB</td><td>INTEGER NUMBER OF BYTES TO SKIP. (IF IB&lt;0, THEN THE FILE IS ACCESSED WITH NO SEEKING) </td></tr>
-    <tr><td class="paramname">NB</td><td>INTEGER NUMBER OF BYTES TO WRITE. </td></tr>
-    <tr><td class="paramname">A</td><td>CHARACTER*1 (NB) DATA TO WRITE. </td></tr>
-    <tr><td class="paramname">KA</td><td>INTEGER NUMBER OF BYTES ACTUALLY WRITTEN.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lu</td><td>unit to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ib</td><td>number of bytes to skip. (If ib&lt;0, then the file is accessed with no seeking.) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>number of bytes to write. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ka</td><td>integer number of bytes actually written. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>data to write.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>A baopen must have already been called. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <a class="el" href="baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd" title="Open a byte-addressable file.">baopen()</a> must have already been called. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00342">342</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00368">368</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00375">bawritel()</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00399">bawritel()</a>.</p>
 
 </div>
 </div>
@@ -769,23 +799,23 @@ Program History Log</h3>
       </table>
 </div><div class="memdoc">
 
-<p>This subrouytine is using updated baciol i/o package to write a given number of bytes to an unblocked file, skipping a given number of bytes. </p>
+<p>This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of bytes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">LU</td><td>INTEGER UNIT TO WRITE. </td></tr>
-    <tr><td class="paramname">IB</td><td>INTEGER(8) NUMBER OF BYTES TO SKIP. (IF IB&lt;0, THEN THE FILE IS ACCESSED WITH NO SEEKING) </td></tr>
-    <tr><td class="paramname">NB</td><td>INTEGER(8) NUMBER OF BYTES TO WRITE. </td></tr>
-    <tr><td class="paramname">A</td><td>CHARACTER*1 (NB) DATA TO WRITE. </td></tr>
-    <tr><td class="paramname">KA</td><td>INTEGER(8) NUMBER OF BYTES ACTUALLY WRITTEN. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lu</td><td>unit to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ib</td><td>number of bytes to skip. (If ib &lt; 0, then the file is accessed with no seeking). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>number of bytes to write. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ka</td><td>number of bytes actually written. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>data to write. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00374">374</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00398">398</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, and <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00034">bacio_module::bacio_noseek</a>, <a class="el" href="baciof_8f90_source.html#l00033">bacio_module::bacio_write</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, and <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="bafrio_8f90_source.html#l00297">bafrwritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00343">bawrite()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="bafrio_8f90_source.html#l00291">bafrwritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00369">bawrite()</a>.</p>
 
 </div>
 </div>
@@ -821,34 +851,34 @@ Program History Log</h3>
       </table>
 </div><div class="memdoc">
 
-<p>This subroutine is calling wrytel to write a given number of bytes to an unblocked file. </p>
-<h3><a class="anchor" id="autotoc_md3"></a>
+<p>This subroutine is calling <a class="el" href="baciof_8f90.html#a33d8e938b4c64dd7fc6eb229ac7da671" title="Write a given number of bytes to an unblocked file.">wrytel()</a> to write a given number of bytes to an unblocked file. </p>
+<h3><a class="anchor" id="autotoc_md9"></a>
 Program History Log</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Date   </th><th class="markdownTableHeadNone">Programmer   </th><th class="markdownTableHeadNone">Comments    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">92-10-31   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
+<td class="markdownTableBodyNone">92-10-31   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">95-10-31   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">WORKSTATION VERSION    </td></tr>
+<td class="markdownTableBodyNone">95-10-31   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">workstation version    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">BACIO VERSION    </td></tr>
+<td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">bacio version    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">J. WANG   </td><td class="markdownTableBodyNone">WRYTEL VERSION   </td></tr>
+<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">Jun Wang   </td><td class="markdownTableBodyNone">wrytel version   </td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lu</td><td>integer unit to which to write. </td></tr>
-    <tr><td class="paramname">nb</td><td>integer(4) number of bytes to write. </td></tr>
-    <tr><td class="paramname">a</td><td>character*1 (nb) data to write.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lu</td><td>unit to which to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>number of bytes to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>data to write. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>A baopen must have already been called. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00425">425</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00446">446</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00460">wrytel()</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00480">wrytel()</a>.</p>
 
 </div>
 </div>
@@ -885,35 +915,35 @@ Program History Log</h3>
 </div><div class="memdoc">
 
 <p>Write a given number of bytes to an unblocked file. </p>
-<h3><a class="anchor" id="autotoc_md4"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Program History Log</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Date   </th><th class="markdownTableHeadNone">Programmer   </th><th class="markdownTableHeadNone">Comments    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">92-10-31   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
+<td class="markdownTableBodyNone">92-10-31   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">Initial.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">95-10-31   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">WORKSTATION VERSION    </td></tr>
+<td class="markdownTableBodyNone">95-10-31   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">workstation version    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">IREDELL   </td><td class="markdownTableBodyNone">BACIO VERSION    </td></tr>
+<td class="markdownTableBodyNone">1998-06-04   </td><td class="markdownTableBodyNone">Mark Iredell   </td><td class="markdownTableBodyNone">bacio version    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">J. WANG   </td><td class="markdownTableBodyNone">BACIOL VERSION   </td></tr>
+<td class="markdownTableBodyNone">2009-04-20   </td><td class="markdownTableBodyNone">Jun Wang   </td><td class="markdownTableBodyNone">wrytel version   </td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">LU</td><td>INTEGER UNIT TO WHICH TO WRITE. </td></tr>
-    <tr><td class="paramname">NB</td><td>INTEGER(8) NUMBER OF BYTES TO WRITE. </td></tr>
-    <tr><td class="paramname">A</td><td>CHARACTER*1 (NB) DATA TO WRITE.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lu</td><td>unit to which to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>number of bytes to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>data to write. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>A baopen must have already been called. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00459">459</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00479">479</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00013">bacio_module::baciol</a>, and <a class="el" href="baciof_8f90_source.html#l00015">bacio_module::fd</a>.</p>
+<p class="reference">References <a class="el" href="baciof_8f90_source.html#l00034">bacio_module::bacio_noseek</a>, <a class="el" href="baciof_8f90_source.html#l00033">bacio_module::bacio_write</a>, <a class="el" href="baciof_8f90_source.html#l00016">bacio_module::baciol</a>, and <a class="el" href="baciof_8f90_source.html#l00022">bacio_module::fd</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00426">wryte()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00447">wryte()</a>.</p>
 
 </div>
 </div>

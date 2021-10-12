@@ -87,210 +87,205 @@ $(document).ready(function(){initNavTree('bafrio_8f90_source.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <a href="bafrio_8f90.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">   45</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a>(LU,IB,LX,IX)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(INOUT)</span>:: LX</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: IX</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordtype">integer(kind=8)</span> :: LONG_IB,LONG_LX ,LONG_IX</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      long_ib=ib</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      long_lx=lx</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keyword">call </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(lu,long_ib,long_lx,long_ix)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      lx=long_lx</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      ix=long_ix</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      <span class="keyword">end SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">   84</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(LU,IB,LX,IX)</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(INOUT)</span>:: LX</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: IX</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordtype">INTEGER(KIND=LBCW)</span>:: BCW1,BCW2</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>:: KR</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordtype">CHARACTER(16)</span> :: MACHINE_ENDIAN</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordtype">LOGICAL</span> :: DO_BYTESWAP</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">!  COMPARE FIRST BLOCK CONTROL WORD AND TRAILING BLOCK CONTROL WORD</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <span class="keywordflow">IF</span>(lu.GT.0) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">!-- set do_byteswap from machine endianness and file endianness</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">CALL </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a>(machine_endian)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">IF</span>( lu&lt;=999) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;          <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            do_byteswap=.false.</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;          <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            do_byteswap=.true.</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordflow">          ENDIF</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">ELSEIF</span>(lu&lt;=1999) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;          <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            do_byteswap=.true.</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;          <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            do_byteswap=.false.</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordflow">          ENDIF</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">! </span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">!-- read out control word      </span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib,lbcw,kr,bcw1)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw1,lbcw,1)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;          lx=-1</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;          <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib+lbcw+bcw1,lbcw,kr,bcw2)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;          <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw2,lbcw,1)</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;          <span class="keywordflow">IF</span>(kr.NE.lbcw.OR.bcw1.NE.bcw2) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            lx=-2</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;          <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            lx=bcw1</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordflow">          ENDIF</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">!end luif</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordflow">      ENDIF</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">!  COMPUTE START BYTE FOR THE NEXT FORTRAN RECORD</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      <span class="keywordflow">IF</span>(lx.GE.0) ix=ib+lbcw+lx+lbcw</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      <span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">  165</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a>(LU,IB,NB,KA,A)</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB,NB</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(OUT)</span>:: A(NB)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span> :: LONG_IB,LONG_NB,LONG_KA</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">if</span>((ib&lt;0.and.ib/=-1) .or. nb&lt;0 ) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;          print *,<span class="stringliteral">&#39;WRONG: in BAFRREAD starting postion IB or read &#39;</span>//   <span class="comment"> &amp;</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment"></span>     &amp; <span class="stringliteral">&#39;data size NB &lt; 0, STOP! Consider use BAFREADL and long integer&#39;</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;          ka=0</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;          <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        long_ib=ib</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        long_nb=nb</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a>(lu,long_ib,long_nb,long_ka,a)</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        ka=long_ka</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      <span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">  205</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a>(LU,IB,NB,KA,A)</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB,NB</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(OUT)</span>:: A(NB)</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>:: LX,IX</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>:: KR</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="comment">!  VALIDATE FORTRAN RECORD</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(lu,ib,lx,ix)</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="comment">!  READ IF VALID</span></div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      <span class="keywordflow">IF</span>(lx.LT.0) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        ka=lx</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordflow">ELSEIF</span>(lx.LT.nb) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        ka=-3</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib+lbcw,nb,kr,a)</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordflow">IF</span>(kr.NE.nb) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;          ka=-1</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;          ka=lbcw+lx+lbcw</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keywordflow">      ENDIF</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">  255</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a>(LU,IB,NB,KA,A)</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB,NB</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(IN)</span>:: A(NB)</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span> :: LONG_IB,LONG_NB,LONG_KA</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordflow">if</span>((ib&lt;0.and.ib/=-1) .or. nb&lt;0 ) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;          print *,<span class="stringliteral">&#39;WRONG: in BAFRWRITE starting postion IB or read &#39;</span>//  <span class="comment"> &amp;</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment"></span>     &amp;   <span class="stringliteral">&#39;data size NB &lt;0, STOP! &#39;</span> //                                   <span class="comment"> &amp;</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="comment"></span>     &amp;   <span class="stringliteral">&#39;Consider use BAFRRWRITEL and long integer&#39;</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;          ka=0</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;          <span class="keywordflow">return</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        long_ib=ib</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        long_nb=nb</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a>(lu,long_ib,long_nb,long_ka,a)</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        ka=long_ka</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
-<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">  296</a></span>&#160;      <span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a>(LU,IB,NB,KA,A)</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      <span class="keywordtype">IMPLICIT NONE</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB,NB</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(IN)</span>:: A(NB)</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      <span class="keywordtype">INTEGER(kind=LBCW)</span>:: BCW</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      <span class="keywordtype">INTEGER(kind=8)</span>:: KR</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <span class="keywordtype">INTEGER(LBCW)</span>:: BCW2,LBCW2</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <span class="keywordtype">CHARACTER(16)</span> :: MACHINE_ENDIAN</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <span class="keywordtype">LOGICAL</span> :: DO_BYTESWAP</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment">!  WRITE DATA BRACKETED BY BLOCK CONTROL WORDS</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="comment">!-- set do_byteswap from machine endianness and file endianness</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      <span class="keyword">CALL </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a>(machine_endian)</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      <span class="keywordflow">IF</span>( lu&lt;=999) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;          do_byteswap=.false.</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;          do_byteswap=.true.</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      <span class="keywordflow">ELSEIF</span>(lu&lt;=1999) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;          do_byteswap=.true.</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;          do_byteswap=.false.</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="keywordflow">      ENDIF</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      bcw=nb</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw,lbcw,1)</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib,lbcw,kr,bcw)</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        ka=-1</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib+lbcw,nb,kr,a)</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="keywordflow">IF</span>(kr.NE.nb) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;          ka=-1</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;          <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib+lbcw+nb,lbcw,kr,bcw)</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;          <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            ka=-1</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;          <span class="keywordflow">ELSE</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;            ka=lbcw+nb+lbcw</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="keywordflow">          ENDIF</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="keywordflow">        ENDIF</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="keywordflow">      ENDIF</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <span class="keyword">END SUBROUTINE  </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a></div>
-<div class="ttc" id="abaciof_8f90_html_a5047c57b0cc1f2101ab7ecc9084a7c9c"><div class="ttname"><a href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a></div><div class="ttdeci">subroutine bawritel(LU, IB, NB, KA, A)</div><div class="ttdoc">This subrouytine is using updated baciol i/o package to write a given number of bytes to an unblocked...</div><div class="ttdef"><b>Definition:</b> <a href="baciof_8f90_source.html#l00374">baciof.f90:375</a></div></div>
-<div class="ttc" id="abaciof_8f90_html_a697368b30db3732805779bd21c089fd0"><div class="ttname"><a href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a></div><div class="ttdeci">subroutine bareadl(LU, IB, NB, KA, A)</div><div class="ttdoc">This subrouytine is using updated baciol i/o package to read a given number of bytes from an unblocke...</div><div class="ttdef"><b>Definition:</b> <a href="baciof_8f90_source.html#l00238">baciof.f90:239</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_a2d954111fae95c9dc58db72cb4cc362c"><div class="ttname"><a href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a></div><div class="ttdeci">subroutine bafrindex(LU, IB, LX, IX)</div><div class="ttdoc">This subprogram is calling bafrindexl to either read an unformatted fortran record and return its len...</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00045">bafrio.f90:46</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_a66c2e118cef7c40620430d5e582d3720"><div class="ttname"><a href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a></div><div class="ttdeci">subroutine bafrread(LU, IB, NB, KA, A)</div><div class="ttdoc">PRGMMR: IREDELL ORG: W/NMC23 DATE: 1999-01-21.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00165">bafrio.f90:166</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_a693fa367483f76d7df7648244c35d66b"><div class="ttname"><a href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a></div><div class="ttdeci">subroutine bafrindexl(LU, IB, LX, IX)</div><div class="ttdoc">This subprogram either reads an unformatted fortran record and return its length and start byte of th...</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00084">bafrio.f90:85</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_a6acc0c1a44ec51584383c3663b4d8a34"><div class="ttname"><a href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a></div><div class="ttdeci">subroutine bafrwrite(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram is calling bafrwrite to write an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00255">bafrio.f90:256</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_abe9ca8bfacb8eae1e033e432dc920f96"><div class="ttname"><a href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a></div><div class="ttdeci">subroutine bafrwritel(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram writes an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00296">bafrio.f90:297</a></div></div>
-<div class="ttc" id="abafrio_8f90_html_afafb156ba2166b08c5019acfd39e62f6"><div class="ttname"><a href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a></div><div class="ttdeci">subroutine bafrreadl(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram reads an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00205">bafrio.f90:206</a></div></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">   44</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a>(LU,IB,LX,IX)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(INOUT)</span>:: LX</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: IX</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">integer(kind=8)</span> :: LONG_IB,LONG_LX ,LONG_IX</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  long_ib=ib</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  long_lx=lx</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">call </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(lu,long_ib,long_lx,long_ix)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  lx=long_lx</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  ix=long_ix</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">end SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">   83</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(LU,IB,LX,IX)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(INOUT)</span>:: LX</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: IX</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">INTEGER(KIND=LBCW)</span>:: BCW1,BCW2</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>:: KR</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">CHARACTER(16)</span> :: MACHINE_ENDIAN</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">LOGICAL</span> :: DO_BYTESWAP</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="comment">!  COMPARE FIRST BLOCK CONTROL WORD AND TRAILING BLOCK CONTROL WORD</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">IF</span>(lu.GT.0) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;     <span class="comment">!</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;     <span class="comment">!-- set do_byteswap from machine endianness and file endianness</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;     <span class="keyword">CALL </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a>(machine_endian)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;     <span class="keywordflow">IF</span>( lu&lt;=999) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;           do_byteswap=.false.</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;           do_byteswap=.true.</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordflow">        ENDIF</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;     <span class="keywordflow">ELSEIF</span>(lu&lt;=1999) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;           do_byteswap=.true.</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;           do_byteswap=.false.</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordflow">        ENDIF</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;     <span class="comment">! </span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;     <span class="comment">!</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;     <span class="comment">!-- read out control word      </span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;     <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib,lbcw,kr,bcw1)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;     <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw1,lbcw,1)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;     <span class="comment">!</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;     <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        lx=-1</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;     <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib+lbcw+bcw1,lbcw,kr,bcw2)</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw2,lbcw,1)</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="comment">!</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">IF</span>(kr.NE.lbcw.OR.bcw1.NE.bcw2) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;           lx=-2</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;           lx=bcw1</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keywordflow">        ENDIF</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;     <span class="comment">!</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;     <span class="comment">!end luif</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="comment">! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="comment">!  COMPUTE START BYTE FOR THE NEXT FORTRAN RECORD</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordflow">IF</span>(lx.GE.0) ix=ib+lbcw+lx+lbcw</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">  162</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a>(LU,IB,NB,KA,A)</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB,NB</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(OUT)</span>:: A(NB)</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span> :: LONG_IB,LONG_NB,LONG_KA</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">if</span>((ib&lt;0.and.ib/=-1) .or. nb&lt;0 ) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;     print *,<span class="stringliteral">&#39;WRONG: in BAFRREAD starting postion IB or read &#39;</span>//    &amp;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;          <span class="stringliteral">&#39;data size NB &lt; 0, STOP! Consider use BAFREADL and long integer&#39;</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;     ka=0</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;     <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  long_ib=ib</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  long_nb=nb</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a>(lu,long_ib,long_nb,long_ka,a)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  ka=long_ka</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">  202</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a>(LU,IB,NB,KA,A)</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB,NB</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(OUT)</span>:: A(NB)</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>:: LX,IX</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>:: KR</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="comment">!  VALIDATE FORTRAN RECORD</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a>(lu,ib,lx,ix)</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="comment">!  READ IF VALID</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordflow">IF</span>(lx.LT.0) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;     ka=lx</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordflow">ELSEIF</span>(lx.LT.nb) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;     ka=-3</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;     <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a>(lu,ib+lbcw,nb,kr,a)</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;     <span class="keywordflow">IF</span>(kr.NE.nb) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        ka=-1</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;     <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        ka=lbcw+lx+lbcw</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">  251</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a>(LU,IB,NB,KA,A)</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU,IB,NB</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(IN)</span>:: A(NB)</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span> :: LONG_IB,LONG_NB,LONG_KA</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keywordflow">if</span>((ib&lt;0.and.ib/=-1) .or. nb&lt;0 ) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;     print *,<span class="stringliteral">&#39;WRONG: in BAFRWRITE starting postion IB or read &#39;</span>//   &amp;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;          <span class="stringliteral">&#39;data size NB &lt;0, STOP! &#39;</span> //                                    &amp;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;          <span class="stringliteral">&#39;Consider use BAFRRWRITEL and long integer&#39;</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;     ka=0</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;     <span class="keywordflow">return</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  long_ib=ib</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  long_nb=nb</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keyword">CALL </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a>(lu,long_ib,long_nb,long_ka,a)</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  ka=long_ka</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="keyword">END SUBROUTINE </span><a class="code" href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">  290</a></span>&#160;<span class="keyword">SUBROUTINE </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a>(LU,IB,NB,KA,A)</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordtype">IMPLICIT NONE</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keywordtype">INTEGER</span>,<span class="keywordtype">INTENT(IN)</span>:: LU</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keywordtype">INTEGER(KIND=8)</span>,<span class="keywordtype">INTENT(IN)</span>:: IB,NB</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">INTENT(OUT)</span>:: KA</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordtype">CHARACTER</span>,<span class="keywordtype">INTENT(IN)</span>:: A(NB)</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>,<span class="keywordtype">PARAMETER</span>:: LBCW=4</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <span class="keywordtype">INTEGER(kind=LBCW)</span>:: BCW</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keywordtype">INTEGER(kind=8)</span>:: KR</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordtype">INTEGER(LBCW)</span>:: BCW2,LBCW2</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="keywordtype">CHARACTER(16)</span> :: MACHINE_ENDIAN</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <span class="keywordtype">LOGICAL</span> :: DO_BYTESWAP</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="comment">!  WRITE DATA BRACKETED BY BLOCK CONTROL WORDS</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="comment">!-- set do_byteswap from machine endianness and file endianness</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keyword">CALL </span><a class="code" href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a>(machine_endian)</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keywordflow">IF</span>( lu&lt;=999) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;     <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        do_byteswap=.false.</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;     <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        do_byteswap=.true.</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <span class="keywordflow">ELSEIF</span>(lu&lt;=1999) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;     <span class="keywordflow">IF</span>( trim(machine_endian)==<span class="stringliteral">&quot;big_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        do_byteswap=.true.</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;     <span class="keywordflow">ELSEIF</span>( trim(machine_endian)==<span class="stringliteral">&quot;little_endian&quot;</span>) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        do_byteswap=.false.</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  bcw=nb</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordflow">IF</span>(do_byteswap) <span class="keyword">CALL </span>byteswap(bcw,lbcw,1)</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib,lbcw,kr,bcw)</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;     ka=-1</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;     <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib+lbcw,nb,kr,a)</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;     <span class="keywordflow">IF</span>(kr.NE.nb) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        ka=-1</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;     <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <span class="keyword">CALL </span><a class="code" href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a>(lu,ib+lbcw+nb,lbcw,kr,bcw)</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="keywordflow">IF</span>(kr.NE.lbcw) <span class="keywordflow">THEN</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;           ka=-1</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keywordflow">ELSE</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;           ka=lbcw+nb+lbcw</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="keywordflow">        ENDIF</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="keywordflow">     ENDIF</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="keywordflow">  ENDIF</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="keyword">END SUBROUTINE  </span><a class="code" href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a></div>
+<div class="ttc" id="abaciof_8f90_html_a5047c57b0cc1f2101ab7ecc9084a7c9c"><div class="ttname"><a href="baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c">bawritel</a></div><div class="ttdeci">subroutine bawritel(LU, IB, NB, KA, A)</div><div class="ttdoc">This subrouytine writes a given number of bytes to an unblocked file, skipping a given number of byte...</div><div class="ttdef"><b>Definition:</b> <a href="baciof_8f90_source.html#l00398">baciof.f90:399</a></div></div>
+<div class="ttc" id="abaciof_8f90_html_a697368b30db3732805779bd21c089fd0"><div class="ttname"><a href="baciof_8f90.html#a697368b30db3732805779bd21c089fd0">bareadl</a></div><div class="ttdeci">subroutine bareadl(LU, IB, NB, KA, A)</div><div class="ttdoc">This subrouytine is using updated baciol() I/O package to read a given number of bytes from an unbloc...</div><div class="ttdef"><b>Definition:</b> <a href="baciof_8f90_source.html#l00266">baciof.f90:267</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_a2d954111fae95c9dc58db72cb4cc362c"><div class="ttname"><a href="bafrio_8f90.html#a2d954111fae95c9dc58db72cb4cc362c">bafrindex</a></div><div class="ttdeci">subroutine bafrindex(LU, IB, LX, IX)</div><div class="ttdoc">This subprogram calls bafrindexl() to either read an unformatted fortran record and return its length...</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00044">bafrio.f90:45</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_a66c2e118cef7c40620430d5e582d3720"><div class="ttname"><a href="bafrio_8f90.html#a66c2e118cef7c40620430d5e582d3720">bafrread</a></div><div class="ttdeci">subroutine bafrread(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram calls bafread() to read an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00162">bafrio.f90:163</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_a693fa367483f76d7df7648244c35d66b"><div class="ttname"><a href="bafrio_8f90.html#a693fa367483f76d7df7648244c35d66b">bafrindexl</a></div><div class="ttdeci">subroutine bafrindexl(LU, IB, LX, IX)</div><div class="ttdoc">This subprogram either reads an unformatted fortran record and return its length and start byte of th...</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00083">bafrio.f90:84</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_a6acc0c1a44ec51584383c3663b4d8a34"><div class="ttname"><a href="bafrio_8f90.html#a6acc0c1a44ec51584383c3663b4d8a34">bafrwrite</a></div><div class="ttdeci">subroutine bafrwrite(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram calls bafrwrite() to write an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00251">bafrio.f90:252</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_abe9ca8bfacb8eae1e033e432dc920f96"><div class="ttname"><a href="bafrio_8f90.html#abe9ca8bfacb8eae1e033e432dc920f96">bafrwritel</a></div><div class="ttdeci">subroutine bafrwritel(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram writes an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00290">bafrio.f90:291</a></div></div>
+<div class="ttc" id="abafrio_8f90_html_afafb156ba2166b08c5019acfd39e62f6"><div class="ttname"><a href="bafrio_8f90.html#afafb156ba2166b08c5019acfd39e62f6">bafrreadl</a></div><div class="ttdeci">subroutine bafrreadl(LU, IB, NB, KA, A)</div><div class="ttdoc">This subprogram reads an unformatted fortran record.</div><div class="ttdef"><b>Definition:</b> <a href="bafrio_8f90_source.html#l00202">bafrio.f90:203</a></div></div>
 <div class="ttc" id="achk__endianc_8f90_html_a3ae79207cdcb24be892c06d13effb1c7"><div class="ttname"><a href="chk__endianc_8f90.html#a3ae79207cdcb24be892c06d13effb1c7">chk_endianc</a></div><div class="ttdeci">subroutine chk_endianc(mendian)</div><div class="ttdoc">Obtain machine endianness.</div><div class="ttdef"><b>Definition:</b> <a href="chk__endianc_8f90_source.html#l00010">chk_endianc.f90:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
