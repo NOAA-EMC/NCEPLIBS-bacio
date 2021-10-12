@@ -102,9 +102,8 @@ bacio_ (int * mode, int * start, int *newpos, int * size, int * no,
         int * nactual, int * fdes, const char *fname, char *datary,
         int  namelen, int  datanamelen)
 {
-    int i, j, jret, seekret;
+    int i, jret, seekret;
     char *realname;
-    int tcharval;
     size_t count;
 
     /* Initialization(s) */
@@ -393,9 +392,8 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
         long int * nactual, int * fdes, const char *fname, char *datary,
         int  namelen, int  datanamelen)
 {
-    int i, j, jret, seekret;
+    int i, jret, seekret;
     char *realname;
-    int tcharval;
     size_t count;
 
     /* Initialization(s) */
