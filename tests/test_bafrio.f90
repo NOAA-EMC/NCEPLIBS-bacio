@@ -75,5 +75,23 @@ program test_bafrio
   call baclose(lu, iret)
   if (iret .ne. 0) stop 120
 
+  print *, 'Testing bafrindex calls with large lu...'
+
+  ! Open the test file.
+  lu = 1999
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 100
+
+  ! Check record length.
+  ib8 = 0
+  lx8 = 0
+  call bafrindex(lu, ib8, lx8, ix8)
+  print *, ix8
+!  if (ix8 .ne. 1344903776) stop 110  
+  
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 120
+
   print *, 'SUCCESS!'
 end program test_bafrio
