@@ -11,7 +11,7 @@
  * error will be sent to stderr and the routine will return non-zero.
  * To silence the error message, call fast_byteswap_errors(0).
  *
- * @author Dexin Zhang, Jun Wang
+ * @author Dexin Zhang, Jun Wang, Ed Hartnett
  */
 
 // no byteswap.h on Apple
@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static int send_errors = 1; /**< if non-zero, warn about non-aligned pointers */
+static int send_errors = 1; /**< If non-zero, warn about non-aligned pointers. */
 static int fast_count_calls = 0; /**< Fast count calls. */
 
 /**
