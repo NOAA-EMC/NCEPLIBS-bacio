@@ -42,10 +42,18 @@ program test_bafrio
   call baopenr(lu, filename, iret)
   if (iret .ne. 0) stop 20
 
+  ! Try to read some data with bad start byte.
+  call bafrread(lu, -2, 4, ka, data_in)
+  if (ka .ne. 0) stop 21
+
+  ! Try to read some data with length.
+  call bafrread(lu, 0, -4, ka, data_in)
+  if (ka .ne. 0) stop 22
+
   ! Read some data.
   call bafrread(lu, 0, 4, ka, data_in)
-  if (ka .ne. 12) stop 22
-  if (data_in .ne. data) stop 23
+  if (ka .ne. 12) stop 23
+  if (data_in .ne. data) stop 24
 
   ! Close the test file.
   call baclose(lu, iret)
@@ -57,7 +65,29 @@ program test_bafrio
   call baopen(lu, filename, iret)
   if (iret .ne. 0) stop 100
 
+  ! Check record length.
+  ib8 = 0
+  lx8 = 0
   call bafrindex(lu, ib8, lx8, ix8)
+  if (ix8 .ne. 12) stop 110  
+  
+  ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 120
+
+  print *, 'Testing bafrindex calls with large lu...'
+
+  ! Open the test file.
+  lu = 1999
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 100
+
+  ! Check record length.
+  ib8 = 0
+  lx8 = 0
+  call bafrindex(lu, ib8, lx8, ix8)
+  print *, ix8
+!  if (ix8 .ne. 1344903776) stop 110  
   
   ! Close the test file.
   call baclose(lu, iret)

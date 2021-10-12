@@ -19,9 +19,10 @@ void byteswap_(char *data, int *nbyte, int *nnum);
 int
 main()
 {
-    printf("Testing NCEPLIBS-bacio byteswaping.\n");
+    printf("Testing NCEPLIBS-bacio byteswaping. Expect error messages.\n");
     printf("Testing some simple fast_byteswap() calls...");
     {
+        unsigned char byte_data = 42;
         short int short_data = 42;
         int int_data = 42;
         long long int int64_data = 42;
@@ -30,6 +31,10 @@ main()
         /* Turn off error messages. */
         fast_byteswap_errors(0);
 
+        /* Swap a byte. Does nothing. */
+        if ((ret = fast_byteswap(&byte_data, 1, 1)) != 1)
+            return ERR;
+        
         /* Swap a short. */
         if ((ret = fast_byteswap(&short_data, 2, 1)) != 1)
             return ERR;
@@ -46,7 +51,10 @@ main()
         if ((ret = fast_byteswap(&int64_data, 4, 1)) != 1)
             return ERR;
         if (int64_data != 704643072) return ERR;
-        
+
+        /* Swap a weird number and it won't work. */
+        if ((ret = fast_byteswap(&short_data, 3, 1)) != 0)
+            return ERR;
     }
     printf("ok!\n");
     printf("Testing some byteswap_() calls...");
@@ -78,6 +86,45 @@ main()
         /* printf("int64_data = %lld\n", int64_data);         */
         if (int64_data != 3026418949592973312LL) return ERR;
         
+    }
+    printf("ok!\n");
+    printf("Testing some non-aligned byteswap_() calls...");
+    {
+        int e;
+
+        /* Try with and without error messages turned on. */
+        for (e = 0; e < 2; e++)
+        {
+            short int short_data[2] = {42, 42};
+            int int_data[2] = {42, 42};
+            long long int int64_data[2] = {42, 42};
+            void *ptr;
+            int nbyte, nnum = 1;
+            
+            /* Turn off error messages. */
+            fast_byteswap_errors(e);
+
+            /* Swap a short. */
+            nbyte = 2;
+            ptr = short_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (short_data[0] != 10794 || short_data[1] != 0) return ERR;
+            
+            /* Swap an int. */
+            nbyte = 4;
+            ptr = int_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (int_data[0] != 10794 || int_data[1] != 0) return ERR;
+        
+            /* Swap an int64. */
+            nbyte = 8;
+            ptr = int64_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (int64_data[0] != 10794 || int64_data[1] != 0) return ERR;
+        }
     }
     printf("ok!\n");
     printf("SUCCESS!\n");
