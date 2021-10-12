@@ -55,7 +55,7 @@ simple_swap_32(void *data,size_t len)
 {
     size_t i;
     uint32_t *udata;
-    if( ((size_t)data)&0x3 != 0 ) {
+    if( (((size_t)data)&0x3) != 0 ) {
         if (send_errors)
             fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
         return 0;
@@ -83,7 +83,7 @@ simple_swap_16(void *data,size_t len)
 {
     size_t i;
     uint16_t *udata;
-    if( ((size_t)data)&0x1 != 0 ) {
+    if( (((size_t)data)&0x1) != 0 ) {
         if (send_errors)
             fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
         return 0;
@@ -110,7 +110,7 @@ macro_swap_64(void *data,size_t len)
 {
     size_t i;
     uint64_t *udata;
-    if( ((size_t)data)&0x5 != 0 ) {
+    if ((((size_t)data)&0x5) != 0) {
         if (send_errors)
             fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
         return 0;
