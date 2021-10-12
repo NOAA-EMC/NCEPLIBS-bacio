@@ -42,6 +42,10 @@ program test_bafrio
   call baopenr(lu, filename, iret)
   if (iret .ne. 0) stop 20
 
+  ! Try to read some data with bad start byte.
+  call bafrread(lu, -2, 4, ka, data_in)
+  if (ka .ne. 0) stop 21
+
   ! Read some data.
   call bafrread(lu, 0, 4, ka, data_in)
   if (ka .ne. 12) stop 22
