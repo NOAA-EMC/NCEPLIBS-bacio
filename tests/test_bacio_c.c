@@ -91,10 +91,10 @@ main()
         /* Try to reopen the file with a bad name - won't work. */
         /* This currently causes a memory leak. See: */
         /* https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62 */
-        /* mode = BAOPEN_RONLY; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
-        /*     return ierr; */
+        mode = BAOPEN_RONLY;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252)
+            return ierr;
 
         /* Reopen the file. */
         mode = BAOPEN_RONLY;

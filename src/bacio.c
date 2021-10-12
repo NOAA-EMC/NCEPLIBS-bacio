@@ -98,12 +98,12 @@
  * @author Robert Grumbine @date 16 March 1998
  */
 int
-bacio_ (int * mode, int * start, int *newpos, int * size, int * no,
-        int * nactual, int * fdes, const char *fname, char *datary,
-        int  namelen, int  datanamelen)
+bacio_(int *mode, int *start, int *newpos, int *size, int *no,
+       int *nactual, int *fdes, const char *fname, char *datary,
+       int namelen, int datanamelen)
 {
     int i, jret, seekret;
-    char *realname;
+    char *realname = NULL;
     size_t count;
 
     /* Initialization(s) */
@@ -133,11 +133,11 @@ bacio_ (int * mode, int * start, int *newpos, int * size, int * no,
         printf("Will be opening a file %s %d\n", fname, namelen); fflush(stdout);
         printf("Strlen %d namelen %d\n", strlen(fname), namelen); fflush(stdout);
 #endif
-        realname = (char *) malloc( (namelen+1) * sizeof(char) ) ;
-        if (realname == NULL) {
+        if (!(realname = (char *)malloc((namelen + 1) * sizeof(char))))
+        {
 #ifdef VERBOSE
             printf("failed to mallocate realname %d = namelen\n", namelen);
-            fflush(stdout);
+        fflush(stdout);
 #endif
             return 253;
         }
@@ -190,6 +190,8 @@ bacio_ (int * mode, int * start, int *newpos, int * size, int * no,
 #ifdef VERBOSE
         printf("error in file descriptor! *fdes %d\n", *fdes);
 #endif
+        if (realname)
+            free(realname);
         return 252;
     }
     else {
@@ -393,7 +395,7 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
         int  namelen, int  datanamelen)
 {
     int i, jret, seekret;
-    char *realname;
+    char *realname = NULL;
     size_t count;
 
     /* Initialization(s) */
@@ -428,8 +430,8 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
         printf("Will be opening a file %s %d\n", fname, namelen); fflush(stdout);
         printf("Strlen %d namelen %d\n", strlen(fname), namelen); fflush(stdout);
 #endif
-        realname = (char *) malloc( (namelen+1) * sizeof(char) ) ;
-        if (realname == NULL) {
+        if (!(realname = (char *)malloc((namelen + 1) * sizeof(char))))
+        {
 #ifdef VERBOSE
             printf("failed to mallocate realname %d = namelen\n", namelen);
             fflush(stdout);
@@ -486,6 +488,8 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
 #ifdef VERBOSE
         printf("error in file descriptor! *fdes %d\n", *fdes);
 #endif
+        if (realname)
+            free(realname);
         return 252;
     }
     else {
