@@ -163,25 +163,31 @@ byteswap_(char *data, int *nbyte, int *nnum)
 {
     int  i, j;
     char swap[256];
-    int  nb=*nbyte;
-    int  nn=*nnum;
-    size_t count=*nnum;
-    if( fast_count_calls == 0 ) {
-        fprintf (stderr, " FAST_BYTESWAP ALGORITHM HAS BEEN USED AND DATA ALIGNMENT IS CORRECT FOR  %9d  )\n",nb );
-        fast_count_calls= 1 ;
+    int  nb = *nbyte;
+    int  nn = *nnum;
+    size_t count = *nnum;
+    
+    if (fast_count_calls == 0)
+    {
+        fprintf(stderr, " FAST_BYTESWAP ALGORITHM HAS BEEN USED AND DATA ALIGNMENT IS CORRECT FOR  %9d  )\n", nb);
+        fast_count_calls = 1;
     }
 
-    if(fast_byteswap(data,nb,count)) {
+    if (fast_byteswap(data, nb, count))
+    {
         /**********     fprintf (stderr," FAST_BYTESWAP WORKED FOR  %9d %9d )\n",nb, count); *******/
         /* it succeeded: data is now byteswapped */
-    } else {
+    }
+    else
+    {
         fprintf(stderr,"ERROR NOT ALIGNED SLOW CODE USED (nb and count %9d %9lu )\n",nb, count);
         /* It failed.  No data was byteswapped because it is not aligned */
-        for (j=0; j<nn; j++) {
-            for (i=0; i<nb; i++)
-                swap[i] = data[j*nb+i];
-            for (i=0; i<nb; i++)
-                data[j*nb+i] = swap[nb-i-1];
+        for (j = 0; j < nn; j++)
+        {
+            for (i = 0; i < nb; i++)
+                swap[i] = data[j * nb + i];
+            for (i = 0; i < nb; i++)
+                data[j * nb + i] = swap[nb - i - 1];
         }
     }
 }
