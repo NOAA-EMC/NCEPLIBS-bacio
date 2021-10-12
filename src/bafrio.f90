@@ -41,21 +41,21 @@
 !> only if lx>=0).
 !>
 !> @author Mark Iredell @date 1999-01-21
-      SUBROUTINE BAFRINDEX(LU,IB,LX,IX)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU,IB
-      INTEGER,INTENT(INOUT):: LX
-      INTEGER,INTENT(OUT):: IX
-      integer(kind=8) :: LONG_IB,LONG_LX ,LONG_IX
-!
-      LONG_IB=IB
-      LONG_LX=LX
-      call BAFRINDEXL(LU,LONG_IB,LONG_LX,LONG_IX)
-      LX=LONG_LX
-      IX=LONG_IX
+SUBROUTINE BAFRINDEX(LU,IB,LX,IX)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU,IB
+  INTEGER,INTENT(INOUT):: LX
+  INTEGER,INTENT(OUT):: IX
+  integer(kind=8) :: LONG_IB,LONG_LX ,LONG_IX
 
-      return
-      end SUBROUTINE BAFRINDEX
+  LONG_IB=IB
+  LONG_LX=LX
+  call BAFRINDEXL(LU,LONG_IB,LONG_LX,LONG_IX)
+  LX=LONG_LX
+  IX=LONG_IX
+
+  return
+end SUBROUTINE BAFRINDEX
 
 !> This subprogram either reads an unformatted fortran record and
 !> return its length and start byte of the next fortran record; or
@@ -80,62 +80,61 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
-      SUBROUTINE BAFRINDEXL(LU,IB,LX,IX)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU
-      INTEGER(KIND=8),INTENT(IN):: IB
-      INTEGER(KIND=8),INTENT(INOUT):: LX
-      INTEGER(KIND=8),INTENT(OUT):: IX
-      INTEGER(KIND=8),PARAMETER:: LBCW=4
-      INTEGER(KIND=LBCW):: BCW1,BCW2
-      INTEGER(KIND=8):: KR
-      CHARACTER(16) :: MACHINE_ENDIAN
-      LOGICAL :: DO_BYTESWAP
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-!  COMPARE FIRST BLOCK CONTROL WORD AND TRAILING BLOCK CONTROL WORD
-      IF(LU.GT.0) THEN
-!
-!-- set do_byteswap from machine endianness and file endianness
-        CALL CHK_ENDIANC(MACHINE_ENDIAN)
-        IF( LU<=999) THEN
-          IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
-            DO_BYTESWAP=.false.
-          ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
-            DO_BYTESWAP=.true.
-          ENDIF
-        ELSEIF(LU<=1999) THEN
-          IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
-            DO_BYTESWAP=.true.
-          ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
-            DO_BYTESWAP=.false.
-          ENDIF
+SUBROUTINE BAFRINDEXL(LU,IB,LX,IX)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU
+  INTEGER(KIND=8),INTENT(IN):: IB
+  INTEGER(KIND=8),INTENT(INOUT):: LX
+  INTEGER(KIND=8),INTENT(OUT):: IX
+  INTEGER(KIND=8),PARAMETER:: LBCW=4
+  INTEGER(KIND=LBCW):: BCW1,BCW2
+  INTEGER(KIND=8):: KR
+  CHARACTER(16) :: MACHINE_ENDIAN
+  LOGICAL :: DO_BYTESWAP
+  ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  !  COMPARE FIRST BLOCK CONTROL WORD AND TRAILING BLOCK CONTROL WORD
+  IF(LU.GT.0) THEN
+     !
+     !-- set do_byteswap from machine endianness and file endianness
+     CALL CHK_ENDIANC(MACHINE_ENDIAN)
+     IF( LU<=999) THEN
+        IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
+           DO_BYTESWAP=.false.
+        ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
+           DO_BYTESWAP=.true.
         ENDIF
-! 
-!
-!-- read out control word      
-        CALL BAREADL(LU,IB,LBCW,KR,BCW1)
-        IF(DO_BYTESWAP) CALL Byteswap(BCW1,LBCW,1)
-!
-        IF(KR.NE.LBCW) THEN
-          LX=-1
+     ELSEIF(LU<=1999) THEN
+        IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
+           DO_BYTESWAP=.true.
+        ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
+           DO_BYTESWAP=.false.
+        ENDIF
+     ENDIF
+     ! 
+     !
+     !-- read out control word      
+     CALL BAREADL(LU,IB,LBCW,KR,BCW1)
+     IF(DO_BYTESWAP) CALL Byteswap(BCW1,LBCW,1)
+     !
+     IF(KR.NE.LBCW) THEN
+        LX=-1
+     ELSE
+        CALL BAREADL(LU,IB+LBCW+BCW1,LBCW,KR,BCW2)
+        IF(DO_BYTESWAP) CALL Byteswap(BCW2,LBCW,1)
+        !
+        IF(KR.NE.LBCW.OR.BCW1.NE.BCW2) THEN
+           LX=-2
         ELSE
-          CALL BAREADL(LU,IB+LBCW+BCW1,LBCW,KR,BCW2)
-          IF(DO_BYTESWAP) CALL Byteswap(BCW2,LBCW,1)
-!
-          IF(KR.NE.LBCW.OR.BCW1.NE.BCW2) THEN
-            LX=-2
-          ELSE
-            LX=BCW1
-          ENDIF
+           LX=BCW1
         ENDIF
-!
-!end luif
-      ENDIF
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-!  COMPUTE START BYTE FOR THE NEXT FORTRAN RECORD
-      IF(LX.GE.0) IX=IB+LBCW+LX+LBCW
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      END SUBROUTINE BAFRINDEXL
+     ENDIF
+     !
+     !end luif
+  ENDIF
+  ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  !  COMPUTE START BYTE FOR THE NEXT FORTRAN RECORD
+  IF(LX.GE.0) IX=IB+LBCW+LX+LBCW
+END SUBROUTINE BAFRINDEXL
 
 !> This subprogram calls bafread() to read an unformatted fortran
 !> record. The difference between bafrread() and bafrreadl() is the
@@ -160,24 +159,24 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
-      SUBROUTINE BAFRREAD(LU,IB,NB,KA,A)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU,IB,NB
-      INTEGER,INTENT(OUT):: KA
-      CHARACTER,INTENT(OUT):: A(NB)
-      INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
-!
-        if((IB<0.and.IB/=-1) .or. NB<0 ) THEN
-          print *,'WRONG: in BAFRREAD starting postion IB or read '//    &
-     & 'data size NB < 0, STOP! Consider use BAFREADL and long integer'
-          KA=0
-          return
-        ENDIF
-        LONG_IB=IB
-        LONG_NB=NB
-        CALL BAFRREADL(LU,LONG_IB,LONG_NB,LONG_KA,A)
-        KA=LONG_KA
-      END SUBROUTINE BAFRREAD
+SUBROUTINE BAFRREAD(LU,IB,NB,KA,A)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU,IB,NB
+  INTEGER,INTENT(OUT):: KA
+  CHARACTER,INTENT(OUT):: A(NB)
+  INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
+
+  if((IB<0.and.IB/=-1) .or. NB<0 ) THEN
+     print *,'WRONG: in BAFRREAD starting postion IB or read '//    &
+          'data size NB < 0, STOP! Consider use BAFREADL and long integer'
+     KA=0
+     return
+  ENDIF
+  LONG_IB=IB
+  LONG_NB=NB
+  CALL BAFRREADL(LU,LONG_IB,LONG_NB,LONG_KA,A)
+  KA=LONG_KA
+END SUBROUTINE BAFRREAD
 
 !> This subprogram reads an unformatted fortran record.
 !>
@@ -200,34 +199,33 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
-      SUBROUTINE BAFRREADL(LU,IB,NB,KA,A)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU
-      INTEGER(kind=8),INTENT(IN):: IB,NB
-      INTEGER(kind=8),INTENT(OUT):: KA
-      CHARACTER,INTENT(OUT):: A(NB)
-      INTEGER(kind=8),PARAMETER:: LBCW=4
-      INTEGER(kind=8):: LX,IX
-      INTEGER(kind=8):: KR
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-!  VALIDATE FORTRAN RECORD
-      CALL BAFRINDEXL(LU,IB,LX,IX)
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-!  READ IF VALID
-      IF(LX.LT.0) THEN
-        KA=LX
-      ELSEIF(LX.LT.NB) THEN
-        KA=-3
-      ELSE
-        CALL BAREADL(LU,IB+LBCW,NB,KR,A)
-        IF(KR.NE.NB) THEN
-          KA=-1
-        ELSE
-          KA=LBCW+LX+LBCW
-        ENDIF
-      ENDIF
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      END SUBROUTINE BAFRREADL
+SUBROUTINE BAFRREADL(LU,IB,NB,KA,A)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU
+  INTEGER(kind=8),INTENT(IN):: IB,NB
+  INTEGER(kind=8),INTENT(OUT):: KA
+  CHARACTER,INTENT(OUT):: A(NB)
+  INTEGER(kind=8),PARAMETER:: LBCW=4
+  INTEGER(kind=8):: LX,IX
+  INTEGER(kind=8):: KR
+
+  !  VALIDATE FORTRAN RECORD
+  CALL BAFRINDEXL(LU,IB,LX,IX)
+
+  !  READ IF VALID
+  IF(LX.LT.0) THEN
+     KA=LX
+  ELSEIF(LX.LT.NB) THEN
+     KA=-3
+  ELSE
+     CALL BAREADL(LU,IB+LBCW,NB,KR,A)
+     IF(KR.NE.NB) THEN
+        KA=-1
+     ELSE
+        KA=LBCW+LX+LBCW
+     ENDIF
+  ENDIF
+END SUBROUTINE BAFRREADL
 
 !> This subprogram calls bafrwrite() to write an unformatted fortran
 !> record. The difference between bafrwrite() and bafrwritel() is the
@@ -250,26 +248,25 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
-      SUBROUTINE BAFRWRITE(LU,IB,NB,KA,A)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU,IB,NB
-      INTEGER,INTENT(OUT):: KA
-      CHARACTER,INTENT(IN):: A(NB)
-      INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
-!
-        if((IB<0.and.IB/=-1) .or. NB<0 ) THEN
-          print *,'WRONG: in BAFRWRITE starting postion IB or read '//   &
-     &   'data size NB <0, STOP! ' //                                    &
-     &   'Consider use BAFRRWRITEL and long integer'
-          KA=0
-          return
-        ENDIF
-        LONG_IB=IB
-        LONG_NB=NB
-        CALL BAFRWRITEL(LU,LONG_IB,LONG_NB,LONG_KA,A)
-        KA=LONG_KA
-!
-      END SUBROUTINE BAFRWRITE
+SUBROUTINE BAFRWRITE(LU,IB,NB,KA,A)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU,IB,NB
+  INTEGER,INTENT(OUT):: KA
+  CHARACTER,INTENT(IN):: A(NB)
+  INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
+
+  if((IB<0.and.IB/=-1) .or. NB<0 ) THEN
+     print *,'WRONG: in BAFRWRITE starting postion IB or read '//   &
+          'data size NB <0, STOP! ' //                                    &
+          'Consider use BAFRRWRITEL and long integer'
+     KA=0
+     return
+  ENDIF
+  LONG_IB=IB
+  LONG_NB=NB
+  CALL BAFRWRITEL(LU,LONG_IB,LONG_NB,LONG_KA,A)
+  KA=LONG_KA
+END SUBROUTINE BAFRWRITE
 
 !> This subprogram writes an unformatted fortran record.
 !>
@@ -290,56 +287,54 @@
 !>
 !> @author Mark Iredell @date 1999-01-21
 !>
-      SUBROUTINE BAFRWRITEL(LU,IB,NB,KA,A)
-      IMPLICIT NONE
-      INTEGER,INTENT(IN):: LU
-      INTEGER(KIND=8),INTENT(IN):: IB,NB
-      INTEGER(kind=8),INTENT(OUT):: KA
-      CHARACTER,INTENT(IN):: A(NB)
-!
-      INTEGER(kind=8),PARAMETER:: LBCW=4
-      INTEGER(kind=LBCW):: BCW
-      INTEGER(kind=8):: KR
-      INTEGER(LBCW):: BCW2,LBCW2
-      CHARACTER(16) :: MACHINE_ENDIAN
-      LOGICAL :: DO_BYTESWAP
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-!  WRITE DATA BRACKETED BY BLOCK CONTROL WORDS
-!
-!-- set do_byteswap from machine endianness and file endianness
-      CALL CHK_ENDIANC(MACHINE_ENDIAN)
-      IF( LU<=999) THEN
-        IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
-          DO_BYTESWAP=.false.
-        ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
-          DO_BYTESWAP=.true.
-        ENDIF
-      ELSEIF(LU<=1999) THEN
-        IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
-          DO_BYTESWAP=.true.
-        ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
-          DO_BYTESWAP=.false.
-        ENDIF
-      ENDIF
-!
-!
-      BCW=NB
-      IF(DO_BYTESWAP) CALL Byteswap(BCW,LBCW,1)
-      CALL BAWRITEL(LU,IB,LBCW,KR,BCW)
-      IF(KR.NE.LBCW) THEN
+SUBROUTINE BAFRWRITEL(LU,IB,NB,KA,A)
+  IMPLICIT NONE
+  INTEGER,INTENT(IN):: LU
+  INTEGER(KIND=8),INTENT(IN):: IB,NB
+  INTEGER(kind=8),INTENT(OUT):: KA
+  CHARACTER,INTENT(IN):: A(NB)
+
+  INTEGER(kind=8),PARAMETER:: LBCW=4
+  INTEGER(kind=LBCW):: BCW
+  INTEGER(kind=8):: KR
+  INTEGER(LBCW):: BCW2,LBCW2
+  CHARACTER(16) :: MACHINE_ENDIAN
+  LOGICAL :: DO_BYTESWAP
+
+  !  WRITE DATA BRACKETED BY BLOCK CONTROL WORDS
+
+  !-- set do_byteswap from machine endianness and file endianness
+  CALL CHK_ENDIANC(MACHINE_ENDIAN)
+  IF( LU<=999) THEN
+     IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
+        DO_BYTESWAP=.false.
+     ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
+        DO_BYTESWAP=.true.
+     ENDIF
+  ELSEIF(LU<=1999) THEN
+     IF( trim(MACHINE_ENDIAN)=="big_endian") THEN
+        DO_BYTESWAP=.true.
+     ELSEIF( trim(MACHINE_ENDIAN)=="little_endian") THEN
+        DO_BYTESWAP=.false.
+     ENDIF
+  ENDIF
+
+  BCW=NB
+  IF(DO_BYTESWAP) CALL Byteswap(BCW,LBCW,1)
+  CALL BAWRITEL(LU,IB,LBCW,KR,BCW)
+  IF(KR.NE.LBCW) THEN
+     KA=-1
+  ELSE
+     CALL BAWRITEL(LU,IB+LBCW,NB,KR,A)
+     IF(KR.NE.NB) THEN
         KA=-1
-      ELSE
-        CALL BAWRITEL(LU,IB+LBCW,NB,KR,A)
-        IF(KR.NE.NB) THEN
-          KA=-1
+     ELSE
+        CALL BAWRITEL(LU,IB+LBCW+NB,LBCW,KR,BCW)
+        IF(KR.NE.LBCW) THEN
+           KA=-1
         ELSE
-          CALL BAWRITEL(LU,IB+LBCW+NB,LBCW,KR,BCW)
-          IF(KR.NE.LBCW) THEN
-            KA=-1
-          ELSE
-            KA=LBCW+NB+LBCW
-          ENDIF
+           KA=LBCW+NB+LBCW
         ENDIF
-      ENDIF
-! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      END SUBROUTINE  BAFRWRITEL
+     ENDIF
+  ENDIF
+END SUBROUTINE  BAFRWRITEL

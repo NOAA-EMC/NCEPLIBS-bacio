@@ -1,0 +1,32 @@
+name: MacOS Build and Test
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      FC: gfortran-9
+      CC: gcc-9
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v2
+      with: 
+        path: bacio
+
+    - name: build
+      run: |
+        cd bacio
+        mkdir build 
+        cd build
+        cmake .. 
+        make -j2
+    
+    - name: test
+      run: |
+        set -e
+        cd $GITHUB_WORKSPACE/bacio/build
+        ctest --version --output-on-error
+
+        
