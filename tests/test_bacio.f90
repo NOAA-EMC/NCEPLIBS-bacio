@@ -93,13 +93,11 @@ program test_bacio
   call bareadl(lu, ib8, -1_8, ka8, data_in)
   if (ka8 .ne. 0) stop 113
 
-  ! Try to reread with l function - won't work, bad lu. These cause
-  ! address santizer failures. See
-  ! https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/64.
-  ! call bareadl(0, ib8, nb8, ka8, data_in)
-  ! if (ka8 .ne. 0) stop 32
-  ! call bareadl(FDDIM + 1, ib8, nb8, ka8, data_in)
-  ! if (ka8 .ne. 0) stop 32
+  ! Try to reread with l function - won't work, bad lu.
+  call bareadl(0, ib8, nb8, ka8, data_in)
+  if (ka8 .ne. 0) stop 32
+  call bareadl(FDDIM + 1, ib8, nb8, ka8, data_in)
+  if (ka8 .ne. 0) stop 32
 
   ! Close the test file.
   call baclose(lu, iret)
