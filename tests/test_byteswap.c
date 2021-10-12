@@ -82,37 +82,41 @@ main()
     printf("ok!\n");
     printf("Testing some non-aligned byteswap_() calls...");
     {
-        short int short_data[2] = {42, 42};
-        int int_data[2] = {42, 42};
-        long long int int64_data[2] = {42, 42};
-        void *ptr;
-        int nbyte, nnum = 1;
-        int ret;
-        
-        /* Turn off error messages. */
-        fast_byteswap_errors(0);
+        int e;
 
-        /* Swap a short. */
-        nbyte = 2;
-        ptr = short_data;
-        ptr = (char *)ptr + 1;
-        byteswap_(ptr, &nbyte, &nnum);
-        if (short_data[0] != 10794 || short_data[1] != 0) return ERR;
+        /* Try with and without error messages turned on. */
+        for (e = 0; e < 2; e++)
+        {
+            short int short_data[2] = {42, 42};
+            int int_data[2] = {42, 42};
+            long long int int64_data[2] = {42, 42};
+            void *ptr;
+            int nbyte, nnum = 1;
+            
+            /* Turn off error messages. */
+            fast_byteswap_errors(e);
+
+            /* Swap a short. */
+            nbyte = 2;
+            ptr = short_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (short_data[0] != 10794 || short_data[1] != 0) return ERR;
+            
+            /* Swap an int. */
+            nbyte = 4;
+            ptr = int_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (int_data[0] != 10794 || int_data[1] != 0) return ERR;
         
-        /* Swap an int. */
-        nbyte = 4;
-        ptr = int_data;
-        ptr = (char *)ptr + 1;
-        byteswap_(ptr, &nbyte, &nnum);
-        if (int_data[0] != 10794 || int_data[1] != 0) return ERR;
-        
-        /* Swap an int64. */
-        nbyte = 8;
-        ptr = int64_data;
-        ptr = (char *)ptr + 1;
-        byteswap_(ptr, &nbyte, &nnum);
-        if (int64_data[0] != 10794 || int64_data[1] != 0) return ERR;
-        
+            /* Swap an int64. */
+            nbyte = 8;
+            ptr = int64_data;
+            ptr = (char *)ptr + 1;
+            byteswap_(ptr, &nbyte, &nnum);
+            if (int64_data[0] != 10794 || int64_data[1] != 0) return ERR;
+        }
     }
     printf("ok!\n");
     printf("SUCCESS!\n");
