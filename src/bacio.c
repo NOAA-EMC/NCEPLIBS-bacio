@@ -162,8 +162,12 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         *fdes = open(realname, O_RDWR | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
 
-    if (*fdes < 0) 
+    if (*fdes < 0)
+    {
+        if (realname)
+            free(realname);
         return 252;
+    }
 
     /* Read data as requested */
     if (BAREAD & *mode &&
