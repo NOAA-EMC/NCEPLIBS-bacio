@@ -190,7 +190,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
     if (BAWRITE & *mode)
     {
         if (!(*mode & NOSEEK))
-            if ((seekret = lseek(*fdes, *start, SEEK_SET) == -1)
+            if ((seekret = lseek(*fdes, *start, SEEK_SET)) == -1)
                 return 248;
 
         if (datary == NULL)
