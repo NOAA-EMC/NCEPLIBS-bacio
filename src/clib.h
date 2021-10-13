@@ -11,11 +11,6 @@
  * Aug 2012 | Jun Wang | move system definition to makefile as a compiler option
  */
 
-/* The following line should be either undef or define VERBOSE. The
- * latter gives noisy debugging output, while the former relies solely
- * on the return codes. */
-#undef  VERBOSE
-
 #include <stdlib.h>
 
 /* IO-related (bacio.c, banio.c). */
