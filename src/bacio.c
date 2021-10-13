@@ -83,7 +83,7 @@
  *
  * This function is called from the Fortran code in baciof.f90.
  *
- * @return ::BA_ENOERROR No error.
+ * @return ::BA_NOERROR No error.
  * @return ::BA_EROANDWO Tried to open read only and write only.
  * @return ::BA_ERANDW Tried to read and write in the same call.
  * @return ::BA_EINTNAME Internal failure in name processing.
@@ -271,7 +271,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
  *
  * This function is called from the Fortran code in baciof.f90.
  *
- * @return ::BA_ENOERROR No error.
+ * @return ::BA_NOERROR No error.
  * @return ::BA_EROANDWO Tried to open read only and write only.
  * @return ::BA_ERANDW Tried to read and write in the same call.
  * @return ::BA_EINTNAME Internal failure in name processing.
