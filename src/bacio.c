@@ -93,6 +93,7 @@
  * @return 246 Read or wrote fewer data than requested
  * @return 102 Massive catastrophe -- datary pointer is NULL
  *
+
  * @author Robert Grumbine @date 21 November 2008
  */
 int
