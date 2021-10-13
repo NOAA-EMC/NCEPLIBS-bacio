@@ -63,7 +63,6 @@ main()
         int int_data = 42;
         long long int int64_data = 42;
         int nbyte, nnum = 1;
-        int ret;
         
         /* Turn off error messages. */
         fast_byteswap_errors(0);
