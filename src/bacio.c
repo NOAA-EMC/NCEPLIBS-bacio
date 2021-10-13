@@ -42,295 +42,7 @@
 
 #include "clib.h"
 
-/** 
- * Do bacio operation.
- *
- * @param mode integer specifying operations to be performed see the
- * clib.inc file for the values. Mode is obtained by adding together
- * the values corresponding to the operations The best method is to
- * include the clib.inc file and refer to the names for the operations
- * rather than rely on hard-coded values.
- * @param start byte number to start your operation from. 0 is the
- * first byte in the file, not 1.
- * @param newpos position in the file after a read or write has been
- * performed. You'll need this if you're doing 'seeking' read/write.
- * @param size is the size of the objects you are trying to
- * read. Types are CHARACTER, INTEGER, REAL, COMPLEX.
- * @param no is the number of things to read or write (characters,
- * integers, whatever).
- * @param nactual is the number of things actually read or
- * written. Check that you got what you wanted.
- * @param fdes is an integer 'file descriptor'. This is not a Fortran
- * Unit Number You can use it, however, to refer to files you've
- * previously opened.
- * @param fname is the name of the file. This only needs to be defined
- * when you are opening a file. It must be (on the Fortran side)
- * declared as CHARACTER*N, where N is a length greater than or equal
- * to the length of the file name. CHARACTER*1 fname[80] (for example)
- * will fail.
- * @param datary is the name of the entity (variable, vector, array)
- * that you want to write data out from or read it in to. The fact
- * that C is declaring it to be a char * does not affect your fortran.
- * @param namelen - Do NOT specify this. It is created automagically by the        
- * Fortran compiler                                                       
- * @param datanamelen - Do NOT specify this. It is created automagically by the        
- * Fortran compiler                                                       
- *
- * @note In your Fortran code, call bacio(), not bacio_(). 
- *
- * What is going on here is that although the Fortran caller will
- * always be calling bacio, the called C routine name will change from
- * system to system.
- * 
- * @return 0 All was well                                   
- * @return 255 Tried to open read only _and_ write only       
- * @return 254 Tried to read and write in the same call       
- * @return 253 Internal failure in name processing            
- * @return 252 Failure in opening file                        
- * @return 251 Tried to read on a write-only file             
- * @return 250 Failed in read to find the 'start' location    
- * @return 249 Tried to write to a read only file             
- * @return 248 Failed in write to find the 'start' location   
- * @return 247 Error in close                                 
- * @return 246 Read or wrote fewer data than requested        
- * @return 102 Massive catastrophe -- datary pointer is NULL  
- *
- * @author Robert Grumbine @date 16 March 1998
- */
-int
-bacio_(int *mode, int *start, int *newpos, int *size, int *no,
-       int *nactual, int *fdes, const char *fname, char *datary,
-       int namelen, int datanamelen)
-{
-    int i, jret, seekret;
-    char *realname = NULL;
-    size_t count;
-
-    /* Initialization(s) */
-    *nactual = 0;
-
-    /* Check for illegal combinations of options */
-    if (( BAOPEN_RONLY & *mode) &&
-        ( (BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ) ) {
-#ifdef VERBOSE
-        printf("illegal -- trying to open both read only and write only\n");
-#endif
-        return 255;
-    }
-    if ( (BAREAD & *mode ) && (BAWRITE & *mode) ) {
-#ifdef VERBOSE
-        printf("illegal -- trying to both read and write in the same call\n");
-#endif
-        return 254;
-    }
-
-    /* This section handles Fortran to C translation of strings so as to */
-    /* be able to open the files Fortran is expecting to be opened. */
-    if ( (BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
-         (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
-         (BAOPEN_RW & *mode) ) {
-#ifdef VERBOSE
-        printf("Will be opening a file %s %d\n", fname, namelen); fflush(stdout);
-        printf("Strlen %d namelen %d\n", strlen(fname), namelen); fflush(stdout);
-#endif
-        if (!(realname = (char *)malloc((namelen + 1) * sizeof(char))))
-        {
-#ifdef VERBOSE
-            printf("failed to mallocate realname %d = namelen\n", namelen);
-        fflush(stdout);
-#endif
-            return 253;
-        }
-
-        i=0;
-        while (i < namelen && isgraph(fname[i])) {
-            realname[i]=fname[i];
-            i++;
-        }
-        realname[i] = '\0';
-    }
-
-    /* Open files with correct read/write and file permission. */
-    if (BAOPEN_RONLY & *mode) {
-#ifdef VERBOSE
-        printf("open read only %s\n", realname);
-#endif
-        *fdes = open(realname, O_RDONLY , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else if (BAOPEN_WONLY & *mode ) {
-#ifdef VERBOSE
-        printf("open write only %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else if (BAOPEN_WONLY_TRUNC & *mode ) {
-#ifdef VERBOSE
-        printf("open write only with truncation %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT | O_TRUNC , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else if (BAOPEN_WONLY_APPEND & *mode ) {
-#ifdef VERBOSE
-        printf("open write only with append %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT | O_APPEND , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else if (BAOPEN_RW & *mode) {
-#ifdef VERBOSE
-        printf("open read-write %s\n", realname);
-#endif
-        *fdes = open(realname, O_RDWR | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else {
-#ifdef VERBOSE
-        printf("no openings\n");
-#endif
-    }
-    if (*fdes < 0) {
-#ifdef VERBOSE
-        printf("error in file descriptor! *fdes %d\n", *fdes);
-#endif
-        if (realname)
-            free(realname);
-        return 252;
-    }
-    else {
-#ifdef VERBOSE
-        printf("file descriptor = %d\n",*fdes );
-#endif
-    }
-
-
-/* Read data as requested */
-    if (BAREAD & *mode &&
-        ( (BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ) ) {
-#ifdef VERBOSE
-        printf("Error, trying to read while in write only mode!\n");
-#endif
-        return 251;
-    }
-    else if (BAREAD & *mode ) {
-        /* Read in some data */
-        if (! (*mode & NOSEEK) ) {
-            seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1) {
-#ifdef VERBOSE
-                printf("error in seeking to %d\n",*start);
-#endif
-                return 250;
-            }
-#ifdef VERBOSE
-            else {
-                printf("Seek successful, seek ret %d, start %d\n", seekret, *start);
-            }
-#endif
-        }
-        if (datary == NULL) {
-            printf("Massive catastrophe -- datary pointer is NULL\n");
-            return 102;
-        }
-#ifdef VERBOSE
-        printf("file descriptor, datary = %d %d\n", *fdes, (int) datary);
-#endif
-        count = (size_t) *no;
-        jret = read(*fdes, (void *) datary, count);
-        if (jret != *no) {
-#ifdef VERBOSE
-            printf("did not read in the requested number of bytes\n");
-            printf("read in %d bytes instead of %d \n",jret, *no);
-#endif
-        }
-        else {
-#ifdef VERBOSE
-            printf("read in %d bytes requested \n", *no);
-#endif
-        }
-        *nactual = jret;
-        *newpos = *start + jret;
-    }
-    /* Done with reading */
-
-    /* See if we should be writing */
-    if ( BAWRITE & *mode && BAOPEN_RONLY & *mode ) {
-#ifdef VERBOSE
-        printf("Trying to write on a read only file \n");
-#endif
-        return 249;
-    }
-    else if ( BAWRITE & *mode ) {
-        if (! (*mode & NOSEEK) ) {
-            seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1) {
-#ifdef VERBOSE
-                printf("error in seeking to %d\n",*start);
-#endif
-                return 248;
-            }
-#ifdef VERBOSE
-            else {
-                printf("Seek successful, seek ret %d, start %d\n", seekret, *start);
-            }
-#endif
-        }
-        if (datary == NULL) {
-            printf("Massive catastrophe -- datary pointer is NULL\n");
-            return 102;
-        }
-#ifdef VERBOSE
-        printf("write file descriptor, datary = %d %d\n", *fdes, (int) datary);
-#endif
-        count = (size_t) *no;
-        jret = write(*fdes, (void *) datary, count);
-        if (jret != *no) {
-#ifdef VERBOSE
-            printf("did not write out the requested number of bytes\n");
-            printf("wrote %d bytes instead\n", jret);
-#endif
-            *nactual = jret;
-            *newpos = *start + jret;
-        }
-        else {
-#ifdef VERBOSE
-            printf("wrote %d bytes \n", jret);
-#endif
-            *nactual = jret;
-            *newpos = *start + jret;
-        }
-    }
-    /* Done with writing */
-
-
-    /* Close file if requested */
-    if (BACLOSE & *mode ) {
-        jret = close(*fdes);
-        if (jret != 0) {
-#ifdef VERBOSE
-            printf("close failed! jret = %d\n",jret);
-#endif
-            return 247;
-        }
-    }
-    /* Done closing */
-
-    /* Free the realname pointer to prevent memory leak */
-    if ( (BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
-         (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
-         (BAOPEN_RW & *mode) ) {
-        free(realname);
-    }
-
-    /* Check that if we were reading or writing, that we actually got what */
-    /* we expected, else return a -10. Return 0 (success) if we're here  */
-    /* and weren't reading or writing. */
-    if ( (*mode & BAREAD || *mode & BAWRITE) && (*nactual != *no) ) {
-        return 246;
-    }
-    else {
-        return 0;
-    }
-}
-
-/** 
+/**
  * Do bacio operation, with new names for long int arguments, needed
  * for files > 2 Gb.
  *
@@ -363,36 +75,36 @@ bacio_(int *mode, int *start, int *newpos, int *size, int *no,
  * @param datary is the name of the entity (variable, vector, array)
  * that you want to write data out from or read it in to. The fact
  * that C is declaring it to be a char * does not affect your fortran.
- * @param namelen - Do NOT specify this. It is created automagically by the        
- * Fortran compiler                                                       
- * @param datanamelen - Do NOT specify this. It is created automagically by the        
- * Fortran compiler                                                       
+ * @param namelen - Do NOT specify this. It is created automagically by the
+ * Fortran compiler
+ * @param datanamelen - Do NOT specify this. It is created automagically by the
+ * Fortran compiler
  *
- * @note In your Fortran code, call bacio(), not bacio_(). 
+ * @note In your Fortran code, call bacio(), not bacio_().
  *
  * What is going on here is that although the Fortran caller will
  * always be calling bacio, the called C routine name will change from
  * system to system.
- * 
- * @return 0 All was well                                   
- * @return 255 Tried to open read only _and_ write only       
- * @return 254 Tried to read and write in the same call       
- * @return 253 Internal failure in name processing            
- * @return 252 Failure in opening file                        
- * @return 251 Tried to read on a write-only file             
- * @return 250 Failed in read to find the 'start' location    
- * @return 249 Tried to write to a read only file             
- * @return 248 Failed in write to find the 'start' location   
- * @return 247 Error in close                                 
- * @return 246 Read or wrote fewer data than requested        
- * @return 102 Massive catastrophe -- datary pointer is NULL  
+ *
+ * @return 0 All was well
+ * @return 255 Tried to open read only _and_ write only
+ * @return 254 Tried to read and write in the same call
+ * @return 253 Internal failure in name processing
+ * @return 252 Failure in opening file
+ * @return 251 Tried to read on a write-only file
+ * @return 250 Failed in read to find the 'start' location
+ * @return 249 Tried to write to a read only file
+ * @return 248 Failed in write to find the 'start' location
+ * @return 247 Error in close
+ * @return 246 Read or wrote fewer data than requested
+ * @return 102 Massive catastrophe -- datary pointer is NULL
  *
  * @author Robert Grumbine @date 21 November 2008
  */
 int
-baciol_(int * mode, long int * start, long int *newpos, int * size, long int * no,
-        long int * nactual, int * fdes, const char *fname, char *datary,
-        int  namelen, int  datanamelen)
+baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
+        long int *nactual, int *fdes, const char *fname, char *datary,
+        int namelen, int datanamelen)
 {
     int i, jret, seekret;
     char *realname = NULL;
@@ -402,42 +114,22 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
     *nactual = 0;
 
     /* Check for illegal combinations of options */
-    if (( BAOPEN_RONLY & *mode) &&
-        ( (BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ) ) {
-#ifdef VERBOSE
-        printf("illegal -- trying to open both read only and write only\n");
-#endif
+    if ((BAOPEN_RONLY & *mode) &&
+        ((BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode)))
         return 255;
-    }
-    if ( (BAREAD & *mode ) && (BAWRITE & *mode) ) {
-#ifdef VERBOSE
-        printf("illegal -- trying to both read and write in the same call\n");
-#endif
+
+    if ((BAREAD & *mode) && (BAWRITE & *mode)) 
         return 254;
-    }
 
     /* This section handles Fortran to C translation of strings so as
      * to be able to open the files Fortran is expecting to be
      * opened. */
-#ifdef CRAY90
-    namelen = _fcdlen(fcd_fname);
-    fname   = _fcdtocp(fcd_fname);
-#endif
-    if ( (BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
-         (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
-         (BAOPEN_RW & *mode) ) {
-#ifdef VERBOSE
-        printf("Will be opening a file %s %d\n", fname, namelen); fflush(stdout);
-        printf("Strlen %d namelen %d\n", strlen(fname), namelen); fflush(stdout);
-#endif
-        if (!(realname = (char *)malloc((namelen + 1) * sizeof(char))))
-        {
-#ifdef VERBOSE
-            printf("failed to mallocate realname %d = namelen\n", namelen);
-            fflush(stdout);
-#endif
+    if ((BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
+        (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
+        (BAOPEN_RW & *mode))
+    {
+        if (!(realname = (char *) malloc((namelen + 1) * sizeof(char))))
             return 253;
-        }
 
         i=0;
         while (i < namelen && isgraph(fname[i])) {
@@ -449,187 +141,192 @@ baciol_(int * mode, long int * start, long int *newpos, int * size, long int * n
     }
 
     /* Open files with correct read/write and file permission. */
-    if (BAOPEN_RONLY & *mode) {
-#ifdef VERBOSE
-        printf("open read only %s\n", realname);
-#endif
-        *fdes = open(realname, O_RDONLY , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
+    if (BAOPEN_RONLY & *mode)
+    {
+        *fdes = open(realname, O_RDONLY , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
-    else if (BAOPEN_WONLY & *mode ) {
-#ifdef VERBOSE
-        printf("open write only %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
+    else if (BAOPEN_WONLY & *mode)
+    {
+        *fdes = open(realname, O_WRONLY | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
-    else if (BAOPEN_WONLY_TRUNC & *mode ) {
-#ifdef VERBOSE
-        printf("open write only with truncation %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT | O_TRUNC , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
+    else if (BAOPEN_WONLY_TRUNC & *mode)
+    {
+        *fdes = open(realname, O_WRONLY | O_CREAT | O_TRUNC , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
-    else if (BAOPEN_WONLY_APPEND & *mode ) {
-#ifdef VERBOSE
-        printf("open write only with append %s\n", realname);
-#endif
-        *fdes = open(realname, O_WRONLY | O_CREAT | O_APPEND , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
+    else if (BAOPEN_WONLY_APPEND & *mode)
+    {
+        *fdes = open(realname, O_WRONLY | O_CREAT | O_APPEND , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
-    else if (BAOPEN_RW & *mode) {
-#ifdef VERBOSE
-        printf("open read-write %s\n", realname);
-#endif
-        *fdes = open(realname, O_RDWR | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP );
-    }
-    else {
-#ifdef VERBOSE
-        printf("no openings\n");
-#endif
-    }
-    if (*fdes < 0) {
-#ifdef VERBOSE
-        printf("error in file descriptor! *fdes %d\n", *fdes);
-#endif
-        if (realname)
-            free(realname);
-        return 252;
-    }
-    else {
-#ifdef VERBOSE
-        printf("file descriptor = %d\n",*fdes );
-#endif
+    else if (BAOPEN_RW & *mode)
+    {
+        *fdes = open(realname, O_RDWR | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
 
+    if (*fdes < 0) 
+    {
+        if (realname)
+          free(realname);
+        return 252;
+    }
 
     /* Read data as requested */
     if (BAREAD & *mode &&
-        ( (BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ) ) {
-#ifdef VERBOSE
-        printf("Error, trying to read while in write only mode!\n");
-#endif
+        ((BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode)))
         return 251;
-    }
-    else if (BAREAD & *mode ) {
+    else if (BAREAD & *mode )
+    {
         /* Read in some data */
-        if (! (*mode & NOSEEK) ) {
+        if (!(*mode & NOSEEK))
+        {
             seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1) {
-#ifdef VERBOSE
-                printf("error in seeking to %d\n",*start);
-#endif
+            if (seekret == -1)
                 return 250;
-            }
-#ifdef VERBOSE
-            else {
-                printf("Seek successful, seek ret %d, start %d\n", seekret, *start);
-            }
-#endif
         }
-#ifdef CRAY90
-        datary = _fcdtocp(fcd_datary);
-#endif
-        if (datary == NULL) {
+
+        if (datary == NULL)
+        {
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return 102;
         }
-#ifdef VERBOSE
-        printf("file descriptor, datary = %d %d\n", *fdes, (int) datary);
-#endif
         count = (size_t) *no;
         jret = read(*fdes, (void *) datary, count);
-        if (jret != *no) {
-#ifdef VERBOSE
-            printf("did not read in the requested number of bytes\n");
-            printf("read in %d bytes instead of %d \n",jret, *no);
-#endif
-        }
-        else {
-#ifdef VERBOSE
-            printf("read in %d bytes requested \n", *no);
-#endif
-        }
         *nactual = jret;
         *newpos = *start + jret;
     }
     /* Done with reading */
 
     /* See if we should be writing */
-    if ( BAWRITE & *mode && BAOPEN_RONLY & *mode ) {
-#ifdef VERBOSE
-        printf("Trying to write on a read only file \n");
-#endif
+    if (BAWRITE & *mode && BAOPEN_RONLY & *mode) 
         return 249;
-    }
-    else if ( BAWRITE & *mode ) {
-        if (! (*mode & NOSEEK) ) {
+    else if (BAWRITE & *mode)
+    {
+        if (!(*mode & NOSEEK))
+        {
             seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1) {
-#ifdef VERBOSE
-                printf("error in seeking to %d\n",*start);
-#endif
+            if (seekret == -1) 
                 return 248;
-            }
-#ifdef VERBOSE
-            else {
-                printf("Seek successful, seek ret %d, start %d\n", seekret, *start);
-            }
-#endif
         }
-#ifdef CRAY90
-        datary = _fcdtocp(fcd_datary);
-#endif
-        if (datary == NULL) {
+        if (datary == NULL)
+        {
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return 102;
         }
-#ifdef VERBOSE
-        printf("write file descriptor, datary = %d %d\n", *fdes, (int) datary);
-#endif
-        count = (size_t) *no;
+        count = (size_t)*no;
         jret = write(*fdes, (void *) datary, count);
-        if (jret != *no) {
-#ifdef VERBOSE
-            printf("did not write out the requested number of bytes\n");
-            printf("wrote %d bytes instead\n", jret);
-#endif
+        if (jret != *no)
+        {
             *nactual = jret;
             *newpos = *start + jret;
         }
-        else {
-#ifdef VERBOSE
-            printf("wrote %d bytes \n", jret);
-#endif
+        else
+        {
             *nactual = jret;
             *newpos = *start + jret;
         }
     }
     /* Done with writing */
 
-
     /* Close file if requested */
-    if (BACLOSE & *mode ) {
+    if (BACLOSE & *mode )
+    {
         jret = close(*fdes);
-        if (jret != 0) {
-#ifdef VERBOSE
-            printf("close failed! jret = %d\n",jret);
-#endif
+        if (jret != 0)
             return 247;
-        }
     }
     /* Done closing */
 
     /* Free the realname pointer to prevent memory leak */
-    if ( (BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
+    if ((BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
          (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
-         (BAOPEN_RW & *mode) ) {
+         (BAOPEN_RW & *mode))
+    {
         free(realname);
     }
 
     /* Check that if we were reading or writing, that we actually got
-    what we expected, else return a -10. Return 0 (success) if we're
-    here and weren't reading or writing. */
-    if ( (*mode & BAREAD || *mode & BAWRITE) && (*nactual != *no) ) {
+       what we expected, else return a -10. Return 0 (success) if we're
+       here and weren't reading or writing. */
+    if ((*mode & BAREAD || *mode & BAWRITE) && (*nactual != *no))
         return 246;
-    }
-    else {
+    else 
         return 0;
-    }
+}
+
+/**
+ * Do bacio operation.
+ *
+ * @param mode integer specifying operations to be performed see the
+ * clib.inc file for the values. Mode is obtained by adding together
+ * the values corresponding to the operations The best method is to
+ * include the clib.inc file and refer to the names for the operations
+ * rather than rely on hard-coded values.
+ * @param start byte number to start your operation from. 0 is the
+ * first byte in the file, not 1.
+ * @param newpos position in the file after a read or write has been
+ * performed. You'll need this if you're doing 'seeking' read/write.
+ * @param size is the size of the objects you are trying to
+ * read. Types are CHARACTER, INTEGER, REAL, COMPLEX.
+ * @param no is the number of things to read or write (characters,
+ * integers, whatever).
+ * @param nactual is the number of things actually read or
+ * written. Check that you got what you wanted.
+ * @param fdes is an integer 'file descriptor'. This is not a Fortran
+ * Unit Number You can use it, however, to refer to files you've
+ * previously opened.
+ * @param fname is the name of the file. This only needs to be defined
+ * when you are opening a file. It must be (on the Fortran side)
+ * declared as CHARACTER*N, where N is a length greater than or equal
+ * to the length of the file name. CHARACTER*1 fname[80] (for example)
+ * will fail.
+ * @param datary is the name of the entity (variable, vector, array)
+ * that you want to write data out from or read it in to. The fact
+ * that C is declaring it to be a char * does not affect your fortran.
+ * @param namelen - Do NOT specify this. It is created automagically by the
+ * Fortran compiler
+ * @param datanamelen - Do NOT specify this. It is created automagically by the
+ * Fortran compiler
+ *
+ * @note In your Fortran code, call bacio(), not bacio_().
+ *
+ * What is going on here is that although the Fortran caller will
+ * always be calling bacio, the called C routine name will change from
+ * system to system.
+ *
+ * @return 0 All was well
+ * @return 255 Tried to open read only _and_ write only
+ * @return 254 Tried to read and write in the same call
+ * @return 253 Internal failure in name processing
+ * @return 252 Failure in opening file
+ * @return 251 Tried to read on a write-only file
+ * @return 250 Failed in read to find the 'start' location
+ * @return 249 Tried to write to a read only file
+ * @return 248 Failed in write to find the 'start' location
+ * @return 247 Error in close
+ * @return 246 Read or wrote fewer data than requested
+ * @return 102 Massive catastrophe -- datary pointer is NULL
+ *
+ * @author Robert Grumbine @date 16 March 1998
+ */
+int
+bacio_(int *mode, int *start, int *newpos, int *size, int *no,
+       int *nactual, int *fdes, const char *fname, char *datary,
+       int namelen, int datanamelen)
+{
+    long int lstart;
+    long int lnewpos;
+    long int lno;
+    long int lnactual;
+    int ret;
+
+    lstart = *start;
+    lnewpos = *newpos;
+    lno = *no;
+
+    /* Call the version of this function with long int parameters. */
+    ret = baciol_(mode, &lstart, &lnewpos, size, &lno, &lnactual, fdes,
+                  fname, datary, namelen, datanamelen);
+
+    *nactual = lnactual;
+
+    return ret;
 }
