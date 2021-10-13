@@ -121,9 +121,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
     if ((BAREAD & *mode) && (BAWRITE & *mode)) 
         return 254;
 
-    /* This section handles Fortran to C translation of strings so as
-     * to be able to open the files Fortran is expecting to be
-     * opened. */
+    /* Copy and null terminate the filename. */
     if ((BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
         (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
         (BAOPEN_RW & *mode))
@@ -131,13 +129,8 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         if (!(realname = (char *) malloc((namelen + 1) * sizeof(char))))
             return 253;
 
-        i=0;
-        while (i < namelen && isgraph(fname[i])) {
-            realname[i]=fname[i];
-            i++;
-        }
-        realname[i] = '\0';
-
+        strncpy(realname, fname, namelen);
+        realname[namelen] = '\0';
     }
 
     /* Open files with correct read/write and file permission. */
