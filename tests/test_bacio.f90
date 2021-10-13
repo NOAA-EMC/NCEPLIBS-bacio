@@ -13,7 +13,7 @@ program test_bacio
   character (len = 12) :: data_in_3
   integer :: lu = 1
   integer :: ka
-  integer(kind=8) :: ka8, ib8, nb8, lu8
+  integer(kind=8) :: ka8, ib8, nb8
   integer :: stat
   integer :: iret
 

@@ -7,16 +7,12 @@ program test_bacio2
 
   character(len=15) :: filename = 'test_bacio2.bin'
   character (len = 4) :: data
-  character (len = 4) :: new_data
   character (len = 4) :: data_in
-  character (len = 8) :: data_in_2
-  character (len = 12) :: data_in_3
   integer, parameter :: lots = 5000
   character (len = lots) :: lots_of_data
-  integer :: i
   integer :: lu = 1
   integer :: ka
-  integer(kind=8) :: ka8, ib8, nb8, lu8
+  integer(kind=8) :: ka8
   integer :: stat
   integer :: iret
 

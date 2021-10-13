@@ -35,7 +35,6 @@ main()
         char datary[] = "test";
         char datary_in[4];
         int  namelen, datanamelen, bad_namelen;
-        int i;
         int ierr;
 
         namelen = strlen(fname);
@@ -46,10 +45,7 @@ main()
         mode = BAOPEN_WONLY | BAOPEN_RONLY;
         if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
                            &fdes, fname, datary, namelen, datanamelen)) != 255)
-        {
-            printf("ierr = %d\n", ierr);
             return ERR;
-        }
 
         /* This won't work - bad mode. */
         mode = BAREAD | BAWRITE;
@@ -89,12 +85,10 @@ main()
             return ierr;
 
         /* Try to reopen the file with a bad name - won't work. */
-        /* This currently causes a memory leak. See: */
-        /* https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62 */
-        /* mode = BAOPEN_RONLY; */
-        /* if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
-        /*     return ierr; */
+        mode = BAOPEN_RONLY;
+        if ((ierr = bacio_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252)
+            return ierr;
 
         /* Reopen the file. */
         mode = BAOPEN_RONLY;
@@ -156,13 +150,11 @@ main()
     {
         int mode;
         int start = 0;
-        int bad_start = 100;
         int newpos = 0, size = 4, no = 4, nactual, fdes;
         const char fname[] = "test_bacio_c.bin";
         char datary[] = "test";
         char datary_in[8];
         int  namelen, datanamelen;
-        int i;
         int ierr;
 
         namelen = strlen(fname);
@@ -271,7 +263,6 @@ main()
         char datary[] = "test";
         char datary_in[4];
         int  namelen, datanamelen, bad_namelen;
-        int i;
         int ierr;
 
         namelen = strlen(fname);
@@ -322,11 +313,10 @@ main()
             return ierr;
 
         /* Try to reopen the file with a bad name - won't work. */
-        /* This currently causes a memory leak. See: https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues/62
-        /* mode = BAOPEN_RONLY; */
-        /* if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual, */
-        /*                    &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252) */
-        /*     return ierr; */
+        mode = BAOPEN_RONLY;
+        if ((ierr = baciol_(&mode, &start, &newpos, &size, &no, &nactual,
+                           &fdes, bad_fname, datary, bad_namelen, datanamelen)) != 252)
+            return ierr;
 
         /* Reopen the file. */
         mode = BAOPEN_RONLY;
@@ -388,14 +378,12 @@ main()
     {
         int mode;
         long int start = 0;
-        long int bad_start = 100;
         long int newpos = 0, no = 4, nactual;
         int size = 4, fdes;
         const char fname[] = "test_baciol_c.bin";
         char datary[] = "test";
         char datary_in[8];
         int  namelen, datanamelen;
-        int i;
         int ierr;
 
         namelen = strlen(fname);

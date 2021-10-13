@@ -75,16 +75,10 @@
  * @param datary is the name of the entity (variable, vector, array)
  * that you want to write data out from or read it in to. The fact
  * that C is declaring it to be a char * does not affect your fortran.
- * @param namelen - Do NOT specify this. It is created automagically by the
- * Fortran compiler
- * @param datanamelen - Do NOT specify this. It is created automagically by the
- * Fortran compiler
+ * @param namelen - Length of the name.
+ * @param datanamelen - Length of data. (Not used).
  *
- * @note In your Fortran code, call bacio(), not bacio_().
- *
- * What is going on here is that although the Fortran caller will
- * always be calling bacio, the called C routine name will change from
- * system to system.
+ * This function is called from the Fortran code in baciof.f90.
  *
  * @return 0 All was well
  * @return 255 Tried to open read only _and_ write only
@@ -99,6 +93,7 @@
  * @return 246 Read or wrote fewer data than requested
  * @return 102 Massive catastrophe -- datary pointer is NULL
  *
+
  * @author Robert Grumbine @date 21 November 2008
  */
 int
@@ -107,7 +102,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         int namelen, int datanamelen)
 {
     int i, jret, seekret;
-    char *realname;
+    char *realname = NULL;
     size_t count;
 
     /* Initialization(s) */
@@ -121,9 +116,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
     if ((BAREAD & *mode) && (BAWRITE & *mode)) 
         return 254;
 
-    /* This section handles Fortran to C translation of strings so as
-     * to be able to open the files Fortran is expecting to be
-     * opened. */
+    /* Copy and null terminate the filename. */
     if ((BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
         (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode) ||
         (BAOPEN_RW & *mode))
@@ -131,13 +124,8 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         if (!(realname = (char *) malloc((namelen + 1) * sizeof(char))))
             return 253;
 
-        i=0;
-        while (i < namelen && isgraph(fname[i])) {
-            realname[i]=fname[i];
-            i++;
-        }
-        realname[i] = '\0';
-
+        strncpy(realname, fname, namelen);
+        realname[namelen] = '\0';
     }
 
     /* Open files with correct read/write and file permission. */
@@ -162,46 +150,50 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         *fdes = open(realname, O_RDWR | O_CREAT , S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP);
     }
 
-    if (*fdes < 0) 
+    /* If the file open didn't work, or a bad fdes was passed in,
+     * return error. */
+    if (*fdes < 0)
+    {
+        if (realname)
+            free(realname);
         return 252;
+    }
 
-    /* Read data as requested */
+    /* Check for bad mode flags. */
     if (BAREAD & *mode &&
         ((BAOPEN_WONLY & *mode) || (BAOPEN_WONLY_TRUNC & *mode) || (BAOPEN_WONLY_APPEND & *mode)))
         return 251;
-    else if (BAREAD & *mode )
+
+    /* Read data as requested. */
+    if (BAREAD & *mode )
     {
-        /* Read in some data */
+        /* Seek the right part of the file. */
         if (!(*mode & NOSEEK))
-        {
-            seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1)
+            if ((seekret = lseek(*fdes, *start, SEEK_SET)) == -1)
                 return 250;
-        }
 
         if (datary == NULL)
         {
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return 102;
         }
-        count = (size_t) *no;
-        jret = read(*fdes, (void *) datary, count);
+        count = (size_t)*no;
+        jret = read(*fdes, (void *)datary, count);
         *nactual = jret;
         *newpos = *start + jret;
     }
-    /* Done with reading */
 
-    /* See if we should be writing */
+    /* Check for bad mode flag. */
     if (BAWRITE & *mode && BAOPEN_RONLY & *mode) 
         return 249;
-    else if (BAWRITE & *mode)
+    
+    /* See if we should be writing. */
+    if (BAWRITE & *mode)
     {
         if (!(*mode & NOSEEK))
-        {
-            seekret = lseek(*fdes, *start, SEEK_SET);
-            if (seekret == -1) 
+            if ((seekret = lseek(*fdes, *start, SEEK_SET)) == -1)
                 return 248;
-        }
+
         if (datary == NULL)
         {
             printf("Massive catastrophe -- datary pointer is NULL\n");
@@ -220,16 +212,11 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
             *newpos = *start + jret;
         }
     }
-    /* Done with writing */
 
     /* Close file if requested */
     if (BACLOSE & *mode )
-    {
-        jret = close(*fdes);
-        if (jret != 0)
+        if ((jret = close(*fdes)) != 0)
             return 247;
-    }
-    /* Done closing */
 
     /* Free the realname pointer to prevent memory leak */
     if ((BAOPEN_RONLY & *mode) || (BAOPEN_WONLY & *mode) ||
@@ -240,8 +227,8 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
     }
 
     /* Check that if we were reading or writing, that we actually got
-       what we expected, else return a -10. Return 0 (success) if we're
-       here and weren't reading or writing. */
+       what we expected. Return 0 (success) if we're here and weren't
+       reading or writing. */
     if ((*mode & BAREAD || *mode & BAWRITE) && (*nactual != *no))
         return 246;
     else 
@@ -277,16 +264,10 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
  * @param datary is the name of the entity (variable, vector, array)
  * that you want to write data out from or read it in to. The fact
  * that C is declaring it to be a char * does not affect your fortran.
- * @param namelen - Do NOT specify this. It is created automagically by the
- * Fortran compiler
- * @param datanamelen - Do NOT specify this. It is created automagically by the
- * Fortran compiler
+ * @param namelen - Length of the name.
+ * @param datanamelen - Length of data. (Not used).
  *
- * @note In your Fortran code, call bacio(), not bacio_().
- *
- * What is going on here is that although the Fortran caller will
- * always be calling bacio, the called C routine name will change from
- * system to system.
+ * This function is called from the Fortran code in baciof.f90.
  *
  * @return 0 All was well
  * @return 255 Tried to open read only _and_ write only
@@ -301,7 +282,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
  * @return 246 Read or wrote fewer data than requested
  * @return 102 Massive catastrophe -- datary pointer is NULL
  *
- * @author Robert Grumbine @date 16 March 1998
+ * @author Robert Grumbine, Ed Hartnett
  */
 int
 bacio_(int *mode, int *start, int *newpos, int *size, int *no,
@@ -314,6 +295,7 @@ bacio_(int *mode, int *start, int *newpos, int *size, int *no,
     long int lnactual;
     int ret;
 
+    /* Copy these parameters to int*8. */
     lstart = *start;
     lnewpos = *newpos;
     lno = *no;
@@ -322,6 +304,7 @@ bacio_(int *mode, int *start, int *newpos, int *size, int *no,
     ret = baciol_(mode, &lstart, &lnewpos, size, &lno, &lnactual, fdes,
                   fname, datary, namelen, datanamelen);
 
+    /* Copy the number of bytes read/written to the 4-byte int. */
     *nactual = lnactual;
 
     return ret;
