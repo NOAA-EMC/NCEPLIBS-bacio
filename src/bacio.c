@@ -103,7 +103,7 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
         long int *nactual, int *fdes, const char *fname, char *datary,
         int namelen, int datanamelen)
 {
-    int i, jret, seekret;
+    int jret, seekret;
     char *realname = NULL;
     size_t count;
 
