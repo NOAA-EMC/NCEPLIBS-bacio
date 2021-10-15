@@ -52,11 +52,12 @@ END MODULE BACIO_MODULE
 !> @param vopt option value.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BASETO(NOPT,VOPT)
+SUBROUTINE BASETO(NOPT, VOPT)
   USE BACIO_MODULE
-  INTEGER NOPT,VOPT
+  IMPLICIT NONE
+  INTEGER NOPT, VOPT
 
-  IF(NOPT.GE.1.AND.NOPT.LE.20) BAOPTS(NOPT)=VOPT
+  IF (NOPT .GE. 1 .AND. NOPT .LE. 20) BAOPTS(NOPT) = VOPT
 END SUBROUTINE BASETO
 
 !> Open a byte-addressable file.
@@ -67,18 +68,21 @@ END SUBROUTINE BASETO
 !> @param iret return code
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BAOPEN(LU,CFN,IRET)
+SUBROUTINE BAOPEN(LU, CFN, IRET)
   USE BACIO_MODULE
-  CHARACTER CFN*(*)
-  CHARACTER(80) CMSG
-  integer(kind=8) IB,JB,NB,KA
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU
+  CHARACTER, intent(in) :: CFN*(*)
+  INTEGER, intent(out) :: IRET  
+  integer(kind=8) IB, JB, NB, KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
-     IRET=6
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
+     IRET = 6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_OPENRW,IB,JB,1,NB,KA,FD(LU),CFN,A)
+  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPEN
 
 !> Open a byte-addressable file for read only.
@@ -89,18 +93,21 @@ END SUBROUTINE BAOPEN
 !> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BAOPENR(LU,CFN,IRET)
+SUBROUTINE BAOPENR(LU, CFN, IRET)
   USE BACIO_MODULE
-  CHARACTER CFN*(*)
-  INTEGER LU,iret
-  integer(kind=8) IB,JB,NB,KA
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU  
+  CHARACTER, intent(in) :: CFN*(*)
+  INTEGER, intent(out) :: IRET  
+  integer(kind=8) IB, JB, NB, KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
      IRET=6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_OPENR,IB,JB,1,NB,KA,FD(LU),CFN,A)
+  IRET = BACIOL(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENR
 
 !> Open a byte-addressable file for write only.
@@ -111,17 +118,21 @@ END SUBROUTINE BAOPENR
 !> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BAOPENW(LU,CFN,IRET)
+SUBROUTINE BAOPENW(LU, CFN, IRET)
   USE BACIO_MODULE
-  CHARACTER CFN*(*)
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU  
+  CHARACTER, intent(in) :: CFN*(*)
+  INTEGER, intent(out) :: IRET  
   integer(kind=8) IB,JB,NB,KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
      IRET=6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_OPENW,IB,JB,1,NB,KA,FD(LU),CFN,A)
+  IRET = BACIOL(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENW
 
 !> Open a byte-addressable file for write only with truncation.
@@ -132,17 +143,21 @@ END SUBROUTINE BAOPENW
 !> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BAOPENWT(LU,CFN,IRET)
+SUBROUTINE BAOPENWT(LU, CFN, IRET)
   USE BACIO_MODULE
-  CHARACTER CFN*(*)
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU  
+  CHARACTER, intent(in) :: CFN*(*)
+  INTEGER, intent(out) :: IRET  
   integer(kind=8) IB,JB,NB,KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
      IRET=6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_OPENWT,IB,JB,1,NB,KA,FD(LU),CFN,A)
+  IRET = BACIOL(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENWT
 
 !> Open a byte-addressable file for write only with append.
@@ -153,17 +168,21 @@ END SUBROUTINE BAOPENWT
 !> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BAOPENWA(LU,CFN,IRET)
+SUBROUTINE BAOPENWA(LU, CFN, IRET)
   USE BACIO_MODULE
-  CHARACTER CFN*(*)
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU  
+  CHARACTER, intent(in) :: CFN*(*)
+  INTEGER, intent(out) :: IRET  
   integer(kind=8) IB,JB,NB,KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
      IRET=6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_OPENWA,IB,JB,1,NB,KA,FD(LU),CFN,A)
+  IRET = BACIOL(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENWA
 
 !> Close a byte-addressable file.
@@ -172,16 +191,20 @@ END SUBROUTINE BAOPENWA
 !> @param iret return code.
 !>
 !> @author Mark Iredell @date 98-06-04
-SUBROUTINE BACLOSE(LU,IRET)
+SUBROUTINE BACLOSE(LU, IRET)
   USE BACIO_MODULE
-  integer(kind=8) IB,JB,NB,KA
+  IMPLICIT NONE
+  INTEGER, intent(in) :: LU
+  INTEGER, intent(out) :: IRET    
+  integer(kind=8) IB, JB, NB, KA
+  CHARACTER :: A(1)
 
-  IF(LU.LT.001.OR.LU.GT.FDDIM) THEN
+  IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
      IRET=6
      RETURN
   ENDIF
 
-  IRET=BACIOL(BACIO_CLOSE,IB,JB,1,NB,KA,FD(LU),CHAR(0),A)
+  IRET = BACIOL(BACIO_CLOSE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
   IF(IRET.EQ.0) FD(LU)=0
 END SUBROUTINE BACLOSE
 
@@ -220,11 +243,11 @@ SUBROUTINE BAREAD(LU,IB,NB,KA,A)
   INTEGER,INTENT(OUT) :: KA
   CHARACTER,INTENT(OUT) :: A(NB)
   INTEGER(KIND=8) :: LONG_IB,LONG_NB,LONG_KA
-  !
-  if(NB<0 ) THEN
+
+  if (NB < 0) THEN
      print *,'WRONG: in BAREAD read data size NB < 0, STOP! '//&
           'Consider using BAREADL and long integer'
-     KA=0
+     KA = 0
      return
   ENDIF
   LONG_IB=IB
@@ -265,7 +288,6 @@ END SUBROUTINE BAREAD
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAREADL(LU,IB,NB,KA,A)
   USE BACIO_MODULE
-  !
   IMPLICIT NONE
   INTEGER,intent(in)          :: LU
   INTEGER(kind=8),intent(in)  :: IB,NB
