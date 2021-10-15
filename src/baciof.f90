@@ -408,7 +408,7 @@ SUBROUTINE BAWRITE(LU, IB, NB, KA, A)
   LONG_IB = IB
   LONG_NB = NB
   CALL BAWRITEL(LU, LONG_IB, LONG_NB, LONG_KA, A)
-  KA = LONG_KA
+  KA = INT(LONG_KA)
 END SUBROUTINE BAWRITE
 
 !> This subrouytine writes a given number of bytes to an unblocked
