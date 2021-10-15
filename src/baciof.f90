@@ -253,7 +253,7 @@ SUBROUTINE BAREAD(LU, IB, NB, KA, A)
   LONG_IB = IB
   LONG_NB = NB
   CALL BAREADL(LU, LONG_IB, LONG_NB, LONG_KA, A)
-  KA = LONG_KA
+  KA = INT(LONG_KA)
 END SUBROUTINE BAREAD
 
 !> This subrouytine is using updated baciol() I/O package to read a
