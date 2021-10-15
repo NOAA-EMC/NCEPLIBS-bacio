@@ -11,20 +11,20 @@ MODULE BACIO_MODULE
 
   !> The bacio function in the C code.
   INTEGER,EXTERNAL:: BACIO
-        
+
   !> The baciol function in the C code.
   INTEGER,EXTERNAL:: BACIOL
-  
+
   !> Maximum number of open files in bacio library.
-  INTEGER,PARAMETER :: FDDIM = 9999 
-  
+  INTEGER,PARAMETER :: FDDIM = 9999
+
   !> Array IDs of currently open files.
-  INTEGER,DIMENSION(FDDIM),SAVE:: FD = FDDIM*0 
-  
+  INTEGER,DIMENSION(FDDIM),SAVE:: FD = FDDIM*0
+
   !> Array of option settings. Only the first element of the array
   !> is used.
   INTEGER,DIMENSION(20),SAVE:: BAOPTS = 0
-  
+
   INTEGER,PARAMETER:: BACIO_OPENR = 1    !< Open file for read only.
   INTEGER,PARAMETER:: BACIO_OPENW = 2    !< Open file for write only.
   INTEGER,PARAMETER:: BACIO_OPENRW = 4   !< Open file for read or write.
@@ -73,7 +73,7 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
-  INTEGER, intent(out) :: IRET  
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB, JB, NB, KA
   CHARACTER :: A(1)
 
@@ -96,14 +96,14 @@ END SUBROUTINE BAOPEN
 SUBROUTINE BAOPENR(LU, CFN, IRET)
   USE BACIO_MODULE
   IMPLICIT NONE
-  INTEGER, intent(in) :: LU  
+  INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
-  INTEGER, intent(out) :: IRET  
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB, JB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
-     IRET=6
+     IRET = 6
      RETURN
   ENDIF
 
@@ -121,14 +121,14 @@ END SUBROUTINE BAOPENR
 SUBROUTINE BAOPENW(LU, CFN, IRET)
   USE BACIO_MODULE
   IMPLICIT NONE
-  INTEGER, intent(in) :: LU  
+  INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
-  INTEGER, intent(out) :: IRET  
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB,JB,NB,KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
-     IRET=6
+     IRET = 6
      RETURN
   ENDIF
 
@@ -146,14 +146,14 @@ END SUBROUTINE BAOPENW
 SUBROUTINE BAOPENWT(LU, CFN, IRET)
   USE BACIO_MODULE
   IMPLICIT NONE
-  INTEGER, intent(in) :: LU  
+  INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
-  INTEGER, intent(out) :: IRET  
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB,JB,NB,KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
-     IRET=6
+     IRET = 6
      RETURN
   ENDIF
 
@@ -171,14 +171,14 @@ END SUBROUTINE BAOPENWT
 SUBROUTINE BAOPENWA(LU, CFN, IRET)
   USE BACIO_MODULE
   IMPLICIT NONE
-  INTEGER, intent(in) :: LU  
+  INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
-  INTEGER, intent(out) :: IRET  
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB,JB,NB,KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
-     IRET=6
+     IRET = 6
      RETURN
   ENDIF
 
@@ -195,12 +195,12 @@ SUBROUTINE BACLOSE(LU, IRET)
   USE BACIO_MODULE
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
-  INTEGER, intent(out) :: IRET    
+  INTEGER, intent(out) :: IRET
   integer(kind=8) IB, JB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
-     IRET=6
+     IRET = 6
      RETURN
   ENDIF
 
@@ -330,8 +330,8 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
              FD(LU), CHAR(0), A)
      ENDIF
 
-  !  BUFFERED I/O
-  !  GET DATA FROM PREVIOUS CALL IF POSSIBLE
+     !  BUFFERED I/O
+     !  GET DATA FROM PREVIOUS CALL IF POSSIBLE
   ELSE
      KA = 0
      IF (LUX .NE. LU) THEN
@@ -381,7 +381,7 @@ END SUBROUTINE BAREADL
 
 !> This program is calling bawritel() to write a given number of bytes to
 !> an unblocked file, skipping a given number of bytes.
-!>      
+!>
 !> @param[in] lu unit to write.
 !> @param[in] ib number of bytes to skip. (If ib<0, then the file is
 !> accessed with no seeking.)
