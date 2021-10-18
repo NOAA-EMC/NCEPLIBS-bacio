@@ -17,13 +17,13 @@ program test_bacio
   integer :: stat
   integer :: iret
 
-  print *, 'Testing bacio.'
-  
-  print *, 'Testing simple write - error messages are expected...'
-
   ! Delete the test file, if it remains from previous runs.
   open(unit = 1234, iostat = stat, file = filename, status='old')
   if (stat == 0) close(1234, status='delete')  
+
+  print *, 'Testing bacio.'
+  
+  print *, 'Testing simple write - error messages are expected...'
 
   ! Try to create a test file - won't work, bad lu.
   call baopen(0, filename, iret)

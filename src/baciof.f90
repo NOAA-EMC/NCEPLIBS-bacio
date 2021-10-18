@@ -9,12 +9,6 @@
 !> @author Mark Iredell @date 98-06-04
 MODULE BACIO_MODULE
 
-  !> The bacio function in the C code.
-  INTEGER,EXTERNAL:: BACIO
-
-  !> The baciol function in the C code.
-  INTEGER,EXTERNAL:: BACIOL
-
   !> Maximum number of open files in bacio library.
   INTEGER,PARAMETER :: FDDIM = 9999
 
@@ -34,6 +28,35 @@ MODULE BACIO_MODULE
   INTEGER,PARAMETER:: BACIO_NOSEEK = 64  !< Start I/O from previous spot.
   INTEGER,PARAMETER:: BACIO_OPENWT = 128 !< Open for write only with truncation.
   INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
+
+  interface
+     !> @fn bacio_module::baciol::baciol(mode, start, newpos, size, no, nactual, fdes, fname, datary)
+     !> Do a bacio operation.
+     !>
+     !> @param mode bacio operation.
+     !> @param start bytes to start operation on.
+     !> @param newpos new position.
+     !> @param size size of each element.
+     !> @param no number of elements.
+     !> @param nactual number elements actually read/written.
+     !> @param fdes file ID.
+     !> @param fname file name.
+     !> @param datary data array.
+     !>
+     !> @author Ed Hartnett @date 21-10-18
+     integer function baciol(mode, start, newpos, size, no, nactual, &
+          fdes, fname, datary) bind(C)
+       use, intrinsic :: iso_c_binding
+       integer(c_int), value, intent(in) :: mode
+       integer(c_long), value, intent(in) :: start, newpos
+       integer(c_int), value, intent(in) :: size
+       integer(c_long), value, intent(in) :: no
+       integer(c_long), intent(inout) :: nactual
+       integer(c_int), intent(inout) :: fdes
+       character(kind=C_char), intent(in) :: fname(*)
+       character(kind=C_char), intent(in) :: datary(*)
+     end function baciol
+  end interface
 END MODULE BACIO_MODULE
 
 !> Set options for byte-addressable I/O. (There is currently only one
@@ -70,6 +93,7 @@ END SUBROUTINE BASETO
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPEN(LU, CFN, IRET)
   USE BACIO_MODULE
+  use iso_c_binding, only: c_null_char  
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
@@ -82,7 +106,8 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), &
+       trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPEN
 
 !> Open a byte-addressable file for read only.
@@ -95,6 +120,7 @@ END SUBROUTINE BAOPEN
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENR(LU, CFN, IRET)
   USE BACIO_MODULE
+  use iso_c_binding, only: c_null_char    
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
@@ -107,7 +133,8 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), &
+       trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENR
 
 !> Open a byte-addressable file for write only.
@@ -120,6 +147,7 @@ END SUBROUTINE BAOPENR
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENW(LU, CFN, IRET)
   USE BACIO_MODULE
+  use iso_c_binding, only: c_null_char    
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
@@ -132,7 +160,8 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), &
+       trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENW
 
 !> Open a byte-addressable file for write only with truncation.
@@ -145,6 +174,7 @@ END SUBROUTINE BAOPENW
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENWT(LU, CFN, IRET)
   USE BACIO_MODULE
+  use iso_c_binding, only: c_null_char    
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
@@ -157,7 +187,8 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), &
+       trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWT
 
 !> Open a byte-addressable file for write only with append.
@@ -170,6 +201,7 @@ END SUBROUTINE BAOPENWT
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENWA(LU, CFN, IRET)
   USE BACIO_MODULE
+  use iso_c_binding, only: c_null_char    
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
@@ -182,7 +214,8 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), &
+       trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWA
 
 !> Close a byte-addressable file.
