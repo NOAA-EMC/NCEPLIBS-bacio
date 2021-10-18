@@ -30,17 +30,18 @@ MODULE BACIO_MODULE
   INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
 
   interface
+     !> @fn bacio_module::baciol::baciol(mode, start, newpos, size, no, nactual, fdes, fname, datary)
      !> Do a bacio operation.
      !>
-     !> @param mode
-     !> @param start
-     !> @param newpos
-     !> @param size
-     !> @param no
-     !> @param natcual
-     !> @param fdes
-     !> @param fname
-     !> @param datary
+     !> @param mode bacio operation.
+     !> @param start bytes to start operation on.
+     !> @param newpos new position.
+     !> @param size size of each element.
+     !> @param no number of elements.
+     !> @param nactual number elements actually read/written.
+     !> @param fdes file ID.
+     !> @param fname file name.
+     !> @param datary data array.
      !>
      !> @author Ed Hartnett @date 21-10-18
      integer function baciol(mode, start, newpos, size, no, nactual, &
