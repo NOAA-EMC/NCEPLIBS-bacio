@@ -60,8 +60,6 @@
  * rather than rely on hard-coded values.
  * @param start Byte number to start your operation from. 0 is the
  * first byte in the file, not 1.
- * @param newpos Position in the file after a read or write has been
- * performed. You'll need this if you're doing 'seeking' read/write.
  * @param size The size of the objects you are trying to read or write
  * (i.e. the size of one element of the type - 4 for integers, for
  * example.)
@@ -100,7 +98,7 @@
  * @author Ed Hartnett @date 18 October, 2021
  */
 int
-baciol(int mode, long int start, long int newpos, int size, long int no,
+baciol(int mode, long int start, int size, long int no,
        long int *nactual, int *fdes, const char *fname, void *datary)
 {
     int jret, seekret;
@@ -165,7 +163,6 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
         count = (size_t)no;
         jret = read(*fdes, (void *)datary, count);
         *nactual = jret;
-        newpos = start + jret;
     }
 
     /* Check for bad mode flag. */
@@ -187,15 +184,9 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
         count = (size_t)no;
         jret = write(*fdes, (void *) datary, count);
         if (jret != no)
-        {
             *nactual = jret;
-            newpos = start + jret;
-        }
         else
-        {
             *nactual = jret;
-            newpos = start + jret;
-        }
     }
 
     /* Close file if requested */
