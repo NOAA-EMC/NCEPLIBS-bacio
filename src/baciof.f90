@@ -30,12 +30,11 @@ MODULE BACIO_MODULE
   INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
 
   interface
-     !> @fn bacio_module::baciol::baciol(mode, start, newpos, size, no, nactual, fdes, fname, datary)
+     !> @fn bacio_module::baciol::baciol(mode, start, size, no, nactual, fdes, fname, datary)
      !> Do a bacio operation.
      !>
      !> @param mode bacio operation.
      !> @param start bytes to start operation on.
-     !> @param newpos new position.
      !> @param size size of each element.
      !> @param no number of elements.
      !> @param nactual number elements actually read/written.
@@ -44,11 +43,11 @@ MODULE BACIO_MODULE
      !> @param datary data array.
      !>
      !> @author Ed Hartnett @date 21-10-18
-     integer function baciol(mode, start, newpos, size, no, nactual, &
+     integer function baciol(mode, start, size, no, nactual, &
           fdes, fname, datary) bind(C)
        use, intrinsic :: iso_c_binding
        integer(c_int), value, intent(in) :: mode
-       integer(c_long), value, intent(in) :: start, newpos
+       integer(c_long), value, intent(in) :: start
        integer(c_int), value, intent(in) :: size
        integer(c_long), value, intent(in) :: no
        integer(c_long), intent(inout) :: nactual
@@ -98,7 +97,7 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB, JB, NB, KA
+  integer(kind=8) IB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -106,7 +105,7 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), &
+  IRET = BACIOL(BACIO_OPENRW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPEN
 
@@ -125,7 +124,7 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB, JB, NB, KA
+  integer(kind=8) IB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -133,7 +132,7 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), &
+  IRET = BACIOL(BACIO_OPENR, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENR
 
@@ -152,7 +151,7 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB,JB,NB,KA
+  integer(kind=8) IB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -160,7 +159,7 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), &
+  IRET = BACIOL(BACIO_OPENW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENW
 
@@ -179,7 +178,7 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB,JB,NB,KA
+  integer(kind=8) IB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -187,7 +186,7 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), &
+  IRET = BACIOL(BACIO_OPENWT, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWT
 
@@ -214,7 +213,7 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), &
+  IRET = BACIOL(BACIO_OPENWA, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWA
 
@@ -229,7 +228,7 @@ SUBROUTINE BACLOSE(LU, IRET)
   IMPLICIT NONE
   INTEGER, intent(in) :: LU
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB, JB, NB, KA
+  integer(kind=8) IB, NB, KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -237,7 +236,7 @@ SUBROUTINE BACLOSE(LU, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_CLOSE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+  IRET = BACIOL(BACIO_CLOSE, IB, 1, NB, KA, FD(LU), CHAR(0), A)
   IF (IRET .EQ. 0) FD(LU) = 0
 END SUBROUTINE BACLOSE
 
@@ -328,7 +327,7 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
   CHARACTER, intent(out) :: A(NB)
   integer(kind=8), PARAMETER :: NY=4096, MY=4
   INTEGER(KIND=8) NS(MY), NN(MY)
-  INTEGER(kind=8) JB, LONG_0, KY, I, K, IY, JY, LUX
+  INTEGER(kind=8) LONG_0, KY, I, K, IY, JY, LUX
   INTEGER IRET
   CHARACTER Y(NY, MY)
   DATA LUX/0/
@@ -357,9 +356,9 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
   IF (BAOPTS(1) .NE. 1) THEN
      KA = 0
      IF (IB .GE. 0) THEN
-        IRET = BACIOL(BACIO_READ, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+        IRET = BACIOL(BACIO_READ, IB, 1, NB, KA, FD(LU), CHAR(0), A)
      ELSE
-        IRET = BACIOL(BACIO_READ + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA,&
+        IRET = BACIOL(BACIO_READ + BACIO_NOSEEK, LONG_0, 1, NB, KA,&
              FD(LU), CHAR(0), A)
      ENDIF
 
@@ -388,7 +387,7 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
         LUX = ABS(LU)
         JY = MOD(JY, MY)+1
         NS(JY) = IB+KA
-        IRET = BACIOL(BACIO_READ, NS(JY), JB, 1, NY, NN(JY), &
+        IRET = BACIOL(BACIO_READ, NS(JY), 1, NY, NN(JY), &
              FD(LUX), CHAR(0), Y(1, JY))
         IF (NN(JY).GT.0) THEN
            K = MIN(NB-KA, NN(JY))
@@ -400,7 +399,7 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
         DO WHILE(NN(JY).EQ.NY.AND.KA.LT.NB)
            JY = MOD(JY, MY)+1
            NS(JY) = NS(JY)+NN(JY)
-           IRET = BACIOL(BACIO_READ+BACIO_NOSEEK, NS(JY), JB, 1, NY, NN(JY), &
+           IRET = BACIOL(BACIO_READ+BACIO_NOSEEK, NS(JY), 1, NY, NN(JY), &
                 FD(LUX), CHAR(0), Y(1, JY))
            IF (NN(JY).GT.0) THEN
               K = MIN(NB-KA, NN(JY))
@@ -461,7 +460,7 @@ SUBROUTINE BAWRITEL(LU, IB, NB, KA, A)
   INTEGER(kind = 8), intent(in) :: IB, NB
   INTEGER(kind = 8), intent(out):: KA
   CHARACTER, intent(in) ::  A(NB)
-  INTEGER(kind = 8) :: JB, LONG_0
+  INTEGER(kind = 8) :: LONG_0
   INTEGER :: IRET
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -481,10 +480,10 @@ SUBROUTINE BAWRITEL(LU, IB, NB, KA, A)
 
   IF (IB .GE. 0) THEN
      KA = 0
-     IRET = BACIOL(BACIO_WRITE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+     IRET = BACIOL(BACIO_WRITE, IB, 1, NB, KA, FD(LU), CHAR(0), A)
   ELSE
      KA = 0
-     IRET = BACIOL(BACIO_WRITE+BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
+     IRET = BACIOL(BACIO_WRITE+BACIO_NOSEEK, LONG_0, 1, NB, KA, &
           FD(LU), CHAR(0), A)
   ENDIF
 END SUBROUTINE  BAWRITEL
@@ -545,7 +544,7 @@ SUBROUTINE WRYTEL(LU, NB, A)
   INTEGER, intent(in) :: LU
   INTEGER(kind = 8), intent(in) :: NB
   CHARACTER, INTENT(in)       :: A(NB)
-  INTEGER(kind = 8) :: LONG_0, JB, KA
+  INTEGER(kind = 8) :: LONG_0, KA
   INTEGER :: IRET
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -561,8 +560,7 @@ SUBROUTINE WRYTEL(LU, NB, A)
 
   LONG_0 = 0
   KA = 0
-  JB = 0
-  IRET = BACIOL(BACIO_WRITE + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
+  IRET = BACIOL(BACIO_WRITE + BACIO_NOSEEK, LONG_0, 1, NB, KA, &
        FD(LU), CHAR(0), A)
   RETURN
 END SUBROUTINE WRYTEL

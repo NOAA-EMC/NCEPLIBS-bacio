@@ -60,8 +60,6 @@
  * rather than rely on hard-coded values.
  * @param start Byte number to start your operation from. 0 is the
  * first byte in the file, not 1.
- * @param newpos Position in the file after a read or write has been
- * performed. You'll need this if you're doing 'seeking' read/write.
  * @param size The size of the objects you are trying to read or write
  * (i.e. the size of one element of the type - 4 for integers, for
  * example.)
@@ -100,13 +98,10 @@
  * @author Ed Hartnett @date 18 October, 2021
  */
 int
-baciol(int mode, long int start, long int newpos, int size, long int no,
+baciol(int mode, long int start, int size, long int no,
        long int *nactual, int *fdes, const char *fname, void *datary)
 {
-    int jret, seekret;
-    size_t count;
-
-    /* Initialization(s) */
+    /* Initialization. */
     *nactual = 0;
 
     /* Check for illegal combinations of options */
@@ -154,7 +149,7 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
     {
         /* Seek the right part of the file. */
         if (!(mode & NOSEEK))
-            if ((seekret = lseek(*fdes, start, SEEK_SET)) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_ERNOSTART;
 
         if (datary == NULL)
@@ -162,10 +157,7 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        count = (size_t)no;
-        jret = read(*fdes, (void *)datary, count);
-        *nactual = jret;
-        newpos = start + jret;
+        *nactual = read(*fdes, (void *)datary, (size_t)no);
     }
 
     /* Check for bad mode flag. */
@@ -176,7 +168,7 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
     if (BAWRITE & mode)
     {
         if (!(mode & NOSEEK))
-            if ((seekret = lseek(*fdes, start, SEEK_SET)) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_EWNOSTART;
 
         if (datary == NULL)
@@ -184,23 +176,12 @@ baciol(int mode, long int start, long int newpos, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        count = (size_t)no;
-        jret = write(*fdes, (void *) datary, count);
-        if (jret != no)
-        {
-            *nactual = jret;
-            newpos = start + jret;
-        }
-        else
-        {
-            *nactual = jret;
-            newpos = start + jret;
-        }
+        *nactual = write(*fdes, (void *) datary, (size_t)no);
     }
 
     /* Close file if requested */
     if (BACLOSE & mode )
-        if ((jret = close(*fdes)) != 0)
+        if (close(*fdes) != 0)
             return BA_ECLOSE;
 
     /* Check that if we were reading or writing, that we actually got
