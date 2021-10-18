@@ -1,3 +1,7 @@
+# This is the CMake file for the src directory of the NCEPLIBS-bacio
+# project.
+#
+# Kyle Gerheiser, Ed Hartnett
 
 add_compile_definitions(UNDERSCORE)
 if(APPLE)
@@ -26,11 +30,14 @@ if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_V
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
 endif()
 
+# This is the Fortran source code.
 set(fortran_src baciof.f90 bafrio.f90 chk_endianc.f90)
+
+# This is the C source code.
 set(c_src bacio.c byteswap.c)
 
-set(lib_name ${PROJECT_NAME}_4)
-set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include_4)
+set(lib_name ${PROJECT_NAME})
+set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 add_library(${lib_name}_f OBJECT ${fortran_src})
 set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
@@ -44,7 +51,7 @@ add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
   $<TARGET_OBJECTS:${lib_name}_c>)
 target_include_directories(${lib_name} INTERFACE
   $<BUILD_INTERFACE:${module_dir}>
-  $<INSTALL_INTERFACE:include_4>)
+  $<INSTALL_INTERFACE:include>)
 list(APPEND LIB_TARGETS ${lib_name})
 install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
