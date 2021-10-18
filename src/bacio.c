@@ -47,8 +47,11 @@
 #include "clib.h"
 
 /**
- * Do bacio operation, with new names for long int arguments, needed
- * for files > 2 Gb.
+ * Do a bacio operation. Available operations include:
+ * * opening a file.
+ * * writing to an open file.
+ * * reading from an open file.
+ * * closing an open file.
  *
  * @param mode Specifies operations to be performed. See the
  * clib.inc file for the values. Mode is obtained by adding together
