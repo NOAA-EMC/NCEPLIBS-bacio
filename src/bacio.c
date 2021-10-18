@@ -101,9 +101,7 @@ int
 baciol(int mode, long int start, int size, long int no,
        long int *nactual, int *fdes, const char *fname, void *datary)
 {
-    int jret, seekret;
-
-    /* Initialization(s) */
+    /* Initialization. */
     *nactual = 0;
 
     /* Check for illegal combinations of options */
@@ -151,7 +149,7 @@ baciol(int mode, long int start, int size, long int no,
     {
         /* Seek the right part of the file. */
         if (!(mode & NOSEEK))
-            if ((seekret = lseek(*fdes, start, SEEK_SET)) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_ERNOSTART;
 
         if (datary == NULL)
@@ -159,8 +157,7 @@ baciol(int mode, long int start, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        jret = read(*fdes, (void *)datary, (size_t)no);
-        *nactual = jret;
+        *nactual = read(*fdes, (void *)datary, (size_t)no);
     }
 
     /* Check for bad mode flag. */
@@ -171,7 +168,7 @@ baciol(int mode, long int start, int size, long int no,
     if (BAWRITE & mode)
     {
         if (!(mode & NOSEEK))
-            if ((seekret = lseek(*fdes, start, SEEK_SET)) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_EWNOSTART;
 
         if (datary == NULL)
@@ -179,16 +176,12 @@ baciol(int mode, long int start, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        jret = write(*fdes, (void *) datary, (size_t)no);
-        if (jret != no)
-            *nactual = jret;
-        else
-            *nactual = jret;
+        *nactual = write(*fdes, (void *) datary, (size_t)no);
     }
 
     /* Close file if requested */
     if (BACLOSE & mode )
-        if ((jret = close(*fdes)) != 0)
+        if (close(*fdes) != 0)
             return BA_ECLOSE;
 
     /* Check that if we were reading or writing, that we actually got
