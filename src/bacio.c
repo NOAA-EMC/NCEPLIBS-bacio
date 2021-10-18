@@ -102,7 +102,6 @@ baciol(int mode, long int start, int size, long int no,
        long int *nactual, int *fdes, const char *fname, void *datary)
 {
     int jret, seekret;
-    size_t count;
 
     /* Initialization(s) */
     *nactual = 0;
@@ -160,8 +159,7 @@ baciol(int mode, long int start, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        count = (size_t)no;
-        jret = read(*fdes, (void *)datary, count);
+        jret = read(*fdes, (void *)datary, (size_t)no);
         *nactual = jret;
     }
 
@@ -181,8 +179,7 @@ baciol(int mode, long int start, int size, long int no,
             printf("Massive catastrophe -- datary pointer is NULL\n");
             return BA_EDATANULL;
         }
-        count = (size_t)no;
-        jret = write(*fdes, (void *) datary, count);
+        jret = write(*fdes, (void *) datary, (size_t)no);
         if (jret != no)
             *nactual = jret;
         else
