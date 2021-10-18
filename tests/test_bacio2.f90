@@ -22,7 +22,7 @@ program test_bacio2
   open(unit = 1234, iostat = stat, file = filename, status='old')
   if (stat == 0) close(1234, status='delete')  
 
-  print *, 'Testing simple wryte() calls - error messages are expected...'
+  print *, 'Testing simple wryte() calls...'
 
   ! Initialize our data.
   data = 'fred'
@@ -85,7 +85,7 @@ program test_bacio2
   call baclose(lu, iret)
   if (iret .ne. 0) stop 105
 
-  print *, 'Testing buffered reads - error messages are expected...'
+  print *, 'Testing buffered reads...'
 
   ! Reopen the test file.
   call baopenr(lu, filename, iret)
@@ -103,7 +103,7 @@ program test_bacio2
   call baclose(lu, iret)
   if (iret .ne. 0) stop 203
 
-  print *, 'Testing wryte() calls with negative seek - error messages are expected...'
+  print *, 'Testing wryte() calls with negative seek...'
 
   ! Turn off buffered reads.
   call baseto(1, 1)
@@ -141,7 +141,7 @@ program test_bacio2
   call baclose(lu, iret)
   if (iret .ne. 0) stop 306
 
-  print *, 'Testing buffered with lots of data - error messages are expected...'
+  print *, 'Testing buffered with lots of data...'
 
   lu = 3
 

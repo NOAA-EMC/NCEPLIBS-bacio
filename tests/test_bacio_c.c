@@ -19,7 +19,7 @@ int
 main()
 {
     printf("Testing NCEPLIBS-bacio. Error messages are expected during this test.\n");
-    printf("Testing some simple baciol_old() calls...");
+    printf("Testing some simple baciol() calls...");
     {
         int mode;
         long int start = 0;
