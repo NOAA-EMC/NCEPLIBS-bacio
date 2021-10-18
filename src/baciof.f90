@@ -30,6 +30,19 @@ MODULE BACIO_MODULE
   INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
 
   interface
+     !> Do a bacio operation.
+     !>
+     !> @param mode
+     !> @param start
+     !> @param newpos
+     !> @param size
+     !> @param no
+     !> @param natcual
+     !> @param fdes
+     !> @param fname
+     !> @param datary
+     !>
+     !> @author Ed Hartnett @date 21-10-18
      integer function baciol(mode, start, newpos, size, no, nactual, &
           fdes, fname, datary) bind(C)
        use, intrinsic :: iso_c_binding
