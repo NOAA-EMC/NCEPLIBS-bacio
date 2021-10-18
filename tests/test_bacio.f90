@@ -3,6 +3,7 @@
 ! Ed Hartnett 10/5/21
 program test_bacio
   use bacio_module
+  use iso_c_binding, only: c_null_char
   implicit none
 
   character(len=14) :: filename = 'test_bacio.bin'
@@ -16,14 +17,21 @@ program test_bacio
   integer(kind=8) :: ka8, ib8, nb8
   integer :: stat
   integer :: iret
-
-  print *, 'Testing bacio.'
-  
-  print *, 'Testing simple write - error messages are expected...'
+  ! integer(kind=8) :: nactual
+  ! character (len = 12) :: idata
 
   ! Delete the test file, if it remains from previous runs.
   open(unit = 1234, iostat = stat, file = filename, status='old')
   if (stat == 0) close(1234, status='delete')  
+
+  print *, 'Testing bacio.'
+  
+  ! print *, 'Testing calling C funtion...'
+  ! iret = baciol1(1, 2_8, 3_8, 4, 5_8, nactual, 6, 'test_file.bac'//c_null_char, idata)
+  ! if (iret .ne. 0) stop 1
+  ! print *, 'nactual = ', nactual
+
+  print *, 'Testing simple write - error messages are expected...'
 
   ! Try to create a test file - won't work, bad lu.
   call baopen(0, filename, iret)

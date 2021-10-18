@@ -236,3 +236,15 @@ baciol_(int *mode, long int *start, long int *newpos, int *size, long int *no,
     else 
         return BA_NOERROR;
 }
+
+int
+baciol1(int mode, long int start, long int newpos, int size, long int no,
+        long int *nactual, int *fdes, const char *fname, void *datary)
+{
+    /* printf("bacio1: mode %d start %ld newpos %ld\n", mode, start, newpos); */
+    /* printf("bacio1: size %d no %ld fdes %d\n", size, no, fdes); */
+    /* printf("bacio1: fname %s\n", fname); */
+    /* *nactual = 99; */
+    return baciol_(&mode, &start, &newpos, &size, &no, nactual, fdes,
+                   fname, datary, strlen(fname), size*4);
+}

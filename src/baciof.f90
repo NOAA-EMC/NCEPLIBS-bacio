@@ -34,6 +34,21 @@ MODULE BACIO_MODULE
   INTEGER,PARAMETER:: BACIO_NOSEEK = 64  !< Start I/O from previous spot.
   INTEGER,PARAMETER:: BACIO_OPENWT = 128 !< Open for write only with truncation.
   INTEGER,PARAMETER:: BACIO_OPENWA = 256 !< Open for write only with append.
+
+  interface
+     integer function baciol1(mode, start, newpos, size, no, nactual, &
+          fdes, fname, datary) bind(C)
+       use, intrinsic :: iso_c_binding
+       integer(c_int), value, intent(in) :: mode
+       integer(c_long), value, intent(in) :: start, newpos
+       integer(c_int), value, intent(in) :: size
+       integer(c_long), value, intent(in) :: no
+       integer(c_long), intent(inout) :: nactual
+       integer(c_int), intent(inout) :: fdes
+       character(kind=C_char), intent(in) :: fname(*)
+       character(kind=C_char), intent(in) :: datary(*)
+     end function baciol1
+  end interface
 END MODULE BACIO_MODULE
 
 !> Set options for byte-addressable I/O. (There is currently only one
@@ -82,7 +97,8 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+!  IRET = BACIOL(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL1(BACIO_OPENRW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPEN
 
 !> Open a byte-addressable file for read only.
@@ -107,7 +123,7 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL1(BACIO_OPENR, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENR
 
 !> Open a byte-addressable file for write only.
@@ -132,7 +148,7 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL1(BACIO_OPENW, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENW
 
 !> Open a byte-addressable file for write only with truncation.
@@ -157,7 +173,7 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL1(BACIO_OPENWT, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENWT
 
 !> Open a byte-addressable file for write only with append.
@@ -182,7 +198,7 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), CFN, A)
+  IRET = BACIOL1(BACIO_OPENWA, IB, JB, 1, NB, KA, FD(LU), CFN, A)
 END SUBROUTINE BAOPENWA
 
 !> Close a byte-addressable file.
@@ -204,7 +220,7 @@ SUBROUTINE BACLOSE(LU, IRET)
      RETURN
   ENDIF
 
-  IRET = BACIOL(BACIO_CLOSE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+  IRET = BACIOL1(BACIO_CLOSE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
   IF (IRET .EQ. 0) FD(LU) = 0
 END SUBROUTINE BACLOSE
 
@@ -324,9 +340,9 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
   IF (BAOPTS(1) .NE. 1) THEN
      KA = 0
      IF (IB .GE. 0) THEN
-        IRET = BACIOL(BACIO_READ, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+        IRET = BACIOL1(BACIO_READ, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
      ELSE
-        IRET = BACIOL(BACIO_READ + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA,&
+        IRET = BACIOL1(BACIO_READ + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA,&
              FD(LU), CHAR(0), A)
      ENDIF
 
@@ -355,7 +371,7 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
         LUX = ABS(LU)
         JY = MOD(JY, MY)+1
         NS(JY) = IB+KA
-        IRET = BACIOL(BACIO_READ, NS(JY), JB, 1, NY, NN(JY), &
+        IRET = BACIOL1(BACIO_READ, NS(JY), JB, 1, NY, NN(JY), &
              FD(LUX), CHAR(0), Y(1, JY))
         IF (NN(JY).GT.0) THEN
            K = MIN(NB-KA, NN(JY))
@@ -367,7 +383,7 @@ SUBROUTINE BAREADL(LU, IB, NB, KA, A)
         DO WHILE(NN(JY).EQ.NY.AND.KA.LT.NB)
            JY = MOD(JY, MY)+1
            NS(JY) = NS(JY)+NN(JY)
-           IRET = BACIOL(BACIO_READ+BACIO_NOSEEK, NS(JY), JB, 1, NY, NN(JY), &
+           IRET = BACIOL1(BACIO_READ+BACIO_NOSEEK, NS(JY), JB, 1, NY, NN(JY), &
                 FD(LUX), CHAR(0), Y(1, JY))
            IF (NN(JY).GT.0) THEN
               K = MIN(NB-KA, NN(JY))
@@ -448,10 +464,10 @@ SUBROUTINE BAWRITEL(LU, IB, NB, KA, A)
 
   IF (IB .GE. 0) THEN
      KA = 0
-     IRET = BACIOL(BACIO_WRITE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
+     IRET = BACIOL1(BACIO_WRITE, IB, JB, 1, NB, KA, FD(LU), CHAR(0), A)
   ELSE
      KA = 0
-     IRET = BACIOL(BACIO_WRITE+BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
+     IRET = BACIOL1(BACIO_WRITE+BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
           FD(LU), CHAR(0), A)
   ENDIF
 END SUBROUTINE  BAWRITEL
@@ -529,7 +545,7 @@ SUBROUTINE WRYTEL(LU, NB, A)
   LONG_0 = 0
   KA = 0
   JB = 0
-  IRET = BACIOL(BACIO_WRITE + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
+  IRET = BACIOL1(BACIO_WRITE + BACIO_NOSEEK, LONG_0, JB, 1, NB, KA, &
        FD(LU), CHAR(0), A)
   RETURN
 END SUBROUTINE WRYTEL
