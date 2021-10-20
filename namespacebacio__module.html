@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">NCEPLIBS-bacio
-   &#160;<span id="projectnumber">2.4.1</span>
+   &#160;<span id="projectnumber">2.5.0</span>
    </div>
   </td>
  </tr>
@@ -83,6 +83,7 @@ $(document).ready(function(){initNavTree('namespacebacio__module.html',''); init
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Types</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">bacio_module Module Reference</div>  </div>
@@ -92,11 +93,13 @@ $(document).ready(function(){initNavTree('namespacebacio__module.html',''); init
 <p>Contains subroutines to read/write binary files.  
 <a href="namespacebacio__module.html#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Types</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebacio__module_1_1baciol.html">baciol</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="memItemLeft" align="right" valign="top">integer, external&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2">bacio</a></td></tr>
-<tr class="memdesc:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bacio function in the C code.  <a href="namespacebacio__module.html#a035681f36ccbe2cb7862a50b3c0dadc2">More...</a><br /></td></tr>
-<tr class="separator:a035681f36ccbe2cb7862a50b3c0dadc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a703dd978f656d21459d5e8b845a7ad21"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a703dd978f656d21459d5e8b845a7ad21">bacio_close</a> = 8</td></tr>
 <tr class="memdesc:a703dd978f656d21459d5e8b845a7ad21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close file.  <a href="namespacebacio__module.html#a703dd978f656d21459d5e8b845a7ad21">More...</a><br /></td></tr>
 <tr class="separator:a703dd978f656d21459d5e8b845a7ad21"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,9 +127,6 @@ Variables</h2></td></tr>
 <tr class="memitem:a25698de9389972b55c1e563bc605446f"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#a25698de9389972b55c1e563bc605446f">bacio_write</a> = 32</td></tr>
 <tr class="memdesc:a25698de9389972b55c1e563bc605446f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to the file.  <a href="namespacebacio__module.html#a25698de9389972b55c1e563bc605446f">More...</a><br /></td></tr>
 <tr class="separator:a25698de9389972b55c1e563bc605446f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca1e34162701c657c831fc0b9bcb1bf1"><td class="memItemLeft" align="right" valign="top">integer, external&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1">baciol</a></td></tr>
-<tr class="memdesc:aca1e34162701c657c831fc0b9bcb1bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The baciol function in the C code.  <a href="namespacebacio__module.html#aca1e34162701c657c831fc0b9bcb1bf1">More...</a><br /></td></tr>
-<tr class="separator:aca1e34162701c657c831fc0b9bcb1bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af25e115157a26f06373832f47309b6b6"><td class="memItemLeft" align="right" valign="top">integer, dimension(20), save&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">baopts</a> = 0</td></tr>
 <tr class="memdesc:af25e115157a26f06373832f47309b6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of option settings.  <a href="namespacebacio__module.html#af25e115157a26f06373832f47309b6b6">More...</a><br /></td></tr>
 <tr class="separator:af25e115157a26f06373832f47309b6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,24 +143,6 @@ Variables</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Mark Iredell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>98-06-04 </dd></dl>
 </div><h2 class="groupheader">Variable Documentation</h2>
-<a id="a035681f36ccbe2cb7862a50b3c0dadc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a035681f36ccbe2cb7862a50b3c0dadc2">&#9670;&nbsp;</a></span>bacio</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, external bacio_module::bacio</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The bacio function in the C code. </p>
-
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00013">13</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
-
-</div>
-</div>
 <a id="a703dd978f656d21459d5e8b845a7ad21"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a703dd978f656d21459d5e8b845a7ad21">&#9670;&nbsp;</a></span>bacio_close</h2>
 
@@ -175,9 +157,9 @@ Variables</h2></td></tr>
 
 <p>Close file. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00031">31</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00025">25</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00176">baclose()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00227">baclose()</a>.</p>
 
 </div>
 </div>
@@ -195,9 +177,9 @@ Variables</h2></td></tr>
 
 <p>Start I/O from previous spot. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00034">34</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00028">28</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00399">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00480">wrytel()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00322">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00457">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00542">wrytel()</a>.</p>
 
 </div>
 </div>
@@ -215,9 +197,9 @@ Variables</h2></td></tr>
 
 <p>Open file for read only. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00028">28</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00022">22</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00093">baopenr()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00121">baopenr()</a>.</p>
 
 </div>
 </div>
@@ -235,9 +217,9 @@ Variables</h2></td></tr>
 
 <p>Open file for read or write. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00030">30</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00024">24</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00071">baopen()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00094">baopen()</a>.</p>
 
 </div>
 </div>
@@ -255,9 +237,9 @@ Variables</h2></td></tr>
 
 <p>Open file for write only. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00029">29</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00023">23</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00115">baopenw()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00148">baopenw()</a>.</p>
 
 </div>
 </div>
@@ -275,9 +257,9 @@ Variables</h2></td></tr>
 
 <p>Open for write only with append. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00036">36</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00030">30</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00157">baopenwa()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00202">baopenwa()</a>.</p>
 
 </div>
 </div>
@@ -295,9 +277,9 @@ Variables</h2></td></tr>
 
 <p>Open for write only with truncation. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00035">35</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00029">29</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00136">baopenwt()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00175">baopenwt()</a>.</p>
 
 </div>
 </div>
@@ -315,9 +297,9 @@ Variables</h2></td></tr>
 
 <p>Read from the file. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00032">32</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00026">26</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00322">bareadl()</a>.</p>
 
 </div>
 </div>
@@ -335,29 +317,9 @@ Variables</h2></td></tr>
 
 <p>Write to the file. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00033">33</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00027">27</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00399">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00480">wrytel()</a>.</p>
-
-</div>
-</div>
-<a id="aca1e34162701c657c831fc0b9bcb1bf1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca1e34162701c657c831fc0b9bcb1bf1">&#9670;&nbsp;</a></span>baciol</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, external bacio_module::baciol</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The baciol function in the C code. </p>
-
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00016">16</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00176">baclose()</a>, <a class="el" href="baciof_8f90_source.html#l00071">baopen()</a>, <a class="el" href="baciof_8f90_source.html#l00093">baopenr()</a>, <a class="el" href="baciof_8f90_source.html#l00115">baopenw()</a>, <a class="el" href="baciof_8f90_source.html#l00157">baopenwa()</a>, <a class="el" href="baciof_8f90_source.html#l00136">baopenwt()</a>, <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00399">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00480">wrytel()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00457">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00542">wrytel()</a>.</p>
 
 </div>
 </div>
@@ -376,9 +338,9 @@ Variables</h2></td></tr>
 <p>Array of option settings. </p>
 <p>Only the first element of the array is used. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00026">26</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00020">20</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>, and <a class="el" href="baciof_8f90_source.html#l00056">baseto()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00322">bareadl()</a>, and <a class="el" href="baciof_8f90_source.html#l00078">baseto()</a>.</p>
 
 </div>
 </div>
@@ -396,9 +358,9 @@ Variables</h2></td></tr>
 
 <p>Array IDs of currently open files. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00022">22</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00016">16</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00176">baclose()</a>, <a class="el" href="baciof_8f90_source.html#l00071">baopen()</a>, <a class="el" href="baciof_8f90_source.html#l00093">baopenr()</a>, <a class="el" href="baciof_8f90_source.html#l00115">baopenw()</a>, <a class="el" href="baciof_8f90_source.html#l00157">baopenwa()</a>, <a class="el" href="baciof_8f90_source.html#l00136">baopenwt()</a>, <a class="el" href="baciof_8f90_source.html#l00267">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00399">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00480">wrytel()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00227">baclose()</a>, <a class="el" href="baciof_8f90_source.html#l00094">baopen()</a>, <a class="el" href="baciof_8f90_source.html#l00121">baopenr()</a>, <a class="el" href="baciof_8f90_source.html#l00148">baopenw()</a>, <a class="el" href="baciof_8f90_source.html#l00202">baopenwa()</a>, <a class="el" href="baciof_8f90_source.html#l00175">baopenwt()</a>, <a class="el" href="baciof_8f90_source.html#l00322">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00457">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00542">wrytel()</a>.</p>
 
 </div>
 </div>
@@ -416,9 +378,9 @@ Variables</h2></td></tr>
 
 <p>Maximum number of open files in bacio library. </p>
 
-<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00019">19</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="baciof_8f90_source.html#l00013">13</a> of file <a class="el" href="baciof_8f90_source.html">baciof.f90</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00176">baclose()</a>, <a class="el" href="baciof_8f90_source.html#l00071">baopen()</a>, <a class="el" href="baciof_8f90_source.html#l00093">baopenr()</a>, <a class="el" href="baciof_8f90_source.html#l00115">baopenw()</a>, <a class="el" href="baciof_8f90_source.html#l00157">baopenwa()</a>, and <a class="el" href="baciof_8f90_source.html#l00136">baopenwt()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="baciof_8f90_source.html#l00227">baclose()</a>, <a class="el" href="baciof_8f90_source.html#l00094">baopen()</a>, <a class="el" href="baciof_8f90_source.html#l00121">baopenr()</a>, <a class="el" href="baciof_8f90_source.html#l00148">baopenw()</a>, <a class="el" href="baciof_8f90_source.html#l00202">baopenwa()</a>, <a class="el" href="baciof_8f90_source.html#l00175">baopenwt()</a>, <a class="el" href="baciof_8f90_source.html#l00322">bareadl()</a>, <a class="el" href="baciof_8f90_source.html#l00457">bawritel()</a>, and <a class="el" href="baciof_8f90_source.html#l00542">wrytel()</a>.</p>
 
 </div>
 </div>

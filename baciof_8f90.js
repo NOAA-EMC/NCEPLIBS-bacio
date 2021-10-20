@@ -1,5 +1,6 @@
 var baciof_8f90 =
 [
+    [ "baciol", "interfacebacio__module_1_1baciol.html", "interfacebacio__module_1_1baciol" ],
     [ "baclose", "baciof_8f90.html#acb0941b0e6f466cac92de223f86c3561", null ],
     [ "baopen", "baciof_8f90.html#a0152ba6221c402e98994e3779d79dedd", null ],
     [ "baopenr", "baciof_8f90.html#aed44200e01d98cc6dd57d9122a61c362", null ],
@@ -13,7 +14,6 @@ var baciof_8f90 =
     [ "bawritel", "baciof_8f90.html#a5047c57b0cc1f2101ab7ecc9084a7c9c", null ],
     [ "wryte", "baciof_8f90.html#a69a1e7f6915d0fef92c0bc288ee356e6", null ],
     [ "wrytel", "baciof_8f90.html#a33d8e938b4c64dd7fc6eb229ac7da671", null ],
-    [ "bacio", "baciof_8f90.html#a035681f36ccbe2cb7862a50b3c0dadc2", null ],
     [ "bacio_close", "baciof_8f90.html#a703dd978f656d21459d5e8b845a7ad21", null ],
     [ "bacio_noseek", "baciof_8f90.html#abb04b9fc9d79b2e3c782b29bebd907d6", null ],
     [ "bacio_openr", "baciof_8f90.html#a5587ae262da960da95263eb79f411ef8", null ],
@@ -23,7 +23,6 @@ var baciof_8f90 =
     [ "bacio_openwt", "baciof_8f90.html#a1175bc6e3fbf57a347d0aa993d7a47ed", null ],
     [ "bacio_read", "baciof_8f90.html#a1bdcbfb33b7a8cb800ba53e632382f13", null ],
     [ "bacio_write", "baciof_8f90.html#a25698de9389972b55c1e563bc605446f", null ],
-    [ "baciol", "baciof_8f90.html#aca1e34162701c657c831fc0b9bcb1bf1", null ],
     [ "baopts", "baciof_8f90.html#af25e115157a26f06373832f47309b6b6", null ],
     [ "fd", "baciof_8f90.html#a633ee3686ed8898a3c21ffa24c9c293d", null ],
     [ "fddim", "baciof_8f90.html#a7f8a43f9e14f6156d815081b4bd97f52", null ]

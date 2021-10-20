@@ -29,6 +29,11 @@ var menudata={children:[
 {text:"Module Members",url:"namespacemembers.html",children:[
 {text:"All",url:"namespacemembers.html"},
 {text:"Variables",url:"namespacemembers_vars.html"}]}]},
+{text:"Data Types List",url:"annotated.html",children:[
+{text:"Data Types List",url:"annotated.html"},
+{text:"Data Fields",url:"functions.html",children:[
+{text:"All",url:"functions.html"},
+{text:"Functions/Subroutines",url:"functions_func.html"}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"},
 {text:"Globals",url:"globals.html",children:[
@@ -40,12 +45,6 @@ var menudata={children:[
 {text:"n",url:"globals.html#index_n"},
 {text:"s",url:"globals.html#index_s"},
 {text:"w",url:"globals.html#index_w"}]},
-{text:"Functions/Subroutines",url:"globals_func.html",children:[
-{text:"b",url:"globals_func.html#index_b"},
-{text:"c",url:"globals_func.html#index_c"},
-{text:"f",url:"globals_func.html#index_f"},
-{text:"m",url:"globals_func.html#index_m"},
-{text:"s",url:"globals_func.html#index_s"},
-{text:"w",url:"globals_func.html#index_w"}]},
+{text:"Functions/Subroutines",url:"globals_func.html"},
 {text:"Variables",url:"globals_vars.html"},
 {text:"Macros",url:"globals_defs.html"}]}]}]}
