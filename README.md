@@ -15,6 +15,7 @@ https://noaa-emc.github.io/NCEPLIBS-bacio/.
 ### Users
 
 The NCEPLIBS-bacio library is used by:
+* [NCEPLIBS-w3emc](https://github.com/NOAA-EMC/NCEPLIBS-w3emc)
 * [NCEPLIBS-g2](https://github.com/NOAA-EMC/NCEPLIBS-g2)
 * [NCEPLIBS-grib_util](https://github.com/NOAA-EMC/NCEPLIBS-grib_util)
 * [UFS_UTILS](https://github.com/NOAA-EMC/UFS_UTILS)
@@ -30,6 +31,10 @@ Developers
 Code Manager: Hang Lei, Ed Hartnett
 
 ### Installing
+
+Download the latest release from
+https://github.com/NOAA-EMC/NCEPLIBS-bacio/releases and untar
+it and cd into the main directory. Then:
 
 ```
 mkdir build
