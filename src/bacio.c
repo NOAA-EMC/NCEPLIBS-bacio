@@ -36,7 +36,7 @@
  */
 
 /** See feature_test_macros(7) */
-#define _LARGEFILE64_SOURCE
+#define _FILE_OFFSET_BITS 64
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -295,7 +295,7 @@ baciol64(int mode, size_t start, size_t size, size_t no,
     {
         /* Seek the right part of the file. */
         if (!(mode & NOSEEK))
-            if (lseek64(*fdes, start, SEEK_SET) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_ERNOSTART;
 
         if (datary == NULL)
@@ -314,7 +314,7 @@ baciol64(int mode, size_t start, size_t size, size_t no,
     if (BAWRITE & mode)
     {
         if (!(mode & NOSEEK))
-            if (lseek64(*fdes, start, SEEK_SET) == -1)
+            if (lseek(*fdes, start, SEEK_SET) == -1)
                 return BA_EWNOSTART;
 
         if (datary == NULL)
