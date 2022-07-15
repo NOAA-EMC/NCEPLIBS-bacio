@@ -35,7 +35,9 @@
  * @author Robert Grumbine @date 16 March 1998
  */
 
-#define _LARGEFILE64_SOURCE     /* See feature_test_macros(7) */
+/** See feature_test_macros(7) */
+#define _LARGEFILE64_SOURCE
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
