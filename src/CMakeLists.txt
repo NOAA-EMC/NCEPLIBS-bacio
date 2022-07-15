@@ -10,6 +10,7 @@ elseif(UNIX)
   add_compile_definitions(LINUX)
 endif()
 
+# Set C compiler flags.
 if(CMAKE_C_COMPILER_ID MATCHES "^(Intel)$")
   set(CMAKE_C_FLAGS "-g -traceback ${CMAKE_C_FLAGS}")
   set(CMAKE_C_FLAGS_DEBUG "-Wall")
@@ -18,6 +19,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
   set(CMAKE_C_FLAGS_DEBUG "-Wall")
 endif()
 
+# Set Fortran flags.
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
   set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
@@ -31,7 +33,7 @@ if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_V
 endif()
 
 # This is the Fortran source code.
-set(fortran_src baciof.f90 bafrio.f90 chk_endianc.f90)
+set(fortran_src baciof.F90 bafrio.F90 chk_endianc.F90)
 
 # This is the C source code.
 set(c_src bacio.c byteswap.c)
