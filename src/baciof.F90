@@ -67,7 +67,7 @@ END MODULE BACIO_MODULE
 !>
 !> If the option value is 1, then the reading is blocked into four
 !> 4096-byte buffers. This may be efficient if the reads will be
-!> requested in much smaller chunks.  otherwise, each call to baread
+!> requested in much smaller chunks. Otherwise, each call to baread
 !> initiates a physical read.
 !>
 !> @param nopt option number.
