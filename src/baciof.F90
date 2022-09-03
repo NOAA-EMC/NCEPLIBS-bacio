@@ -88,6 +88,19 @@ END SUBROUTINE BASETO
 !> @param cfn filename to open (consisting of nonblank
 !> printable characters).
 !> @param iret return code
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPEN(LU, CFN, IRET)
@@ -115,6 +128,19 @@ END SUBROUTINE BAOPEN
 !> @param cfn filename to open (consisting of nonblank
 !> printable characters).
 !> @param iret return code.
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENR(LU, CFN, IRET)
@@ -142,6 +168,19 @@ END SUBROUTINE BAOPENR
 !> @param cfn filename to open (consisting of nonblank
 !> printable characters).
 !> @param iret return code.
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENW(LU, CFN, IRET)
@@ -169,6 +208,19 @@ END SUBROUTINE BAOPENW
 !> @param cfn filename to open (consisting of nonblank
 !> printable characters).
 !> @param iret return code.
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENWT(LU, CFN, IRET)
@@ -196,6 +248,19 @@ END SUBROUTINE BAOPENWT
 !> @param cfn filename to open (consisting of nonblank
 !> printable characters).
 !> @param iret return code.
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BAOPENWA(LU, CFN, IRET)
@@ -221,6 +286,19 @@ END SUBROUTINE BAOPENWA
 !>
 !> @param lu unit to close.
 !> @param iret return code.
+!> - 6 LU too small or too large.
+!> - ::BA_NOERROR No error.
+!> - ::BA_EROANDWO Tried to open read only and write only.
+!> - ::BA_ERANDW Tried to read and write in the same call.
+!> - ::BA_EINTNAME Internal failure in name processing.
+!> - ::BA_EFILEOPEN Failure in opening file.
+!> - ::BA_ERONWO Tried to read on a write-only file.
+!> - ::BA_ERNOSTART Failed in read to find the 'start' location.
+!> - ::BA_EWANDRO Tried to write to a read only file.
+!> - ::BA_EWNOSTART Failed in write to find the 'start' location.
+!> - ::BA_ECLOSE Error in close.
+!> - ::BA_EFEWDATA Read or wrote fewer data than requested.
+!> - ::BA_EDATANULL Data pointer is NULL.
 !>
 !> @author Mark Iredell @date 98-06-04
 SUBROUTINE BACLOSE(LU, IRET)
