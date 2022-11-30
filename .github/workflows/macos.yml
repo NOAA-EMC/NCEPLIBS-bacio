@@ -1,5 +1,15 @@
-name: MacOS Build and Test
-on: [push, pull_request]
+name: MacOS
+on:
+  push:
+    branches:
+    - develop
+    paths-ignore:
+    - README.md
+  pull_request:
+    branches:
+    - develop
+    paths-ignore:
+    - README.md
 
 jobs:
   build:

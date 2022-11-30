@@ -10,6 +10,7 @@ elseif(UNIX)
   add_compile_definitions(LINUX)
 endif()
 
+# Set C compiler flags for Intel and GNU.
 if(CMAKE_C_COMPILER_ID MATCHES "^(Intel)$")
   set(CMAKE_C_FLAGS "-g -traceback ${CMAKE_C_FLAGS}")
   set(CMAKE_C_FLAGS_DEBUG "-Wall")
@@ -18,6 +19,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
   set(CMAKE_C_FLAGS_DEBUG "-Wall")
 endif()
 
+# Set Fortran compiler flags Intel and GNU.
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
   set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
@@ -26,6 +28,8 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^(GNU)$")
   set(CMAKE_Fortran_FLAGS_DEBUG "-Wall")
 endif()
 
+# GNU Fortran starts complaining about argument mismatch in
+# gfortran-10.
 if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
 endif()
