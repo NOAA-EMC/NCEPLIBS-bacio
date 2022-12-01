@@ -68,7 +68,7 @@ program test_bafrio
   ! Check record length.
   ib8 = 0
   lx8 = 0
-  call bafrindex(lu, ib8, lx8, ix8)
+  call bafrindexl(lu, ib8, lx8, ix8)
   if (ix8 .ne. 12) then
      print *, ix8
      stop 110
@@ -88,7 +88,7 @@ program test_bafrio
   ! Check record length.
   ib8 = 0
   lx8 = 0
-  call bafrindex(lu, ib8, lx8, ix8)
+  call bafrindexl(lu, ib8, lx8, ix8)
   print *, ix8
 !  if (ix8 .ne. 1344903776) stop 110  
   
