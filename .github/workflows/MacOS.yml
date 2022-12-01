@@ -37,6 +37,6 @@ jobs:
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
-        ctest --version --output-on-error
+        ctest  --output-on-failure --rerun-failed
 
         
