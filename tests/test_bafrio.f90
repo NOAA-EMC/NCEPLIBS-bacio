@@ -69,7 +69,7 @@ program test_bafrio
   ib8 = 0
   lx8 = 0
   call bafrindex(lu, ib8, lx8, ix8)
-!  print *, ix8
+  print *, ix8
   if (ix8 .ne. 12) stop 110  
   
   ! Close the test file.
