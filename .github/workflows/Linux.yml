@@ -1,0 +1,42 @@
+name: Linux
+on:
+  push:
+    branches:
+    - develop
+    paths-ignore:
+    - README.md
+  pull_request:
+    branches:
+    - develop
+    paths-ignore:
+    - README.md
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FC: gfortran-11
+      CC: gcc-11
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v2
+      with: 
+        path: bacio
+
+    - name: build
+      run: |
+        cd bacio
+        mkdir build 
+        cd build
+        cmake .. 
+        make -j2
+
+    - name: test
+      run: |
+        set -e
+        cd $GITHUB_WORKSPACE/bacio/build
+        ctest --output-on-failure --rerun-failed --verbose
+
+        

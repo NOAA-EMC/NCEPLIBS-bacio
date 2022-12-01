@@ -68,8 +68,11 @@ program test_bafrio
   ! Check record length.
   ib8 = 0
   lx8 = 0
-  call bafrindex(lu, ib8, lx8, ix8)
-  if (ix8 .ne. 12) stop 110  
+  call bafrindexl(lu, ib8, lx8, ix8)
+  if (ix8 .ne. 12) then
+     print *, ix8
+     stop 110
+  end if
   
   ! Close the test file.
   call baclose(lu, iret)
@@ -80,18 +83,18 @@ program test_bafrio
   ! Open the test file.
   lu = 1999
   call baopen(lu, filename, iret)
-  if (iret .ne. 0) stop 100
+  if (iret .ne. 0) stop 130
 
   ! Check record length.
   ib8 = 0
   lx8 = 0
-  call bafrindex(lu, ib8, lx8, ix8)
+  call bafrindexl(lu, ib8, lx8, ix8)
   print *, ix8
 !  if (ix8 .ne. 1344903776) stop 110  
   
   ! Close the test file.
   call baclose(lu, iret)
-  if (iret .ne. 0) stop 120
+  if (iret .ne. 0) stop 140
 
   print *, 'SUCCESS!'
 end program test_bafrio
