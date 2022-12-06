@@ -24,9 +24,6 @@ jobs:
       CC: icc
       FC: ifort
       CXX: icpc
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
 
     steps:
 
@@ -54,12 +51,12 @@ jobs:
         mkdir build 
         cd build
         cmake .. 
-        make -j2
+        make -j2 VERBOSE=1
     
     - name: test
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
-        ctest --version --output-on-error
+        ctest --verbose --output-on-failure --rerun-failed
 
 
