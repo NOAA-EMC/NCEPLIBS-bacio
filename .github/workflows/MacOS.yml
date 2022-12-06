@@ -31,12 +31,12 @@ jobs:
         mkdir build 
         cd build
         cmake .. 
-        make -j2
+        make -j2 VERBOSE=1
     
     - name: test
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
-        ctest  --output-on-failure --rerun-failed
+        ctest --verbose --output-on-failure --rerun-failed
 
         

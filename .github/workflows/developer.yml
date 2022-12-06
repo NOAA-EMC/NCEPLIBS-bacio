@@ -15,8 +15,8 @@ jobs:
   developer:
     runs-on: ubuntu-latest
     env:
-      FC: gfortran-10
-      CC: gcc-10
+      FC: gfortran-9
+      CC: gcc-9
 
     steps:
 
@@ -37,14 +37,14 @@ jobs:
         mkdir build 
         cd build
         cmake .. -DENABLE_DOCS=ON -DCMAKE_Fortran_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address -Wall -Werror" -DCMAKE_C_FLAGS="-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0 -fsanitize=address -Wall -Werror" -DCMAKE_BUILD_TYPE=Debug
-        make -j2
+        make -j2 VERBOSE=1
 
     - name: test
       run: |
         set -e
         cd $GITHUB_WORKSPACE/bacio/build
         ctest --output-on-failure --rerun-failed --verbose
-        gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles --print-summary -o test-coverage.html
+        gcovr --root .. -v  --html-details --exclude ../tests --exclude CMakeFiles --print-summary -o test-coverage.html &> /dev/null
 
     - name: upload-test-coverage
       uses: actions/upload-artifact@v2
