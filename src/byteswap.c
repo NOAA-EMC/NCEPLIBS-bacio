@@ -34,6 +34,8 @@ static int send_errors = 1; /**< If non-zero, warn about non-aligned pointers. *
  *
  * @param flag Set to 0 to turn off warnings, non-zero to turn them on
  * (the default).
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 void
 fast_byteswap_errors(int flag)
@@ -48,6 +50,8 @@ fast_byteswap_errors(int flag)
  * @param len Length
  *
  * @return 0 for error, 1 otherwise.
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 static int
 simple_swap_32(void *data,size_t len)
@@ -77,6 +81,8 @@ simple_swap_32(void *data,size_t len)
  * @param len Length
  *
  * @return 0 for error, 1 otherwise.
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 static int
 simple_swap_16(void *data,size_t len)
@@ -105,6 +111,8 @@ simple_swap_16(void *data,size_t len)
  * @param len Length
  *
  * @return 0 for error, 1 otherwise.
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 static int
 macro_swap_64(void *data,size_t len)
@@ -131,6 +139,8 @@ macro_swap_64(void *data,size_t len)
  * @param count Count.
  *
  * @return 0 for error, 1 otherwise.
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 int
 fast_byteswap(void *data,int bytes,size_t count)
@@ -156,6 +166,8 @@ fast_byteswap(void *data,int bytes,size_t count)
  * @param nbyte Number of bytes.
  * @param nnum NNUM
  *
+ *
+ * @author Dexin Zhang, Jun Wang
  */
 void
 byteswap_(char *data, int *nbyte, int *nnum)
