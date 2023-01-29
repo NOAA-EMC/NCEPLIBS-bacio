@@ -10,30 +10,6 @@ elseif(UNIX)
   add_compile_definitions(LINUX)
 endif()
 
-# Set C compiler flags for Intel and GNU.
-if(CMAKE_C_COMPILER_ID MATCHES "^(Intel)$")
-  set(CMAKE_C_FLAGS "-g -traceback ${CMAKE_C_FLAGS}")
-  set(CMAKE_C_FLAGS_DEBUG "-Wall")
-elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
-  set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}")
-  set(CMAKE_C_FLAGS_DEBUG "-Wall")
-endif()
-
-# Set Fortran compiler flags Intel and GNU.
-if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
-  set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^(GNU)$")
-  set(CMAKE_Fortran_FLAGS "-g -fbacktrace -funroll-loops ${CMAKE_Fortran_FLAGS}")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-Wall")
-endif()
-
-# GNU Fortran starts complaining about argument mismatch in
-# gfortran-10.
-if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
-endif()
-
 # This is the Fortran source code.
 set(fortran_src baciof.F90 bafrio.F90 chk_endianc.F90)
 
@@ -43,22 +19,27 @@ set(c_src bacio.c byteswap.c)
 set(lib_name ${PROJECT_NAME})
 set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include)
 
+# Build Fortran code.
 add_library(${lib_name}_f OBJECT ${fortran_src})
 set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
   "${fortran_4_flags}")
 set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
   ${module_dir})
 
+# Build C code.
 add_library(${lib_name}_c OBJECT ${c_src})
 
+# Create library with both Fortran and C code.
 add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
   $<TARGET_OBJECTS:${lib_name}_c>)
+
 target_include_directories(${lib_name} INTERFACE
   $<BUILD_INTERFACE:${module_dir}>
   $<INSTALL_INTERFACE:include>)
 list(APPEND LIB_TARGETS ${lib_name})
 install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
+# Set up install.
 install(
   TARGETS ${LIB_TARGETS}
   EXPORT ${PROJECT_NAME}Exports
