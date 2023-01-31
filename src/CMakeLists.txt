@@ -43,22 +43,25 @@ set(c_src bacio.c byteswap.c)
 set(lib_name ${PROJECT_NAME})
 set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include)
 
+# Compile the Fortran code.
 add_library(${lib_name}_f OBJECT ${fortran_src})
 set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
   "${fortran_4_flags}")
 set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
   ${module_dir})
 
+# Compile the C code.
 add_library(${lib_name}_c OBJECT ${c_src})
 
-add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
-  $<TARGET_OBJECTS:${lib_name}_c>)
+# Create the combined library.
+add_library(${lib_name} $<TARGET_OBJECTS:${lib_name}_f> $<TARGET_OBJECTS:${lib_name}_c>)
 target_include_directories(${lib_name} INTERFACE
   $<BUILD_INTERFACE:${module_dir}>
   $<INSTALL_INTERFACE:include>)
 list(APPEND LIB_TARGETS ${lib_name})
-install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
+# Set up install.
+install(DIRECTORY ${module_dir} DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(
   TARGETS ${LIB_TARGETS}
   EXPORT ${PROJECT_NAME}Exports
