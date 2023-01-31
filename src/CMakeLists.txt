@@ -21,17 +21,28 @@ set(module_dir ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Build Fortran code.
 add_library(${lib_name}_f OBJECT ${fortran_src})
-set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS
-  "${fortran_4_flags}")
+set_target_properties(${lib_name}_f PROPERTIES COMPILE_FLAGS "${fortran_4_flags}")
 set_target_properties(${lib_name}_f PROPERTIES Fortran_MODULE_DIRECTORY
   ${module_dir})
 
 # Build C code.
 add_library(${lib_name}_c OBJECT ${c_src})
 
+# For shared, add fPIC.
+if(BUILD_SHARED_LIBS)
+  set_property(TARGET ${lib_name}_f PROPERTY POSITION_INDEPENDENT_CODE 1)
+  set_property(TARGET ${lib_name}_c PROPERTY POSITION_INDEPENDENT_CODE 1)
+endif()
+
 # Create library with both Fortran and C code.
-add_library(${lib_name} STATIC $<TARGET_OBJECTS:${lib_name}_f>
+add_library(${lib_name} $<TARGET_OBJECTS:${lib_name}_f>
   $<TARGET_OBJECTS:${lib_name}_c>)
+
+# For shared, set SOVERSION; increment it if API changes (other than
+# adding new functions).
+if(BUILD_SHARED_LIBS)
+  set_target_properties(${lib_name} PROPERTIES SOVERSION 0)
+endif()
 
 target_include_directories(${lib_name} INTERFACE
   $<BUILD_INTERFACE:${module_dir}>
