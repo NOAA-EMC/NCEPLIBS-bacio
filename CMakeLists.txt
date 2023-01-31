@@ -14,9 +14,10 @@ include(GNUInstallDirs)
 
 # Handle user options.
 option(ENABLE_DOCS "Enable generation of doxygen-based documentation." OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(BUILD_TESTING "Build tests of the library" ON)
 
-# Set the build type.
+# Check build type.
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE
@@ -50,7 +51,7 @@ if(${CMAKE_Fortran_COMPILER_ID} MATCHES "^(GNU)$" AND ${CMAKE_Fortran_COMPILER_V
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -fallow-argument-mismatch")
 endif()
 
-# This is the source code directiroy.
+# This is where the library code is.
 add_subdirectory(src)
 
 # Turn on testing if desired.
@@ -59,7 +60,7 @@ if (BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-# Build docs if required.
+# Does the user want to generate documentation?
 if(ENABLE_DOCS)
   find_package(Doxygen REQUIRED)
   add_subdirectory(docs)  
