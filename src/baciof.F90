@@ -43,7 +43,7 @@ MODULE BACIO_MODULE
      !> @param datary data array.
      !>
      !> @author Ed Hartnett @date 21-10-18
-     integer function baciol(mode, start, size, no, nactual, &
+     function baciol(mode, start, size, no, nactual, &
           fdes, fname, datary) bind(C)
        use, intrinsic :: iso_c_binding
        integer(c_int), value, intent(in) :: mode
@@ -54,6 +54,7 @@ MODULE BACIO_MODULE
        integer(c_int), intent(inout) :: fdes
        character(kind=C_char), intent(in) :: fname(*)
        character(kind=C_char), intent(in) :: datary(*)
+       integer(c_int) :: baciol
      end function baciol
   end interface
 END MODULE BACIO_MODULE
@@ -118,6 +119,8 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENRW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPEN
@@ -158,6 +161,8 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENR, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENR
@@ -198,6 +203,8 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENW
@@ -238,6 +245,8 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENWT, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWT
@@ -270,7 +279,7 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB,JB,NB,KA
+  integer(kind=8) IB,NB,KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -278,6 +287,8 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENWA, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWA
@@ -314,6 +325,8 @@ SUBROUTINE BACLOSE(LU, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_CLOSE, IB, 1, NB, KA, FD(LU), CHAR(0), A)
   IF (IRET .EQ. 0) FD(LU) = 0
 END SUBROUTINE BACLOSE
