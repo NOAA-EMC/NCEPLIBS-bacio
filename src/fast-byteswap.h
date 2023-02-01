@@ -1,5 +1,7 @@
 /** @file
  * @brief Header file for byteswap functions.
+ *
+ * @author George Vandenberghe @data July 22, 2015
  */
 
 #ifndef __FAST_BYTESWAP_H__

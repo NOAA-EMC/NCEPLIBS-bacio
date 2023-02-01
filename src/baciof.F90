@@ -343,12 +343,6 @@ END SUBROUTINE BACLOSE
 !> done. So it may contian out-of-date data, if the data file has been
 !> changed after the buffers were filled. Use with caution.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | Jun Wang | Modifications.
-!>
 !> @param lu unit to read.
 !> @param ib number of bytes to skip. (If ib<0, then the file
 !> is accessed with no seeking)
@@ -391,12 +385,6 @@ END SUBROUTINE BAREAD
 !> closed and reopened, or when any other operation on the file is
 !> done. So it may contian out-of-date data, if the data file has been
 !> changed after the buffers were filled. Use with caution.
-!>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param[in] lu unit to read.
 !> @param[in] ib number of bytes to skip (if ib<0, then the
@@ -544,6 +532,7 @@ END SUBROUTINE BAWRITE
 !> @param[out] ka number of bytes actually written.
 !> @param[in] a data to write.
 !>
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE BAWRITEL(LU, IB, NB, KA, A)
   USE BACIO_MODULE
   IMPLICIT NONE
@@ -582,20 +571,13 @@ END SUBROUTINE  BAWRITEL
 !> This subroutine is calling wrytel() to write a given number of
 !> bytes to an unblocked file.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 92-10-31 | Mark Iredell | Initial.
-!> 95-10-31 | Mark Iredell | workstation version
-!> 1998-06-04 | Mark Iredell | bacio version
-!> 2009-04-20 | Jun Wang | wrytel version
-!>
 !> @param[in] lu unit to which to write.
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
-
 !> @note A baopen must have already been called.
+!>
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE WRYTE(LU, NB, A)
   USE BACIO_MODULE
   IMPLICIT NONE
@@ -615,20 +597,13 @@ END SUBROUTINE WRYTE
 
 !> Write a given number of bytes to an unblocked file.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 92-10-31 | Mark Iredell | Initial.
-!> 95-10-31 | Mark Iredell | workstation version
-!> 1998-06-04 | Mark Iredell | bacio version
-!> 2009-04-20 | Jun Wang | wrytel version
+!> @note A baopen must have already been called.
 !>
 !> @param[in] lu unit to which to write.
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
-
-!> @note A baopen must have already been called.
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE WRYTEL(LU, NB, A)
   USE BACIO_MODULE
   IMPLICIT NONE
