@@ -11,6 +11,7 @@ program test_bafrio
   character (len = 4) :: data_in
   integer :: lu = 1
   integer :: ka
+  integer :: ib, lx, ix
   integer (kind = 8) :: ib8, lx8, ix8
   integer :: iret
 
@@ -75,6 +76,23 @@ program test_bafrio
   end if
   
   ! Close the test file.
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 120
+
+  ! Open the test file again.
+  call baopen(lu, filename, iret)
+  if (iret .ne. 0) stop 100
+
+  ! Check record length again.
+  ib = 0
+  lx = 0
+  call bafrindex(lu, ib, lx, ix)
+  if (ix .ne. 12) then
+     print *, ix
+     stop 110
+  end if
+  
+  ! Close the test file again.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 120
 
