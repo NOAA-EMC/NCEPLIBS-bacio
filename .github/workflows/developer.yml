@@ -56,3 +56,8 @@ jobs:
           bacio/build/*.html
           bacio/build/*.css
         
+    - uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: |
+          bacio/build/docs/html
