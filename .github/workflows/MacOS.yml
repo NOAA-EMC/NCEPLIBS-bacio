@@ -18,6 +18,9 @@ jobs:
     env:
       FC: gfortran-11
       CC: gcc-11
+    strategy:
+      matrix:
+        shared: [ON, OFF]
 
     steps:
 
@@ -31,8 +34,11 @@ jobs:
         cd bacio
         mkdir build 
         cd build
-        cmake .. 
+        cmake -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DCMAKE_INSTALL_PREFIX=~/install .. 
         make -j2 VERBOSE=1
+        make install
+        ls -l ~/install
+        ls -l ~/install/lib
     
     - name: test
       run: |
