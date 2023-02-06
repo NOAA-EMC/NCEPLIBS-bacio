@@ -6,7 +6,7 @@ This library performs binary I/O for the NCEP models, processing
 formatted and unformatted byte-addressable data records, and helping
 transform little endian files into big endian files.
 
-## Documentation for Previous Versions of NCEPLIBS-g2
+## Documentation for Previous Versions of NCEPLIBS-bacio
 
 * [NCEPLIBS-bacio Version 2.5.0](ver-2.5.0/index.html)
 
