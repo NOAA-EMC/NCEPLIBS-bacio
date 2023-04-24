@@ -12,6 +12,8 @@ project.
 For more detailed documentation see
 https://noaa-emc.github.io/NCEPLIBS-bacio/.
 
+To submit bug reports, feature requests, or other code-related issues including installation and usage questions, please create a [GitHub issue](https://github.com/NOAA-EMC/NCEPLIBS-bacio/issues). For general NCEPLIBS inquiries, contact [Ed Hartnett](mailto:edward.hartnett@noaa.gov) (secondary point of contact [Alex Richert](mailto:alexander.richert@noaa.gov)).
+
 ### Users
 
 The NCEPLIBS-bacio library is used by:
@@ -28,7 +30,7 @@ The NCEPLIBS-bacio library is used by:
 Robert Grumbine, Mark Iredell, Jun Wang, Dexin Zhang, other NCEP/EMC
 Developers
 
-Code Manager: Hang Lei, Ed Hartnett
+Code Manager: [Hang Lei](mailto:hang.lei@noaa.gov), [Ed Hartnett](mailto:edward.hartnett@noaa.gov)
 
 ### Installing
 
