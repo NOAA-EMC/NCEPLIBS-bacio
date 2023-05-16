@@ -24,7 +24,7 @@ var NAVTREE =
 [
   [ "NCEPLIBS-bacio", "index.html", [
     [ "bacio", "index.html#autotoc_md0", [
-      [ "Documentation for Previous Versions of NCEPLIBS-bacio", "index.html#autotoc_md1", null ],
+      [ "Documentation for Previous Versions of NCEPLIBS-g2", "index.html#autotoc_md1", null ],
       [ "Fortran Library", "index.html#autotoc_md2", [
         [ "Opening or Creating a Data File", "index.html#autotoc_md3", null ],
         [ "Reading or Writing Unformatted Records", "index.html#autotoc_md4", null ],
