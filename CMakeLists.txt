@@ -28,7 +28,7 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
 endif()
 
 # Set C compiler flags for Intel and GNU.
-if(CMAKE_C_COMPILER_ID MATCHES "^(Intel)$")
+if(CMAKE_C_COMPILER_ID MATCHES "^(Intel|IntelLLVM)$")
   set(CMAKE_C_FLAGS "-g -traceback ${CMAKE_C_FLAGS}")
   set(CMAKE_C_FLAGS_DEBUG "-Wall")
 elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
@@ -37,7 +37,7 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
 endif()
 
 # Set Fortran compiler flags Intel and GNU.
-if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel)$")
+if(CMAKE_Fortran_COMPILER_ID MATCHES "^(Intel|IntelLLVM)$")
   set(CMAKE_Fortran_FLAGS "-g -traceback -FR ${CMAKE_Fortran_FLAGS}")
   set(CMAKE_Fortran_FLAGS_DEBUG "-warn all")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^(GNU)$")
