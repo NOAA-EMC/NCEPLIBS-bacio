@@ -21,10 +21,9 @@ defaults:
 jobs:
   Intel:
     runs-on: ubuntu-latest
-    env:
-      CC: icc
-      FC: ifort
-      CXX: icpc
+    strategy:
+      matrix:
+        compilers: ["CC=icc FC=ifort", "CC=icx FC=ifx"]
 
     steps:
 
@@ -51,7 +50,7 @@ jobs:
         cd bacio
         mkdir build 
         cd build
-        cmake .. 
+        ${{ matrix.compilers }} cmake .. 
         make -j2 VERBOSE=1
     
     - name: test
