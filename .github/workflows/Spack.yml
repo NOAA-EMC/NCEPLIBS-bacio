@@ -41,7 +41,7 @@ jobs:
         cp $GITHUB_WORKSPACE/bacio/spack/package.py $SPACK_ROOT/var/spack/repos/builtin/packages/bacio/package.py
         mv $GITHUB_WORKSPACE/bacio $SPACK_ENV/bacio
         spack develop --no-clone bacio@develop
-        spack add bacio@develop%gcc@11 ${{ matrix.sharedlibs }} ${{ matrix.pic }} # target=x86_64
+        spack add bacio@develop%gcc@11 ${{ matrix.sharedlibs }} ${{ matrix.pic }}
         spack external find cmake gmake
         spack concretize
         # Run installation and run CTest suite
