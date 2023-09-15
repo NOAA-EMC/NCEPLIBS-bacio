@@ -1,0 +1,69 @@
+# This is a CI workflow for the NCEPLIBS-bacio project.
+#
+# This workflow builds bacio with Spack, including installing with the "--test
+# root" option to run the CTest suite. It also has a one-off job that validates
+# the recipe by ensuring that every CMake option that should be set in the
+# Spack recipe is so set.
+#
+# Alex Richert, Sep 2023
+name: Spack
+on:
+  push:
+    branches:
+    - develop
+  pull_request:
+    branches:
+    - develop
+
+jobs:
+  # This job builds with Spack using every combination of variants and runs the CTest suite each time
+  Spack:
+    strategy:
+      matrix:
+        os: ["ubuntu-latest"]
+        sharedlibs: ["+shared", "~shared"]
+        pic: ["+pic", "~pic"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    
+    - name: checkout-bacio
+      uses: actions/checkout@v4
+      with: 
+        path: bacio
+
+    - name: spack-build-and-test
+      run: |
+        git clone -c feature.manyFiles=true https://github.com/spack/spack
+        . spack/share/spack/setup-env.sh
+        spack env create bacio-env
+        spack env activate bacio-env
+        cp $GITHUB_WORKSPACE/bacio/spack/package.py $SPACK_ROOT/var/spack/repos/builtin/packages/bacio/package.py
+        mv $GITHUB_WORKSPACE/bacio $SPACK_ENV/bacio
+        spack develop --no-clone bacio@develop
+        spack add bacio@develop%gcc@11 ${{ matrix.sharedlibs }} ${{ matrix.pic }} # target=x86_64
+        spack external find cmake gmake
+        spack concretize
+        # Run installation and run CTest suite
+        spack install --verbose --fail-fast --test root
+        # Run 'spack load' to check for obvious errors in setup_run_environment
+        spack load bacio
+
+  # This job validates the Spack recipe by making sure each cmake build option is represented
+  recipe-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: checkout-bacio
+      uses: actions/checkout@v4
+      with: 
+        path: bacio
+
+    - name: recipe-check
+      run: |
+        echo "If this jobs fails, look at the most recently output CMake option below and make sure that option appears in spack/package.py"
+        for opt in $(grep -ioP '^option\(\K(?!(ENABLE_DOCS))[^ ]+' $GITHUB_WORKSPACE/bacio/CMakeLists.txt) ; do
+          echo "Checking for presence of '$opt' CMake option in package.py"
+          grep -cP "define.+\b${opt}\b" $GITHUB_WORKSPACE/bacio/spack/package.py
+        done

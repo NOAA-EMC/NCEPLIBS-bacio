@@ -15,7 +15,6 @@ include(GNUInstallDirs)
 # Handle user options.
 option(ENABLE_DOCS "Enable generation of doxygen-based documentation." OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(BUILD_TESTING "Build tests of the library" ON)
 
 # Check build type.
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
@@ -55,8 +54,8 @@ endif()
 add_subdirectory(src)
 
 # Turn on testing if desired.
+include(CTest)
 if (BUILD_TESTING)
-  include(CTest)
   add_subdirectory(tests)
 endif()
 
