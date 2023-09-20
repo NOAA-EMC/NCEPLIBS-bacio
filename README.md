@@ -1,4 +1,4 @@
-![Status](https://github.com/NOAA-EMC/NCEPLIBS-sp/workflows/developer/badge.svg)
+![Status](https://github.com/NOAA-EMC/NCEPLIBS-bacio/workflows/developer/badge.svg)
 
 # BACIO
 
