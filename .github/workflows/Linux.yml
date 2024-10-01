@@ -14,25 +14,18 @@ on:
 
 jobs:
   Linux:
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        gcc-version: [12,14]
+    runs-on: ubuntu-latest
+    env:
+      FC: gfortran-11
+      CC: gcc-11
 
     steps:
-
-    - name: get-gcc
-      run: |
-        if [ -z $(type -P gcc-${{ matrix.gcc-version }}) ]; then
-          sudo apt install gcc-${{ matrix.gcc-version }}
-        fi
 
     - name: checkout
       uses: actions/checkout@v4
 
     - name: build
       run: |
-        export CC=gcc-${{ matrix.gcc-version }} ; export FC=gfortran-${{ matrix.gcc-version }}
         cmake -B build
         cmake --build build --parallel 2 --verbose
 
@@ -40,3 +33,5 @@ jobs:
       run: |
         set -e
         ctest --test-dir build --output-on-failure --rerun-failed --verbose
+
+        
