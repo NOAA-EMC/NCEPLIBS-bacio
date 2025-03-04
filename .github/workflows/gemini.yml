@@ -2,7 +2,7 @@ name: ai-code-review
 on: [push,pull_request]
 
 jobs:
-  developer:
+  ai-code-review:
     runs-on: ubuntu-latest
 
     steps:
