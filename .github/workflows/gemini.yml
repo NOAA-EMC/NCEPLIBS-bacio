@@ -1,0 +1,13 @@
+name: ai-code-review
+on: [push,pull_request]
+
+jobs:
+  developer:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: "Code review"
+      uses: AlexanderRichert-NOAA/ci-gemini-code-review@develop
+      with:
+        api-key: ${{ secrets.GEMINI_API_KEY }}
