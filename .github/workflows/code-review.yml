@@ -4,10 +4,10 @@ on: [push,pull_request]
 jobs:
   ai-code-review:
     runs-on: ubuntu-latest
+    env:
+      LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     steps:
 
     - name: "Code review"
-      uses: AlexanderRichert-NOAA/ci-gemini-code-review@develop
-      with:
-        api-key: ${{ secrets.GEMINI_API_KEY }}
+      uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
