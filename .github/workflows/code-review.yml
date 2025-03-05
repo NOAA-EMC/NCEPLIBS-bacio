@@ -5,9 +5,13 @@ jobs:
   ai-code-review:
     runs-on: ubuntu-latest
     env:
-      LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
 
     steps:
 
     - name: "Code review"
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
+      with:
+        backend: mistral
+        api-key-variable: MISTRAL_API_KEY
