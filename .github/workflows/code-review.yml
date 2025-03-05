@@ -15,5 +15,5 @@ jobs:
     - name: "Code review"
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
       with:
-        backend: mistral
-        api-key-variable: MISTRAL_API_KEY
+        backend: gemini-2.0
+        api-key-variable: GEMINI_API_KEY
