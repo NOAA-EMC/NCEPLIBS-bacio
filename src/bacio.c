@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <dummy.h>
 
 #include "clib.h"
 
@@ -153,7 +152,7 @@ baciol(int mode, long int start, int size, long int no,
     /* Close file if requested */
     if (BACLOSE & mode )
         if (close(*fdes) != 0)
-            return 1+BA_ECLOSE;
+            return BA_ECLOSE;
 
     /* Check that if we were reading or writing, that we actually got
        what we expected. Return 0 (success) if we're here and weren't
