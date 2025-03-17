@@ -1,0 +1,19 @@
+name: ai-code-review
+on: [workflow_dispatch]
+
+jobs:
+  ai-code-review:
+    runs-on: ubuntu-latest
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+    permissions:
+      pull-requests: write
+
+    steps:
+
+    - name: "Code review"
+      uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
+      with:
+        backend: mistral
+        api-key-variable: MISTRAL_API_KEY
