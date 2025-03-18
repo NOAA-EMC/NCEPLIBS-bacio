@@ -12,52 +12,31 @@ on:
     branches:
     - develop
 
-# Use custom shell with -l so .bash_profile is sourced which loads intel/oneapi/setvars.sh
-# without having to do it in manually every step
-defaults:
-  run:
-    shell: bash -leo pipefail {0}
-
 jobs:
   Intel:
     runs-on: ubuntu-latest
-    env:
-      CC: icc
-      FC: ifort
-      CXX: icpc
+    strategy:
+      matrix:
+        compilers: ["oneapi", "classic"]
 
     steps:
 
-    # See https://software.intel.com/content/www/us/en/develop/articles/oneapi-repo-instructions.html
-    - name: install-intel
-      run: |
-        cd /tmp
-        wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-        sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-        rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-        echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-        sudo apt-get update
-        sudo apt-get install intel-oneapi-dev-utilities intel-oneapi-mpi-devel intel-oneapi-openmp intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
-        echo "source /opt/intel/oneapi/setvars.sh" >> ~/.bash_profile
-      
-    - name: checkout-bacio
-      uses: actions/checkout@v2
+    - name: "Install Intel"
+      uses: NOAA-EMC/ci-install-intel-toolkit@develop
       with:
-        repository: NOAA-EMC/NCEPLIBS-bacio
-        path: bacio
+        compiler-setup: ${{ matrix.compilers }}
+      
+    - name: "Checkout bacio"
+      uses: actions/checkout@v4
 
-    - name: build
+    - name: "Build bacio"
       run: |
-        cd bacio
-        mkdir build 
-        cd build
-        cmake .. 
-        make -j2 VERBOSE=1
+        cmake -B build
+        cmake --build build --parallel 2 --verbose
     
-    - name: test
+    - name: "Test bacio"
       run: |
         set -e
-        cd $GITHUB_WORKSPACE/bacio/build
-        ctest --verbose --output-on-failure --rerun-failed
+        ctest --test-dir build --verbose --output-on-failure --rerun-failed
 
 

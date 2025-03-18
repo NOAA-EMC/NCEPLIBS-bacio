@@ -1,0 +1,50 @@
+# This is a CI workflow for the NCEPLIBS-bacio project.
+#
+# This workflow builds bacio with Spack, including installing with the "--test
+# root" option to run the CTest suite. It also has a one-off job that validates
+# the recipe by ensuring that every CMake option that should be set in the
+# Spack recipe is so set.
+#
+# Alex Richert, Sep 2023
+name: Spack
+on:
+  push:
+    branches:
+    - develop
+  pull_request:
+    branches:
+    - develop
+
+jobs:
+  # This job builds with Spack using every combination of variants and runs the CTest suite each time
+  Spack:
+    strategy:
+      matrix:
+        os: ["ubuntu-latest"]
+        variants: ["+shared+pic", "~shared~pic"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    
+    - name: "Build Spack package"
+      uses: NOAA-EMC/ci-test-spack-package@develop
+      with:
+        package-name: bacio
+        package-variants: ${{ matrix.variants }}
+        custom-recipe: spack/package.py
+        use-repo-cache: true
+        spack-compiler: gcc
+        repo-cache-key-suffix: ${{ matrix.os }}-${{ matrix.variants }}-1
+
+  # This job validates the Spack recipe by making sure each cmake build option is represented
+  recipe-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: recipe-check
+      uses: NOAA-EMC/ci-check-spack-recipe@develop
+      with:
+        recipe-file: package/spack/package.py
+        cmakelists-txt: package/CMakeLists.txt
+        ignore-list: ENABLE_DOCS

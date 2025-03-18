@@ -16,28 +16,28 @@ jobs:
   MacOS:
     runs-on: macos-latest
     env:
-      FC: gfortran-11
-      CC: gcc-11
+      FC: gfortran-12
+      CC: gcc-12
+    strategy:
+      matrix:
+        shared: [ON, OFF]
 
     steps:
 
     - name: checkout
-      uses: actions/checkout@v2
-      with: 
-        path: bacio
+      uses: actions/checkout@v4
 
     - name: build
       run: |
-        cd bacio
-        mkdir build 
-        cd build
-        cmake .. 
-        make -j2 VERBOSE=1
+        cmake -B build -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DCMAKE_INSTALL_PREFIX=~/install
+        cmake --build build --parallel 2 --verbose
+        cmake --install build
+        ls -l ~/install
+        ls -l ~/install/lib
     
     - name: test
       run: |
         set -e
-        cd $GITHUB_WORKSPACE/bacio/build
-        ctest --verbose --output-on-failure --rerun-failed
+        ctest --test-dir build --verbose --output-on-failure --rerun-failed
 
         

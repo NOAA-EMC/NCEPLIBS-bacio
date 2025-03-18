@@ -14,30 +14,29 @@ on:
 
 jobs:
   Linux:
-    runs-on: ubuntu-latest
-    env:
-      FC: gfortran-11
-      CC: gcc-11
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        gcc-version: [12,14]
 
     steps:
 
+    - name: get-gcc
+      run: |
+        if [ -z $(type -P gcc-${{ matrix.gcc-version }}) ]; then
+          sudo apt install gcc-${{ matrix.gcc-version }}
+        fi
+
     - name: checkout
-      uses: actions/checkout@v2
-      with: 
-        path: bacio
+      uses: actions/checkout@v4
 
     - name: build
       run: |
-        cd bacio
-        mkdir build 
-        cd build
-        cmake .. 
-        make -j2 VERBOSE=1
+        export CC=gcc-${{ matrix.gcc-version }} ; export FC=gfortran-${{ matrix.gcc-version }}
+        cmake -B build
+        cmake --build build --parallel 2 --verbose
 
     - name: test
       run: |
         set -e
-        cd $GITHUB_WORKSPACE/bacio/build
-        ctest --output-on-failure --rerun-failed --verbose
-
-        
+        ctest --test-dir build --output-on-failure --rerun-failed --verbose

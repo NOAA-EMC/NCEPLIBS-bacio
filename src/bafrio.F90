@@ -9,12 +9,6 @@
 !> to byteswap their data after (for reading) or before (for writing)
 !> calling subroutines this file.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | iredell | Initial. 
-!> Aug, 2012 | Jun Wang | bafrio for big and little endian files
-!>
 !> @author Mark Iredell @date 1999-01-21
 
 !> This subprogram calls bafrindexl() to either read an unformatted
@@ -23,12 +17,6 @@
 !> determines the start byte of the next fortran record. The
 !> difference between bafrindex() and bafrindexl() is the kind type of
 !> integers in the argument list.
-!>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Mark Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param[in] lu logical unit to read. if lu<=0, then determine ix
 !> from lx.
@@ -62,12 +50,6 @@ end SUBROUTINE BAFRINDEX
 !> given the record length, without i/o it determines the start byte
 !> of the next fortran record.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Mark Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
-!>
 !> @param[in] lu logical unit to read. if lu<=0, then determine ix
 !> from lx.
 !> @param[in] ib fortran record start byte. (for the first fortran
@@ -79,7 +61,6 @@ end SUBROUTINE BAFRINDEX
 !> only if lx>=0).
 !>
 !> @author Mark Iredell @date 1999-01-21
-!>
 SUBROUTINE BAFRINDEXL(LU,IB,LX,IX)
   IMPLICIT NONE
   INTEGER,INTENT(IN):: LU
@@ -131,7 +112,7 @@ SUBROUTINE BAFRINDEXL(LU,IB,LX,IX)
      !
      !end luif
   ENDIF
-  ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   !  COMPUTE START BYTE FOR THE NEXT FORTRAN RECORD
   IF(LX.GE.0) IX=IB+LBCW+LX+LBCW
 END SUBROUTINE BAFRINDEXL
@@ -139,12 +120,6 @@ END SUBROUTINE BAFRINDEXL
 !> This subprogram calls bafread() to read an unformatted fortran
 !> record. The difference between bafrread() and bafrreadl() is the
 !> kind type of integers in the argument list.
-!>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Mark Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
 !>
 !> @param[in] lu logical unit to read.
 !> @param[in] ib fortran record start byte (for the first fortran
@@ -158,7 +133,6 @@ END SUBROUTINE BAFRINDEXL
 !> @param[out] a data read
 !>
 !> @author Mark Iredell @date 1999-01-21
-!>
 SUBROUTINE BAFRREAD(LU,IB,NB,KA,A)
   IMPLICIT NONE
   INTEGER,INTENT(IN):: LU,IB,NB
@@ -180,12 +154,6 @@ END SUBROUTINE BAFRREAD
 
 !> This subprogram reads an unformatted fortran record.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
-!>
 !> @param[in] lu logical unit to read.
 !> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
@@ -198,7 +166,6 @@ END SUBROUTINE BAFRREAD
 !> @param[out] a data read.
 !>
 !> @author Mark Iredell @date 1999-01-21
-!>
 SUBROUTINE BAFRREADL(LU,IB,NB,KA,A)
   IMPLICIT NONE
   INTEGER,INTENT(IN):: LU
@@ -231,12 +198,6 @@ END SUBROUTINE BAFRREADL
 !> record. The difference between bafrwrite() and bafrwritel() is the
 !> kind type of integers in the argument list.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
-!>
 !> @param[in] lu logical unit to write to.
 !> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
@@ -247,7 +208,6 @@ END SUBROUTINE BAFRREADL
 !> @param[in] a data to write.
 !>
 !> @author Mark Iredell @date 1999-01-21
-!>
 SUBROUTINE BAFRWRITE(LU,IB,NB,KA,A)
   IMPLICIT NONE
   INTEGER,INTENT(IN):: LU,IB,NB
@@ -270,12 +230,6 @@ END SUBROUTINE BAFRWRITE
 
 !> This subprogram writes an unformatted fortran record.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|--------- 
-!> 1999-01-21 | Iredell | Initial
-!> 2009-04-20 | Jun Wang | Changes
-!>
 !> @param[in] lu logical unit to write to.
 !> @param[in] ib fortran record start byte. (For the first
 !> fortran record, ib should be 0.)
@@ -286,7 +240,6 @@ END SUBROUTINE BAFRWRITE
 !> @param[in] a data to write.
 !>
 !> @author Mark Iredell @date 1999-01-21
-!>
 SUBROUTINE BAFRWRITEL(LU,IB,NB,KA,A)
   IMPLICIT NONE
   INTEGER,INTENT(IN):: LU

@@ -43,7 +43,7 @@ MODULE BACIO_MODULE
      !> @param datary data array.
      !>
      !> @author Ed Hartnett @date 21-10-18
-     integer function baciol(mode, start, size, no, nactual, &
+     function baciol(mode, start, size, no, nactual, &
           fdes, fname, datary) bind(C)
        use, intrinsic :: iso_c_binding
        integer(c_int), value, intent(in) :: mode
@@ -54,6 +54,7 @@ MODULE BACIO_MODULE
        integer(c_int), intent(inout) :: fdes
        character(kind=C_char), intent(in) :: fname(*)
        character(kind=C_char), intent(in) :: datary(*)
+       integer(c_int) :: baciol
      end function baciol
   end interface
 END MODULE BACIO_MODULE
@@ -118,6 +119,8 @@ SUBROUTINE BAOPEN(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENRW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPEN
@@ -158,6 +161,8 @@ SUBROUTINE BAOPENR(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENR, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENR
@@ -198,6 +203,8 @@ SUBROUTINE BAOPENW(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENW, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENW
@@ -238,6 +245,8 @@ SUBROUTINE BAOPENWT(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENWT, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWT
@@ -270,7 +279,7 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
   INTEGER, intent(in) :: LU
   CHARACTER, intent(in) :: CFN*(*)
   INTEGER, intent(out) :: IRET
-  integer(kind=8) IB,JB,NB,KA
+  integer(kind=8) IB,NB,KA
   CHARACTER :: A(1)
 
   IF (LU .LT. 001 .OR. LU .GT. FDDIM) THEN
@@ -278,6 +287,8 @@ SUBROUTINE BAOPENWA(LU, CFN, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_OPENWA, IB, 1, NB, KA, FD(LU), &
        trim(CFN)//c_null_char, A)
 END SUBROUTINE BAOPENWA
@@ -314,6 +325,8 @@ SUBROUTINE BACLOSE(LU, IRET)
      RETURN
   ENDIF
 
+  IB = 0
+  NB = 0
   IRET = BACIOL(BACIO_CLOSE, IB, 1, NB, KA, FD(LU), CHAR(0), A)
   IF (IRET .EQ. 0) FD(LU) = 0
 END SUBROUTINE BACLOSE
@@ -329,12 +342,6 @@ END SUBROUTINE BACLOSE
 !> closed and reopened, or when any other operation on the file is
 !> done. So it may contian out-of-date data, if the data file has been
 !> changed after the buffers were filled. Use with caution.
-!>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param lu unit to read.
 !> @param ib number of bytes to skip. (If ib<0, then the file
@@ -378,12 +385,6 @@ END SUBROUTINE BAREAD
 !> closed and reopened, or when any other operation on the file is
 !> done. So it may contian out-of-date data, if the data file has been
 !> changed after the buffers were filled. Use with caution.
-!>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 1998-06-04 | Mark Iredell | Initial.
-!> 2009-04-20 | Jun Wang | Modifications.
 !>
 !> @param[in] lu unit to read.
 !> @param[in] ib number of bytes to skip (if ib<0, then the
@@ -531,6 +532,7 @@ END SUBROUTINE BAWRITE
 !> @param[out] ka number of bytes actually written.
 !> @param[in] a data to write.
 !>
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE BAWRITEL(LU, IB, NB, KA, A)
   USE BACIO_MODULE
   IMPLICIT NONE
@@ -569,20 +571,13 @@ END SUBROUTINE  BAWRITEL
 !> This subroutine is calling wrytel() to write a given number of
 !> bytes to an unblocked file.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 92-10-31 | Mark Iredell | Initial.
-!> 95-10-31 | Mark Iredell | workstation version
-!> 1998-06-04 | Mark Iredell | bacio version
-!> 2009-04-20 | Jun Wang | wrytel version
-!>
 !> @param[in] lu unit to which to write.
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
-
 !> @note A baopen must have already been called.
+!>
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE WRYTE(LU, NB, A)
   USE BACIO_MODULE
   IMPLICIT NONE
@@ -602,20 +597,13 @@ END SUBROUTINE WRYTE
 
 !> Write a given number of bytes to an unblocked file.
 !>
-!> ### Program History Log
-!> Date | Programmer | Comments
-!> -----|------------|---------
-!> 92-10-31 | Mark Iredell | Initial.
-!> 95-10-31 | Mark Iredell | workstation version
-!> 1998-06-04 | Mark Iredell | bacio version
-!> 2009-04-20 | Jun Wang | wrytel version
+!> @note A baopen must have already been called.
 !>
 !> @param[in] lu unit to which to write.
 !> @param[in] nb number of bytes to write.
 !> @param[in] a data to write.
 !>
-
-!> @note A baopen must have already been called.
+!> @author Mark Iredell @date 92-10-31
 SUBROUTINE WRYTEL(LU, NB, A)
   USE BACIO_MODULE
   IMPLICIT NONE
