@@ -7,6 +7,7 @@ jobs:
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+      GH_API_KEY: ${{ github.token }}
     permissions:
       pull-requests: write
 
@@ -16,4 +17,4 @@ jobs:
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
       with:
         backend: mistral
-        api-key-variable: MISTRAL_API_KEY
+        api-key-variable: GH_API_KEY
