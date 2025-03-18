@@ -1,5 +1,5 @@
 name: ai-code-review
-on: [workflow_dispatch,pull_request_target]
+on: [workflow_dispatch,pull_request,pull_request_target]
 
 jobs:
   ai-code-review:
@@ -7,7 +7,7 @@ jobs:
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
-      GH_API_KEY: ${{ secrets.ALEX_GH_LLM_KEY }}
+      GH_API_KEY: ${{ secrets.GH_API_KEY }}
     permissions:
       pull-requests: write
 
@@ -17,4 +17,4 @@ jobs:
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
       with:
         backend: gh-phi-4
-        api-key: ${{ secrets.ALEX_GH_LLM_KEY }}
+        api-key-variable: GH_API_KEY
