@@ -1,10 +1,8 @@
 name: ai-code-review
 on:
   workflow_dispatch
-  pull_request:
-    branches: [develop,dummy_ai_test]
-  pull_request_target:
-    branches-ignore: develop
+  pull_request
+  pull_request_target
 
 jobs:
   ai-code-review:
