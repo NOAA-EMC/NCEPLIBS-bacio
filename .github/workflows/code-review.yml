@@ -1,5 +1,10 @@
 name: ai-code-review
-on: [workflow_dispatch,pull_request,pull_request_target]
+on:
+  workflow_dispatch
+  pull_request:
+    branches: develop
+  pull_request_target:
+    branches-ignore: develop
 
 jobs:
   ai-code-review:
@@ -13,8 +18,24 @@ jobs:
 
     steps:
 
+    - name: "Check if we want pull_request or pull_request_target"
+      shell: bash
+      run: |
+        if [ ${{ github.event_name }} == 'pull_request' ]; then
+          if [ ${{ github.event.pull_request.head.repo.owner.login }} == ${{ github.repository_owner }} ]; then
+            echo CONTINUE=true >> $GITHUB_ENV
+          fi
+        elif [ ${{ github.event_name }} == 'pull_request_target' ]; then
+          if [ ${{ github.event.pull_request.head.repo.owner.login }} != ${{ github.repository_owner }} ]; then
+            echo CONTINUE=true >> $GITHUB_ENV
+          fi
+        elif [ ${{ github.event_name }} == 'workflow_dispatch' ]; then
+          echo CONTINUE=true >> $GITHUB_ENV
+        fi
+
     - name: "Code review"
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
+      if: ${{ env.CONTINUE == 'true' }}
       with:
         backend: gh-phi-4
         api-key-variable: GH_API_KEY
