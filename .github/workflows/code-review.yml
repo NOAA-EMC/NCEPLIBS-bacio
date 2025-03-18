@@ -17,4 +17,4 @@ jobs:
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
       with:
         backend: gh-phi-4
-        api-key-variable: GH_API_KEY
+        api-key: ${{ secrets.ALEX_GH_LLM_KEY }}
