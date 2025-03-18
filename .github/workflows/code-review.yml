@@ -1,5 +1,5 @@
 name: ai-code-review
-on: [workflow_dispatch]
+on: [workflow_dispatch,pull_request]
 
 jobs:
   ai-code-review:
