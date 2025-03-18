@@ -16,5 +16,5 @@ jobs:
     - name: "Code review"
       uses: AlexanderRichert-NOAA/ci-llm-code-review@develop
       with:
-        backend: mistral
+        backend: gh-phi-4
         api-key-variable: GH_API_KEY
