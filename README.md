@@ -34,16 +34,12 @@ Code Manager: [Hang Lei](mailto:hang.lei@noaa.gov), [Ed Hartnett](mailto:edward.
 
 ### Installing
 
-Download the latest release from
-https://github.com/NOAA-EMC/NCEPLIBS-bacio/releases and untar
-it and cd into the main directory. Then:
-
-```
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX=/path/to/install ..
-make -j2
-make install
+```console
+git clone https://github.com/NOAA-EMC/NCEPLIBS-bacio # or download a release from https://github.com/NOAA-EMC/NCEPLIBS-bacio/releases
+cmake -DCMAKE_INSTALL_PREFIX=/path/to/install -S NCEPLIBS-bacio -B NCEPLIBS-bacio/build # <add'l CMake options>
+cmake --build NCEPLIBS-bacio/build --parallel 2
+ctest --test-dir NCEPLIBS-bacio/build --parallel 2 # <add'l CTest options>
+cmake --install NCEPLIBS-bacio/build
 ```
 
 ## Disclaimer
