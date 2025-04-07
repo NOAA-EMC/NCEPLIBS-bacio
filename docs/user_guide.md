@@ -10,6 +10,25 @@ transform little endian files into big endian files.
 
 * [NCEPLIBS-bacio Version 2.5.0](ver-2.5.0/index.html)
 
+## Installation
+
+```
+git clone https://github.com/NOAA-EMC/NCEPLIBS-bacio # or download a release from https://github.com/NOAA-EMC/NCEPLIBS-bacio/releases
+cmake -DCMAKE_INSTALL_PREFIX=/path/to/install -S NCEPLIBS-bacio -B NCEPLIBS-bacio/build # <add'l CMake options>
+cmake --build NCEPLIBS-bacio/build --parallel 2
+ctest --test-dir NCEPLIBS-bacio/build --parallel 2 # <add'l CTest options>
+cmake --install NCEPLIBS-bacio/build
+```
+
+The following CMake build options can be used to configure the build by setting them with `-D<OPTION>=<VALUE>`.
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| CMAKE_INSTALL_PREFIX | Installation path | /usr/local |
+| CMAKE_POSITION_INDEPENDENT_CODE | Enable position-independent code (PIC) for static build | OFF |
+| ENABLE_DOCS | Enable generation of doxygen-based documentation. | OFF |
+| BUILD_SHARED_LIBS | Build shared libraries | OFF |
+
 ## Fortran Library
 
 The NCEPLIBS-bacio has Fortran functions to open, read or write, and
