@@ -1,8 +1,9 @@
 name: cdash
-on: pull_request_target
-#: # make this 'push' for initial testing, then use 'merge'
-#    branches:
-#    - develop
+on:
+  push:
+    branches:
+    - develop
+    - add_cdash
 
 jobs:
   cdash:
