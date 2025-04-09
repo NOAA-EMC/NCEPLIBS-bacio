@@ -7,12 +7,12 @@ on:
 jobs:
   cdash:
     runs-on: ubuntu-latest
-    env:
-      FC: gfortran
-      CC: gcc
-      CDASH_TOKEN: ${{ secrets.CDASH_TOKEN }}
 
     steps:
 
     - name: CDash
+      env:
+        FC: gfortran
+        CC: gcc
+        CDASH_TOKEN: ${{ secrets.CDASH_TOKEN }}
       uses: NOAA-EMC/ci-cdash@develop
