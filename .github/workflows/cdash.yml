@@ -1,6 +1,6 @@
 name: cdash
 on:
-  pull_request: # make this 'push' for initial testing, then use 'merge'
+  pull_request_target: # make this 'push' for initial testing, then use 'merge'
     branches:
     - develop
 
