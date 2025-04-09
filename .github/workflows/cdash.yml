@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - develop
+    - add_cdash
 
 jobs:
   cdash:
