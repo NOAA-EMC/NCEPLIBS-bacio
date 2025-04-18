@@ -42,6 +42,8 @@ ctest --test-dir NCEPLIBS-bacio/build --parallel 2 # <add'l CTest options>
 cmake --install NCEPLIBS-bacio/build
 ```
 
+NCEPLIBS-bacio is also available through Spack as '[bacio](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/bacio)'.
+
 ## Disclaimer
 
 The United States Department of Commerce (DOC) GitHub project code is
