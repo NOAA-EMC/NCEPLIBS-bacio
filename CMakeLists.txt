@@ -15,6 +15,7 @@ include(GNUInstallDirs)
 # Handle user options.
 option(ENABLE_DOCS "Enable generation of doxygen-based documentation." OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(DUMMY_OPT "Does nothing" ON)
 
 # Check build type.
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
