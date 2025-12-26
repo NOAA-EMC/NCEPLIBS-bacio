@@ -20,8 +20,8 @@ jobs:
   MacOS:
     runs-on: macos-latest
     env:
-      FC: gfortran-12
-      CC: gcc-12
+      FC: gfortran-14
+      CC: gcc-14
     strategy:
       matrix:
         shared: [ON, OFF]
