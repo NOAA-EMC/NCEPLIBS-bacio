@@ -590,6 +590,37 @@ int test_null_char_filename()
     }
 }
     printf("ok!\n");
+    /* NEW: Insert additional test cases here */
+    printf("Running additional test cases...\n");
+
+    // Test zero byte read
+    if (test_zero_byte_read() != 0)
+    {
+        printf("Zero byte read test failed\n");
+        return ERR;
+    }
+
+    // Test null character filename
+    if (test_null_char_filename() != 0)
+    {
+        printf("Null character filename test failed\n");
+        return ERR;
+    }
+
+    // Test write seek fails
+    if (test_write_seek_fails() != 0)
+    {
+        printf("Write seek fails test failed\n");
+        return ERR;
+    }
+
+    // Test buffered reading edge cases
+    if (test_buffered_reading_edge_cases() != 0)
+    {
+        printf("Buffered reading edge cases test failed\n");
+        return ERR;
+    }
+
     printf("SUCCESS!\n");
     return 0;
 }
