@@ -241,6 +241,16 @@ main()
     printf("ok!\n");
                /* NEW: Additional test cases for missing error paths */
             /* Open file write-only */
+     {
+        int mode;
+        long int start = 0;
+        long int no = 4, nactual;
+        int size = 4, fdes;
+        const char fname[] = "test_baciolc.bin";
+        char datary[] = "test";
+        char datary_in[8];
+        int ierr;
+                
         mode = BAOPEN_WONLY;
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
             return ERR;
