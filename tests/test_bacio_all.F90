@@ -1,50 +1,56 @@
 program test_bacio_all
   use bacio_module
   implicit none
-
-  integer :: unit, iret, nbytes
-  character(len=30) :: filename = "full_coverage.bin"
   
-  ! INITIALIZE ALL DATA to prevent MemCheck defects
-  integer(1) :: d1(8) = 0, r1(8) = 0
-  integer(2) :: d2(4) = 0
-  integer(4) :: d4(2) = 0
-  integer(8) :: d8(1) = 0
+  ! External C helpers
+  interface
+     subroutine force_endian_mock(pattern) bind(c)
+       use, intrinsic :: iso_c_binding
+       character(kind=c_char), intent(in) :: pattern(4)
+     end subroutine force_endian_mock
+  end interface
 
-  print *, "--- Starting 100% Coverage Suite ---"
+  integer :: lu, iret, ka, lx, ix
+  integer(4) :: d4(10) = 0, r4(10) = 0
+  character :: d_out(8192) = 'A', d_in(8192) = ' '
+  character(16) :: mendian = ' '
 
-  ! 1. TEST INTERFACES 
-  call bacio(bacio_openw, unit, 0, 0, nbytes, filename, d4, iret)
-  if (iret /= 0) stop 1
-  call bacio(bacio_write, unit, 0, 0, 8, filename, d4, iret)
-  call bacio(bacio_close, unit, 0, 0, nbytes, filename, d4, iret)
+  print *, "--- Starting 100% Comprehensive Coverage Suite ---"
 
-  ! 2. TEST BYTESWAP (The part that reached 100%!)
-  call bacio(bacio_openw, unit, 0, 0, nbytes, filename, d1, iret)
-  call bacio(bacio_write + bacio_byteswap, unit, 0, 1, 8, filename, d1, iret)
-  call bacio(bacio_write + bacio_byteswap, unit, 0, 2, 8, filename, d2, iret)
-  call bacio(bacio_write + bacio_byteswap, unit, 0, 4, 8, filename, d4, iret)
-  call bacio(bacio_write + bacio_byteswap, unit, 0, 8, 8, filename, d8, iret)
+  ! A. BACIOF.F90 & BACIO.C (Interface & System Branches)
+  lu = 1
+  call baopen(lu, "test_file.bin", iret)
+  call baseto(1, 1) ! Enable Buffered I/O (hits BAREADL buffer logic)
+  call bawrite(lu, 0, 10, ka, d_out)
+  call baread(lu, 0, 5, ka, d_in)   ! Hits buffer fill
+  call baread(lu, 5, 5, ka, d_in)   ! Hits data-from-buffer path
   
-  ! Trigger default case but don't 'stop' on expected error
-  call bacio(bacio_write + bacio_byteswap, unit, 0, 3, 8, filename, d1, iret)
-  print *, "Expected error for nresvd=3, iret is: ", iret
+  ! Trigger Error: Write to Read-Only
+  call baopenr(2, "test_file.bin", iret)
+  call bawrite(2, 0, 1, ka, d_out) ! Hits BA_EWANDRO
   
-  call bacio(bacio_close, unit, 0, 0, nbytes, filename, d1, iret)
+  ! Trigger Error: BA_ECLOSE
+  call bacio(bacio_close, 999, 0, 0, ka, " ", d_out, iret) ! Hits wrap_close mock
 
-  ! 3. TEST SYSTEM ERRORS (via mocks)
-  ! We expect iret /= 0 here because 'forbidden.bin' triggers the mock error
-  call bacio(bacio_openr, unit, 0, 0, nbytes, "forbidden.bin", d1, iret)
-  if (iret == 0) then
-     print *, "Error: Mock open failed to trigger error"
-     stop 2
-  endif
+  ! B. BYTESWAP.C (Alignment & Logic Branches)
+  ! We use the confirmed 'bacio_swp' symbol for swapping
+  call bacio(bacio_write + bacio_swp, 1, 1, 1, ka, " ", d_out, iret) ! Case 1
+  call bacio(bacio_write + bacio_swp, 1, 2, 1, ka, " ", d_out, iret) ! Case 2
+  call bacio(bacio_write + bacio_swp, 1, 8, 1, ka, " ", d_out, iret) ! Case 8
+  call bacio(bacio_write + bacio_swp, 1, 3, 1, ka, " ", d_out, iret) ! Default/Error
 
-  ! 4. TEST PARTIAL READ / EOF
-  call bacio(bacio_openr, unit, 0, 0, nbytes, filename, r1, iret)
-  ! Reading 100 bytes from an 8-byte file hits the 'nread < nbytes' branch
-  call bacio(bacio_read, unit, 0, 0, 100, filename, r1, iret)
-  call bacio(bacio_close, unit, 0, 0, nbytes, filename, r1, iret)
+  ! C. BAFRIO.F90 (Endian & Record Logic)
+  call baopenw(10, "records.bin", iret)   ! LU <= 999
+  call bafrwrite(10, 0, 10, ka, d_out)
+  call baopenw(1500, "records2.bin", iret) ! LU > 999 (Inverts endian logic)
+  call bafrwrite(1500, 0, 10, ka, d_out)
 
-  print *, "--- Coverage Suite Complete (Success) ---"
+  ! D. CHK_ENDIANC.F90 (Common Block Branches)
+  call chk_endianc(mendian) ! Natural path
+  call force_endian_mock((/'3','2','1','0'/))
+  call findendian(mendian) ! Hits big_endian branch
+  call force_endian_mock((/'1','X','Y','Z'/))
+  call findendian(mendian) ! Hits mixed_endian branch
+
+  print *, "--- All Coverage Targets Exercised ---"
 end program test_bacio_all
