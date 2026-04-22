@@ -19,7 +19,7 @@ add_test(test_bacio test_bacio)
 add_executable(test_bacio2 test_bacio2.F90)
 target_link_libraries(test_bacio2 bacio)
 add_test(test_bacio2 test_bacio2)
-add_executable(test_bacio_all test_bacio_all.f90 mock_sys.c)
+add_executable(test_bacio_all test_bacio_all.F90 mock_sys.c)
 target_link_libraries(test_bacio_all bacio_fortran)
 set_target_properties(test_bacio_all PROPERTIES LINK_FLAGS 
     "-Wl,--wrap=read -Wl,--wrap=write -Wl,--wrap=open")
