@@ -2,34 +2,28 @@
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-// Mocking read to simulate a partial read (hits the 'while' loop in bacio.c)
+// 1. Mock system calls for bacio.c coverage
 ssize_t __real_read(int fd, void *buf, size_t count);
 ssize_t __wrap_read(int fd, void *buf, size_t count) {
-    if (count > 10) {
-        return __real_read(fd, buf, count / 2); // Force bacio to loop
-    }
+    if (count > 10 && count < 100) return __real_read(fd, buf, count / 2); // Force while loop
     return __real_read(fd, buf, count);
 }
 
-// Mocking write to simulate an Interrupted system call (hits the EINTR branch)
-ssize_t __real_write(int fd, const void *buf, size_t count);
-static int interrupt_triggered = 0;
-ssize_t __wrap_write(int fd, const void *buf, size_t count) {
-    if (!interrupt_triggered && count > 0) {
-        interrupt_triggered = 1;
-        errno = EINTR; 
-        return -1;
-    }
-    return __real_write(fd, buf, count);
+int __real_close(int fd);
+int __wrap_close(int fd) {
+    if (fd == 999) return -1; // Force BA_ECLOSE error
+    return __real_close(fd);
 }
 
-// Mocking open to simulate permission/existence failures
-int __real_open(const char *pathname, int flags, mode_t mode);
-int __wrap_open(const char *pathname, int flags, mode_t mode) {
-    if (strstr(pathname, "forbidden")) {
-        errno = EACCES;
-        return -1;
-    }
-    return __real_open(pathname, flags, mode);
+// 2. Mock blank common block for chk_endianc.F90 coverage
+char __blank_common_block[4]; 
+void force_endian_mock(const char *pattern) {
+    memcpy(__blank_common_block, pattern, 4);
+}
+
+// 3. Helper to provide misaligned pointers for byteswap.c coverage
+void* get_misaligned_ptr(void* ptr, int offset) {
+    return (char*)ptr + offset;
 }
