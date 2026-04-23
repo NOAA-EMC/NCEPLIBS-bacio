@@ -210,6 +210,96 @@ program test_bacio
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 413
-
+  call test_zero_length_read
+  call test_endian_scenarios
+  call test_mixed_endian_detection
   print *, 'SUCCESS!'
 end program test_bacio
+
+! Test mixed endian detection
+subroutine test_mixed_endian_detection
+  implicit none
+  character(16) :: mendian
+  integer(4) :: test_value
+
+  ! Simulate a mixed endian scenario
+  test_value = x'12345678'  ! A value that might trigger mixed endian
+
+  call findendian(mendian)
+  
+  ! Check if mixed endian is detected
+  if (trim(mendian) .ne. 'mixed_endian') then
+     print *, 'Mixed endian detection failed'
+     stop 1
+  end if
+
+  print *, 'Mixed endian test passed'
+end subroutine test_mixed_endian_detection
+
+! Test endian-specific scenarios
+subroutine test_endian_scenarios
+  use bacio_module
+  implicit none
+  integer :: lu = 1
+  integer :: iret
+  character(len=16) :: machine_endian
+  integer :: ka
+  character(len=4) :: data, data_in
+
+  ! Check machine endianness
+  call chk_endianc(machine_endian)
+  print *, 'Machine Endianness: ', trim(machine_endian)
+
+  ! Open file for writing
+  call baopen(lu, 'endian_test.bin', iret)
+  if (iret .ne. 0) stop 1
+
+  ! Write some test data
+  data = 'test'
+  call bawrite(lu, 0, 4, ka, data)
+  if (ka .ne. 4) stop 2
+
+  ! Close and reopen
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 3
+
+  ! Reopen for reading with different logical units to test endian variations
+  lu = 1500  ! Unit in the 1000-1999 range
+  call baopenr(lu, 'endian_test.bin', iret)
+  if (iret .ne. 0) stop 4
+
+  ! Read data
+  call baread(lu, 0, 4, ka, data_in)
+  if (ka .ne. 4) stop 5
+  if (data .ne. data_in) stop 6
+
+  ! Close file
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 7
+
+  print *, 'Endian scenario test passed'
+end subroutine test_endian_scenarios
+
+! Test zero-length read scenario
+subroutine test_zero_length_read
+  use bacio_module
+  implicit none
+  integer :: lu = 1
+  integer :: ka
+  character(len=4) :: data_in
+  integer :: iret
+
+  ! Open a file
+  call baopen(lu, 'zero_length_test.bin', iret)
+  if (iret .ne. 0) stop 1
+
+  ! Attempt to read zero bytes
+  call baread(lu, 0, 0, ka, data_in)
+  if (ka .ne. 0) stop 2
+
+  ! Close file
+  call baclose(lu, iret)
+  if (iret .ne. 0) stop 3
+
+  print *, 'Zero-length read test passed'
+end subroutine test_zero_length_read
