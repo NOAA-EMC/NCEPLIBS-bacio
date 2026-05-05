@@ -23,6 +23,19 @@ add_executable(test_bafrio test_bafrio.F90)
 target_link_libraries(test_bafrio bacio)
 add_test(test_bafrio test_bafrio)
 
+add_executable(test_bacio_comprehensive test_bacio_comprehensive.F90)
+target_link_libraries(test_bacio_comprehensive bacio)
+add_test(test_bacio_comprehensive test_bacio_comprehensive)
+
+add_executable(test_bafrio_errors test_bafrio_errors.F90)
+target_link_libraries(test_bafrio_errors bacio)
+add_test(test_bafrio_errors test_bafrio_errors)
+
+add_executable(test_char0_handling test_char0_handling.c)
+target_include_directories(test_char0_handling PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(test_char0_handling PRIVATE bacio)
+add_test(test_char0_handling test_char0_handling)
+
 # Add some C tests.
 c_test(test_bacio_c)
 c_test(test_byteswap)
