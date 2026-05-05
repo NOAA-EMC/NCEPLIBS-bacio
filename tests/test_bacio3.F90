@@ -1,10 +1,10 @@
-! Comprehensive test program for missing coverage lines
+! Extra test program for missing coverage lines
 ! This program tests:
 ! 1. Zero-length read scenario (baciof.F90 Line 420-421)
 ! 2. Endian scenarios (bafrio.F90 Line 83, 89, 262, 266-270)
 ! 3. Mixed endian detection (chk_endianc.F90 Line 36-41)
 !
-program test_bacio_comprehensive
+program test_bacio3
   use bacio_module
   implicit none
   
@@ -12,7 +12,7 @@ program test_bacio_comprehensive
   integer :: passed_count = 0
   
   print *, '========================================='
-  print *, 'Running Comprehensive BACIO Coverage Tests'
+  print *, 'Running extra BACIO Coverage Tests'
   print *, '========================================='
   
   ! Run all test subroutines
@@ -23,7 +23,7 @@ program test_bacio_comprehensive
   call run_test_buffered_read_continuation()
   
   print *, '========================================='
-  print *, 'All comprehensive tests completed successfully!'
+  print *, 'All extra tests completed successfully!'
   print *, '========================================='
 
 contains
@@ -415,5 +415,5 @@ contains
     print *, 'PASSED: Buffered read continuation tests'
   end subroutine run_test_buffered_read_continuation
 
-end program test_bacio_comprehensive
+end program test_bacio3
 
