@@ -23,9 +23,9 @@ add_executable(test_bafrio test_bafrio.F90)
 target_link_libraries(test_bafrio bacio)
 add_test(test_bafrio test_bafrio)
 
-add_executable(test_bacio_comprehensive test_bacio_comprehensive.F90)
-target_link_libraries(test_bacio_comprehensive bacio)
-add_test(test_bacio_comprehensive test_bacio_comprehensive)
+add_executable(test_bacio3 test_bacio3.F90)
+target_link_libraries(test_bacio3 bacio)
+add_test(test_bacio3 test_bacio3)
 
 add_executable(test_bafrio_errors test_bafrio_errors.F90)
 target_link_libraries(test_bafrio_errors bacio)
