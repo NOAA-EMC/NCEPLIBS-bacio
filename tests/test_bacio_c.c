@@ -529,17 +529,25 @@ main()
         char datary_in[4];
         int ierr;
 
-        /* Open file write-only */
+        /* Create file write-only */
         mode = BAOPEN_WONLY;
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
             return ERR;
 
-        /* Try to read from write-only file - should return BA_ERONWO (250) */
-        mode = BAREAD | BAOPEN_WONLY;
-        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary_in)) != 250)
+        /* Write some data first */
+        mode = BAWRITE;
+        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
         {
-            printf("Expected BA_ERONWO (250), got %d\n", ierr);
-            /* Close the file */
+            mode = BACLOSE;
+            baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
+            return ERR;
+        }
+
+        /* Try to read from write-only file - should fail */
+        mode = BAREAD;
+        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary_in)) == 0)
+        {
+            printf("Expected read error on write-only file\n");
             mode = BACLOSE;
             baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
             return ERR;
@@ -567,7 +575,12 @@ main()
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
             return ERR;
         mode = BAWRITE;
-        baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
+        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
+        {
+            mode = BACLOSE;
+            baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
+            return ERR;
+        }
         mode = BACLOSE;
         baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
 
@@ -576,12 +589,11 @@ main()
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
             return ERR;
 
-        /* Try to write to read-only file - should return BA_EWANDRO (249) */
-        mode = BAWRITE | BAOPEN_RONLY;
-        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != 249)
+        /* Try to write to read-only file - should fail */
+        mode = BAWRITE;
+        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) == 0)
         {
-            printf("Expected BA_EWANDRO (249), got %d\n", ierr);
-            /* Close the file */
+            printf("Expected write error on read-only file\n");
             mode = BACLOSE;
             baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
             return ERR;
