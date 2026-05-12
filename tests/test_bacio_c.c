@@ -255,11 +255,11 @@ main()
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)))
             return ERR;
 
-        /* Try to read from write-only file - should return BA_ERONWO (250) */
+        /* Try to read from write-only file - should return BA_ERONWO */
         mode = BAREAD | BAOPEN_WONLY;
-        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != 250)
+        if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != BA_ERONWO)
         {
-            printf("Expected BA_ERONWO (250), got %d\n", ierr);
+            printf("Expected BA_ERONWO (%d), got %d\n", BA_ERONWO, ierr);
             return ERR;
         }
 
