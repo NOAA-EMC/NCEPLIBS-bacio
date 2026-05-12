@@ -26,7 +26,7 @@ int test_buffered_reading_edge_cases(void);
 /* Test BA_EWNOSTART - Line 142: Write seek fails */
 int test_write_seek_fails(void)
 {
-    printf("Testing BA_EWNOSTART error (write seek fails)...");
+    printf("Testing BA_EWNOSTART error (write seek fails)...\n");
     int mode;
     long int start = 999999999; /* Very large seek position */
     long int no = 4, nactual;
@@ -86,10 +86,10 @@ int test_write_seek_fails(void)
 /* Test coverage for line 420-421 in baciof.F90: KA = 0, RETURN */
 int test_zero_byte_read(void)
 {
-    printf("Testing zero byte read scenario...");
+    printf("Testing zero byte read scenario...\n");
     int mode;
     long int start = 0;
-    long int no = 0, nactual;  // Zero bytes to read
+    long int no = 0, nactual;  /* Zero bytes to read */
     int size = 4, fdes;
     const char fname[] = "test_zero_read.bin";
     char datary[1] = {0};
@@ -149,19 +149,19 @@ int test_zero_byte_read(void)
 /* Test coverage for line 441 in baciof.F90: CHAR(0) parameter */
 int test_null_char_filename(void)
 {
-    printf("Testing CHAR(0) file name scenario...");
+    printf("Testing CHAR(0) file name scenario...\n");
     int mode;
     long int start = 0;
     long int no = 4, nactual;
     int size = 4, fdes;
-    const char fname[] = "\0";  // Null character filename
+    const char fname[] = "\0";  /* Null character filename */
     char datary[] = "test";
     int ierr;
 
     /* Scenario 1: Attempt to open with null character filename */
     mode = BAOPEN_WONLY;
     ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
-    if (ierr == 0)  // Unexpected successful open
+    if (ierr == 0)  /* Unexpected successful open */
     {
         printf("Unexpected successful open with null character filename\n");
         return ERR;
@@ -170,7 +170,7 @@ int test_null_char_filename(void)
     /* Scenario 2: Attempt to write with null character filename */
     mode = BAWRITE;
     ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
-    if (ierr == 0)  // Unexpected successful write
+    if (ierr == 0)  /* Unexpected successful write */
     {
         printf("Unexpected successful write with null character filename\n");
         return ERR;
@@ -179,7 +179,7 @@ int test_null_char_filename(void)
     /* Scenario 3: Attempt to read with null character filename */
     mode = BAOPEN_RONLY;
     ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
-    if (ierr == 0)  // Unexpected successful read
+    if (ierr == 0)  /* Unexpected successful read */
     {
         printf("Unexpected successful read with null character filename\n");
         return ERR;
@@ -192,15 +192,16 @@ int test_null_char_filename(void)
 /* Test coverage for buffered reading edge cases */
 int test_buffered_reading_edge_cases(void)
 {
-    printf("Testing buffered reading edge cases...");
+    printf("Testing buffered reading edge cases...\n");
     int mode;
     long int start = 0;
-    long int no = 4096 * 5;  // Large buffer spanning multiple blocks
+    long int no = 4096 * 5;  /* Large buffer spanning multiple blocks */
     int size = 1, fdes;
     const char fname[] = "test_large_buffered.bin";
     char *large_datary = NULL;
     char *read_datary = NULL;
     long int nactual;
+    long int i;
     int ierr;
 
     /* Allocate memory for large data */
@@ -220,7 +221,7 @@ int test_buffered_reading_edge_cases(void)
     }
 
     /* Prepare large data with predictable pattern */
-    for (long int i = 0; i < no; i++)
+    for (i = 0; i < no; i++)
         large_datary[i] = (char)(i % 256);
 
     /* Create file with large data */
@@ -267,7 +268,7 @@ int test_buffered_reading_edge_cases(void)
     }
 
     /* Verify data integrity */
-    for (long int i = 0; i < no; i++)
+    for (i = 0; i < no; i++)
     {
         if (large_datary[i] != read_datary[i])
         {
@@ -315,6 +316,7 @@ main()
         char datary[] = "test";
         char datary_in[4];
         int ierr;
+        int i;
 
         /* This won't work - bad mode. */
         mode = BAOPEN_WONLY | BAOPEN_RONLY;
@@ -322,7 +324,7 @@ main()
                            &fdes, fname, datary)) != 255)
             return ERR;
 
-           /* This won't work - bad mode. */
+        /* This won't work - bad mode. */
         mode = BAREAD | BAWRITE;
         if ((ierr = baciol(mode, start, size, no, &nactual,
                            &fdes, fname, datary)) != 254)
@@ -402,7 +404,7 @@ main()
                            &fdes, fname, datary_in)))
             return ierr;
         if (nactual != no) return ERR;
-        for (int i = 0; i < 4; i++)
+        for (i = 0; i < 4; i++)
             if (datary[i] != datary_in[i]) return ERR;
 
         /* Close the file. */
@@ -423,6 +425,7 @@ main()
         char datary[] = "test";
         char datary_in[8];
         int ierr;
+        int i;
 
         /* Create the file. */
         mode = BAOPEN_WONLY_TRUNC;
@@ -455,7 +458,7 @@ main()
                            &fdes, fname, datary_in)))
             return ierr;
         if (nactual != no) return ERR;
-        for (int i = 0; i < 4; i++)
+        for (i = 0; i < 4; i++)
             if (datary[i] != datary_in[i]) return ERR;
 
         /* Close the file. */
@@ -499,7 +502,7 @@ main()
                            &fdes, fname, datary_in)))
             return ierr;
         if (nactual != no) return ERR;
-        for (int i = 0; i < 4; i++)
+        for (i = 0; i < 4; i++)
         {
             if (datary[i] != datary_in[i]) return ERR;
             if (datary[i] != datary_in[i + 4]) return ERR;
@@ -536,6 +539,9 @@ main()
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary_in)) != 250)
         {
             printf("Expected BA_ERONWO (250), got %d\n", ierr);
+            /* Close the file */
+            mode = BACLOSE;
+            baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
             return ERR;
         }
 
@@ -575,6 +581,9 @@ main()
         if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != 249)
         {
             printf("Expected BA_EWANDRO (249), got %d\n", ierr);
+            /* Close the file */
+            mode = BACLOSE;
+            baciol(mode, start, size, no, &nactual, &fdes, fname, datary);
             return ERR;
         }
 
