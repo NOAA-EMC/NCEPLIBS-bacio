@@ -4,6 +4,10 @@
 # Kyle Gerheiser, Ed Hartnett
 
 add_compile_definitions(UNDERSCORE)
+if(ENABLE_DEPRECATED_SUBS)
+  add_compile_definitions(ENABLE_DEPRECATED_SUBS)
+  message(STATUS "Deprecated byteswap subroutines enabled (macro_swap_64, simple_swap_16, simple_swap_32)")
+endif()
 if(APPLE)
   add_compile_definitions(APPLE)
 elseif(UNIX)
