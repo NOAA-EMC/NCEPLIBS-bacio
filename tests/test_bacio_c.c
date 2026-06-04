@@ -113,7 +113,7 @@ int test_zero_byte_read(void)
     long int no = 0, nactual;  /* Zero bytes to read */
     int size = 4, fdes;
     const char fname[] = "test_zero_read.bin";
-    char datary[1] = {0};
+    char datary[4] = {0};
     int ierr;
 
     /* Create file */
