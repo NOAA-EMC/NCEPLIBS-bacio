@@ -145,11 +145,31 @@ contains
     end if
 
     ! Test with logical unit in 1000-1999 range (covers Line 266-270)
+    ! Write a new file using lu2=1500 so that both write and read use the
+    ! same endian convention (no byteswap on little-endian for lu 1000-1999).
     lu2 = 1500
-    call baopenr(lu2, filename, iret)
+    call baopen(lu2, 'endian_test_1500.bin', iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not open file with lu=1500'
+      stop 13
+    end if
+
+    call bafrwrite(lu2, 0, 4, ka, data)
+    if (ka .ne. 12) then
+      print *, 'FAILED: Expected ka = 12 writing with lu=1500, got', ka
+      stop 14
+    end if
+
+    call baclose(lu2, iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not close file written with lu=1500'
+      stop 15
+    end if
+
+    call baopenr(lu2, 'endian_test_1500.bin', iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not reopen file with lu=1500'
-      stop 13
+      stop 16
     end if
 
     ! Read using bafrindex to check record structure
@@ -158,26 +178,26 @@ contains
     call bafrindex(lu2, ib, lx, ix)
     if (ix .ne. 12) then
       print *, 'FAILED: Expected ix = 12, got', ix
-      stop 14
+      stop 17
     end if
 
     ! Read data using bafrread
     call bafrread(lu2, 0, 4, ka, data_in)
     if (ka .ne. 12) then
       print *, 'FAILED: Expected ka = 12 on read, got', ka
-      stop 15
+      stop 18
     end if
     
     if (data_in .ne. data) then
       print *, 'FAILED: Data mismatch'
-      stop 16
+      stop 19
     end if
 
     ! Close file
     call baclose(lu2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not close file after read'
-      stop 17
+      stop 20
     end if
 
     ! Test big-endian scenario (covers Line 262)
@@ -188,7 +208,7 @@ contains
       call baopen(lu, filename, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not open file for big-endian test'
-        stop 18
+        stop 21
       end if
       
       call bafrwrite(lu, 0, 4, ka, data)
@@ -196,7 +216,7 @@ contains
       call baclose(lu, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not close file in big-endian test'
-        stop 19
+        stop 22
       end if
     end if
 
