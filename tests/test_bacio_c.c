@@ -113,7 +113,7 @@ int test_zero_byte_read(void)
     long int no = 0, nactual;  /* Zero bytes to read */
     int size = 4, fdes;
     const char fname[] = "test_zero_read.bin";
-    char datary[1] = {0};
+    char datary[4] = {0};
     int ierr;
 
     /* Create file */
@@ -144,7 +144,17 @@ int test_zero_byte_read(void)
     mode = BAOPEN_RONLY;
     if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != 0)
     {
+        printf("Expected successful open, got %d\n", ierr);
+        return ERR;
+    }
+
+    /* Read zero bytes - nactual should be zero */
+    mode = BAREAD;
+    if ((ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, datary)) != 0)
+    {
         printf("Expected successful zero-byte read, got %d\n", ierr);
+        mode = BACLOSE;
+        baciol(mode, start, size, 4, &nactual, &fdes, fname, datary);
         return ERR;
     }
 
@@ -152,6 +162,8 @@ int test_zero_byte_read(void)
     if (nactual != 0)
     {
         printf("Expected nactual to be zero, got %ld\n", nactual);
+        mode = BACLOSE;
+        baciol(mode, start, size, 4, &nactual, &fdes, fname, datary);
         return ERR;
     }
 
@@ -256,6 +268,19 @@ int test_buffered_reading_edge_cases(void)
         return ERR;
     }
 
+        /* Write the large data */
+    mode = BAWRITE;
+    ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, large_datary);
+    if (ierr != 0)
+    {
+        printf("Failed to write large data\n");
+        mode = BACLOSE;
+        baciol(mode, start, size, no, &nactual, &fdes, fname, large_datary);
+        free(large_datary);
+        free(read_datary);
+        return ERR;
+    }
+
     /* Close file */
     mode = BACLOSE;
     ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, large_datary);
@@ -273,6 +298,19 @@ int test_buffered_reading_edge_cases(void)
     if (ierr != 0)
     {
         printf("Failed to reopen file for reading, error %d\n", ierr);
+        free(large_datary);
+        free(read_datary);
+        return ERR;
+    }
+
+        /* Read the large data */
+    mode = BAREAD;
+    ierr = baciol(mode, start, size, no, &nactual, &fdes, fname, read_datary);
+    if (ierr != 0 && ierr != 246)
+    {
+        printf("Failed to read large data, error %d\n", ierr);
+        mode = BACLOSE;
+        baciol(mode, start, size, no, &nactual, &fdes, fname, read_datary);
         free(large_datary);
         free(read_datary);
         return ERR;
