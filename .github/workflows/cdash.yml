@@ -17,4 +17,6 @@ jobs:
     steps:
 
     - name: CDash
-      uses: NOAA-EMC/ci-cdash@develop
+      uses: NOAA-EMC/ci-cdash@addprofiling
+      with:
+        profiling: true
