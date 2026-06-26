@@ -439,3 +439,4 @@ contains
   end subroutine run_test_buffered_read_continuation
 
 end program test_bacio3
+
