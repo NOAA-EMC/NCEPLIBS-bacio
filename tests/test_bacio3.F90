@@ -109,19 +109,20 @@ contains
     integer(kind=8) :: ib8, lx8, ix8
     character(len=4) :: data, data_in
     character(len=20) :: filename = 'endian_test.bin'
+    character(len=24) :: filename2 = 'endian_test_1500.bin'
     integer :: stat
 
     print *, 'Test 2: Endian scenario tests...'
-    
-    ! Delete file if exists
-    open(unit = 1234, iostat = stat, file = filename, status='old')
-    if (stat == 0) close(1234, status='delete')
-    
+
     ! Check machine endianness
     call chk_endianc(machine_endian)
     print *, '  Machine Endianness: ', trim(machine_endian)
 
     ! Test with standard logical unit (covers Line 83 or 89)
+    ! Delete file if exists
+    open(unit = 1234, iostat = stat, file = filename, status='old')
+    if (stat == 0) close(1234, status='delete')
+
     lu = 1
     call baopen(lu, filename, iret)
     if (iret .ne. 0) then
@@ -145,11 +146,33 @@ contains
     end if
 
     ! Test with logical unit in 1000-1999 range (covers Line 266-270)
+    ! Write and read with lu2=1500 so endian convention matches
+    open(unit = 1234, iostat = stat, file = filename2, status='old')
+    if (stat == 0) close(1234, status='delete')
+
     lu2 = 1500
-    call baopenr(lu2, filename, iret)
+    call baopen(lu2, filename2, iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not open file with lu=1500'
+      stop 13
+    end if
+
+    call bafrwrite(lu2, 0, 4, ka, data)
+    if (ka .ne. 12) then
+      print *, 'FAILED: Expected ka = 12 on write, got', ka
+      stop 14
+    end if
+
+    call baclose(lu2, iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not close file after write with lu=1500'
+      stop 15
+    end if
+
+    call baopenr(lu2, filename2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not reopen file with lu=1500'
-      stop 13
+      stop 16
     end if
 
     ! Read using bafrindex to check record structure
@@ -158,45 +181,45 @@ contains
     call bafrindex(lu2, ib, lx, ix)
     if (ix .ne. 12) then
       print *, 'FAILED: Expected ix = 12, got', ix
-      stop 14
+      stop 17
     end if
 
     ! Read data using bafrread
     call bafrread(lu2, 0, 4, ka, data_in)
     if (ka .ne. 12) then
       print *, 'FAILED: Expected ka = 12 on read, got', ka
-      stop 15
+      stop 18
     end if
-    
+
     if (data_in .ne. data) then
       print *, 'FAILED: Data mismatch'
-      stop 16
+      stop 19
     end if
 
     ! Close file
     call baclose(lu2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not close file after read'
-      stop 17
+      stop 20
     end if
 
     ! Test big-endian scenario (covers Line 262)
     if (trim(machine_endian) == 'big_endian') then
       print *, '  Testing big-endian specific path'
-      
+
       lu = 1
       call baopen(lu, filename, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not open file for big-endian test'
-        stop 18
+        stop 21
       end if
-      
+
       call bafrwrite(lu, 0, 4, ka, data)
-      
+
       call baclose(lu, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not close file in big-endian test'
-        stop 19
+        stop 22
       end if
     end if
 
