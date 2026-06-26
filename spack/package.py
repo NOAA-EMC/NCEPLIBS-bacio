@@ -30,13 +30,10 @@ class Bacio(CMakePackage):
 
     variant("pic", default=True, description="Build with position-independent-code")
     variant("shared", default=False, description="Build shared library", when="@2.6.0:")
-    variant("deprecated_subs", default=False,
-            description="Enable deprecated byteswap subroutines (macro_swap_64, simple_swap_16, simple_swap_32)")
 
     def cmake_args(self):
         args = [self.define_from_variant("CMAKE_POSITION_INDEPENDENT_CODE", "pic")]
         args.append(self.define_from_variant("BUILD_SHARED_LIBS", "shared"))
-        args.append(self.define_from_variant("ENABLE_DEPRECATED_SUBS", "deprecated_subs"))
         if self.run_tests and self.spec.satisfies("@:2.4"):
             args.append(self.define("ENABLE_TESTS", True))
 

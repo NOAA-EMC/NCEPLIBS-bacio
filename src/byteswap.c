@@ -1,9 +1,8 @@
 /** @file
  *
- * This file contains various implementations of fast byteswapping
- * routines. The main entry point, fast_byteswap(), is the only one
- * you should need, and it should be modified to use whatever method
- * is fastest on your architecture.
+ * This file contains the fast byteswapping routine. The main entry
+ * point is fast_byteswap(), which is the only function you should
+ * need.
  *
  * In all cases, the routines return 1 on success and 0 on failure.
  * They only fail if your data is non-aligned. All routines require
@@ -43,165 +42,64 @@ fast_byteswap_errors(int flag)
     send_errors=flag;
 }
 
-#ifdef ENABLE_DEPRECATED_SUBS
-/**
- * Simple single-value loops (deprecated - use fast_byteswap() instead).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- *
- * @deprecated Compile with -DENABLE_DEPRECATED_SUBS=ON to include.
- *
- * @author Dexin Zhang, Jun Wang
- */
-static int
-simple_swap_32(void *data,size_t len)
-{
-    size_t i;
-    uint32_t *udata;
-    if ((size_t)data & 0x3)
-    {
-        if (send_errors)
-            fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
-        return 0;
-    }
-    udata=data;
-    for(i=0;i<len;i++)
-        udata[i]=
-            ( (udata[i]>>24)&0xff ) |
-            ( (udata[i]>>8)&0xff00 ) |
-            ( (udata[i]<<8)&0xff0000 ) |
-            ( (udata[i]<<24)&0xff000000 );
-    return 1;
-}
-
-/**
- * Simple single-value loops (deprecated - use fast_byteswap() instead).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- *
- * @deprecated Compile with -DENABLE_DEPRECATED_SUBS=ON to include.
- *
- * @author Dexin Zhang, Jun Wang
- */
-static int
-simple_swap_16(void *data,size_t len)
-{
-    size_t i;
-    uint16_t *udata;
-    if ((size_t)data & 0x1)
-    {
-        if (send_errors)
-            fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
-        return 0;
-    }
-    udata=data;
-    for(i=0;i<len;i++)
-        udata[i]=
-            ( (udata[i]>>8)&0xff ) |
-            ( (udata[i]<<8)&0xff00 );
-    return 1;
-}
-
-/**
- * Use the GNU macros, which are specialized byteswap ASM instructions
- * (deprecated - use fast_byteswap() instead).
- *
- * @param data data
- * @param len Length
- *
- * @return 0 for error, 1 otherwise.
- *
- * @deprecated Compile with -DENABLE_DEPRECATED_SUBS=ON to include.
- *
- * @author Dexin Zhang, Jun Wang
- */
-static int
-macro_swap_64(void *data,size_t len)
-{
-    size_t i;
-    uint64_t *udata;
-    if ((size_t)data & 0x5)
-    {
-        if (send_errors)
-            fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
-        return 0;
-    }
-    udata=data;
-    for(i=0;i<len;i++)
-        udata[i]=bswap_64(udata[i]);
-    return 1;
-}
-#endif /* ENABLE_DEPRECATED_SUBS */
-
 /**
  * Fast byteswap.
  *
  * @param data data
- * @param bytes Number of bytes
- * @param count Count.
+ * @param bytes Number of bytes per element (1, 2, 4, or 8).
+ * @param count Number of elements.
  *
- * @return 0 for error, 1 otherwise.
+ * @return 1 on success, 0 on failure (non-aligned pointer).
  *
  * @author Dexin Zhang, Jun Wang
  */
 int
-fast_byteswap(void *data,int bytes,size_t count)
+fast_byteswap(void *data, int bytes, size_t count)
 {
-#ifdef ENABLE_DEPRECATED_SUBS
-    switch(bytes) {
-    case 1: return 1;
-    case 2: return simple_swap_16(data,count);
-    case 4: return simple_swap_32(data,count);
-    case 8: return macro_swap_64(data,count);
-    default: return 0;
-    }
-#else
     size_t i;
-    switch(bytes) {
-    case 1: return 1;
+    switch (bytes) {
+    case 1:
+        return 1;
     case 2: {
         uint16_t *u = data;
         if ((size_t)data & 0x1) {
             if (send_errors)
-                fprintf(stderr,"ERROR: pointer to 16-bit integer is not 16-bit aligned (pointer is 0x%llx)\n",(long long)data);
+                fprintf(stderr, "ERROR: pointer to 16-bit integer is not 16-bit aligned"
+                        " (pointer is 0x%llx)\n", (long long)data);
             return 0;
         }
         for (i = 0; i < count; i++)
-            u[i] = (uint16_t)(((u[i]>>8)&0xff) | ((u[i]<<8)&0xff00));
+            u[i] = (uint16_t)(((u[i] >> 8) & 0xff) | ((u[i] << 8) & 0xff00));
         return 1;
     }
     case 4: {
         uint32_t *u = data;
         if ((size_t)data & 0x3) {
             if (send_errors)
-                fprintf(stderr,"ERROR: pointer to 32-bit integer is not 32-bit aligned (pointer is 0x%llx)\n",(long long)data);
+                fprintf(stderr, "ERROR: pointer to 32-bit integer is not 32-bit aligned"
+                        " (pointer is 0x%llx)\n", (long long)data);
             return 0;
         }
         for (i = 0; i < count; i++)
-            u[i] = ((u[i]>>24)&0xff) | ((u[i]>>8)&0xff00) |
-                   ((u[i]<<8)&0xff0000) | ((u[i]<<24)&0xff000000);
+            u[i] = ((u[i] >> 24) & 0xff)     | ((u[i] >> 8) & 0xff00) |
+                   ((u[i] << 8)  & 0xff0000) | ((u[i] << 24) & 0xff000000);
         return 1;
     }
     case 8: {
         uint64_t *u = data;
         if ((size_t)data & 0x5) {
             if (send_errors)
-                fprintf(stderr,"ERROR: pointer to 64-bit integer is not 64-bit aligned (pointer is 0x%llx)\n",(long long)data);
+                fprintf(stderr, "ERROR: pointer to 64-bit integer is not 64-bit aligned"
+                        " (pointer is 0x%llx)\n", (long long)data);
             return 0;
         }
         for (i = 0; i < count; i++)
             u[i] = bswap_64(u[i]);
         return 1;
     }
-    default: return 0;
+    default:
+        return 0;
     }
-#endif /* ENABLE_DEPRECATED_SUBS */
 }
 
 /* Include the C library file for definition/control */
@@ -216,7 +114,6 @@ fast_byteswap(void *data,int bytes,size_t count)
  * @param nbyte Number of bytes.
  * @param nnum NNUM
  *
- *
  * @author Dexin Zhang, Jun Wang
  */
 void
@@ -227,10 +124,11 @@ byteswap_(char *data, int *nbyte, int *nnum)
     int nb = *nbyte;
     int nn = *nnum;
     size_t count = *nnum;
-    
+
     if (!fast_byteswap(data, nb, count))
     {
-        fprintf(stderr,"ERROR NOT ALIGNED SLOW CODE USED (nb and count %9d %9lu )\n",nb, count);
+        fprintf(stderr, "ERROR NOT ALIGNED SLOW CODE USED (nb and count %9d %9lu )\n",
+                nb, count);
         /* It failed.  No data was byteswapped because it is not aligned */
         for (j = 0; j < nn; j++)
         {

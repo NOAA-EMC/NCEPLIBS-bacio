@@ -15,8 +15,6 @@ include(GNUInstallDirs)
 # Handle user options.
 option(ENABLE_DOCS "Enable generation of doxygen-based documentation." OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(ENABLE_DEPRECATED_SUBS
-  "Enable deprecated byteswap subroutines (macro_swap_64, simple_swap_16, simple_swap_32). Disabled by default; enable only if a downstream package requires these symbols." OFF)
 
 # Check build type.
 if(NOT CMAKE_BUILD_TYPE MATCHES "^(Debug|Release|RelWithDebInfo|MinSizeRel)$")
