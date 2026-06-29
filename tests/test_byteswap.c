@@ -34,7 +34,8 @@ main()
         /* Swap a byte. Does nothing. */
         if ((ret = fast_byteswap(&byte_data, 1, 1)) != 1)
             return ERR;
-        
+
+#ifdef ENABLE_DEPRECATED_SUBS
         /* Swap a short. */
         if ((ret = fast_byteswap(&short_data, 2, 1)) != 1)
             return ERR;
@@ -51,6 +52,7 @@ main()
         if ((ret = fast_byteswap(&int64_data, 4, 1)) != 1)
             return ERR;
         if (int64_data != 704643072) return ERR;
+#endif /* ENABLE_DEPRECATED_SUBS */
 
         /* Swap a weird number and it won't work. */
         if ((ret = fast_byteswap(&short_data, 3, 1)) != 0)
