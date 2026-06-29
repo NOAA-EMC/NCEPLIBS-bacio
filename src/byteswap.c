@@ -143,60 +143,15 @@ macro_swap_64(void *data, size_t len)
 int
 fast_byteswap(void *data, int bytes, size_t count)
 {
-#ifdef ENABLE_DEPRECATED_SUBS
     switch (bytes) {
     case 1: return 1;
+#ifdef ENABLE_DEPRECATED_SUBS
     case 2: return simple_swap_16(data, count);
     case 4: return simple_swap_32(data, count);
     case 8: return macro_swap_64(data, count);
+#endif
     default: return 0;
     }
-#else
-    size_t i;
-    switch (bytes) {
-    case 1:
-        return 1;
-    case 2: {
-        uint16_t *u = data;
-        if ((size_t)data & 0x1) {
-            if (send_errors)
-                fprintf(stderr, "ERROR: pointer to 16-bit integer is not 16-bit aligned"
-                        " (pointer is 0x%llx)\n", (long long)data);
-            return 0;
-        }
-        for (i = 0; i < count; i++)
-            u[i] = (uint16_t)(((u[i] >> 8) & 0xff) | ((u[i] << 8) & 0xff00));
-        return 1;
-    }
-    case 4: {
-        uint32_t *u = data;
-        if ((size_t)data & 0x3) {
-            if (send_errors)
-                fprintf(stderr, "ERROR: pointer to 32-bit integer is not 32-bit aligned"
-                        " (pointer is 0x%llx)\n", (long long)data);
-            return 0;
-        }
-        for (i = 0; i < count; i++)
-            u[i] = ((u[i] >> 24) & 0xff)     | ((u[i] >> 8) & 0xff00) |
-                   ((u[i] << 8)  & 0xff0000)  | ((u[i] << 24) & 0xff000000);
-        return 1;
-    }
-    case 8: {
-        uint64_t *u = data;
-        if ((size_t)data & 0x5) {
-            if (send_errors)
-                fprintf(stderr, "ERROR: pointer to 64-bit integer is not 64-bit aligned"
-                        " (pointer is 0x%llx)\n", (long long)data);
-            return 0;
-        }
-        for (i = 0; i < count; i++)
-            u[i] = bswap_64(u[i]);
-        return 1;
-    }
-    default:
-        return 0;
-    }
-#endif /* ENABLE_DEPRECATED_SUBS */
 }
 
 /* Include the C library file for definition/control */
