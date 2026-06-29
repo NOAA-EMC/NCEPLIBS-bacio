@@ -24,9 +24,11 @@ main()
     {
         unsigned char byte_data = 42;
         short int short_data = 42;
+        int ret;
+#ifdef ENABLE_DEPRECATED_SUBS
         int int_data = 42;
         long long int int64_data = 42;
-        int ret;
+#endif
         
         /* Turn off error messages. */
         fast_byteswap_errors(0);
@@ -36,9 +38,6 @@ main()
             return ERR;
 
 #ifdef ENABLE_DEPRECATED_SUBS
-        int int_data = 42;
-        long long int int64_data = 42;
-        int ret;
         /* Swap a short. */
         if ((ret = fast_byteswap(&short_data, 2, 1)) != 1)
             return ERR;
