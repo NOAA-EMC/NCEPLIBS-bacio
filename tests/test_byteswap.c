@@ -36,6 +36,9 @@ main()
             return ERR;
 
 #ifdef ENABLE_DEPRECATED_SUBS
+        int int_data = 42;
+        long long int int64_data = 42;
+        int ret;
         /* Swap a short. */
         if ((ret = fast_byteswap(&short_data, 2, 1)) != 1)
             return ERR;
