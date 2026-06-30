@@ -144,6 +144,26 @@ contains
       print *, 'FAILED: Could not close file'
       stop 12
     end if
+! Reopen and check record structure with a standard LU (covers Line 81-86)
+    call baopenr(lu, filename, iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not reopen file for index test'
+      stop 13
+    end if
+
+    ib = 0
+    lx = 0
+    call bafrindex(lu, ib, lx, ix)
+    if (ix .ne. 12) then
+      print *, 'FAILED: Expected ix = 12 for lu=1, got', ix
+      stop 14
+    end if
+
+    call baclose(lu, iret)
+    if (iret .ne. 0) then
+      print *, 'FAILED: Could not close file after index test'
+      stop 15
+    end if
 
     ! Test with logical unit in 1000-1999 range (covers Line 266-270)
     ! Write and read with lu2=1500 so endian convention matches
@@ -154,25 +174,25 @@ contains
     call baopen(lu2, filename2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not open file with lu=1500'
-      stop 13
+      stop 16
     end if
 
     call bafrwrite(lu2, 0, 4, ka, data)
     if (ka .ne. 12) then
       print *, 'FAILED: Expected ka = 12 on write, got', ka
-      stop 14
+      stop 17
     end if
 
     call baclose(lu2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not close file after write with lu=1500'
-      stop 15
+      stop 18
     end if
 
     call baopenr(lu2, filename2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not reopen file with lu=1500'
-      stop 16
+      stop 19
     end if
 
     ! Read using bafrindex to check record structure
@@ -181,26 +201,26 @@ contains
     call bafrindex(lu2, ib, lx, ix)
     if (ix .ne. 12) then
       print *, 'FAILED: Expected ix = 12, got', ix
-      stop 17
+      stop 20
     end if
 
     ! Read data using bafrread
     call bafrread(lu2, 0, 4, ka, data_in)
     if (ka .ne. 12) then
       print *, 'FAILED: Expected ka = 12 on read, got', ka
-      stop 18
+      stop 21
     end if
 
     if (data_in .ne. data) then
       print *, 'FAILED: Data mismatch'
-      stop 19
+      stop 22
     end if
 
     ! Close file
     call baclose(lu2, iret)
     if (iret .ne. 0) then
       print *, 'FAILED: Could not close file after read'
-      stop 20
+      stop 23
     end if
 
     ! Test big-endian scenario (covers Line 262)
@@ -211,7 +231,7 @@ contains
       call baopen(lu, filename, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not open file for big-endian test'
-        stop 21
+        stop 24
       end if
 
       call bafrwrite(lu, 0, 4, ka, data)
@@ -219,7 +239,7 @@ contains
       call baclose(lu, iret)
       if (iret .ne. 0) then
         print *, 'FAILED: Could not close file in big-endian test'
-        stop 22
+        stop 25
       end if
     end if
 
@@ -240,16 +260,17 @@ contains
         trim(mendian) .ne. 'big_endian' .and. &
         trim(mendian) .ne. 'mixed_endian') then
       print *, 'FAILED: Invalid endianness detected: ', trim(mendian)
-      stop 20
+      stop 60
     end if
     
     print *, '  Detected endianness: ', trim(mendian)
     print *, 'PASSED: Endian detection tests'
   end subroutine run_test_mixed_endian_detection
 
-  ! Test 4: Logical Unit boundary conditions (baciof.F90 Line 547-548, 551-552, 617-618, 621)
+! Test 4: Logical Unit boundary conditions (baciof.F90 Line 547-548, 551-552, 617-618, 621)
   subroutine run_test_lu_boundary_conditions()
     integer :: lu = 0
+    integer :: lu_unopened = 900  ! Valid range, never opened
     integer :: ka
     integer(kind=8) :: ka8, ib8, nb8
     character(len=4) :: data, data_in
@@ -262,6 +283,26 @@ contains
     ! Delete file if exists
     open(unit = 1234, iostat = stat, file = filename, status='old')
     if (stat == 0) close(1234, status='delete')
+
+! Test with a valid-but-unopened LU (covers baciof.F90 Line 420-421,
+    ! 551-552, 621: FD(LU) <= 0, KA = 0/RETURN)
+    ib8 = 0
+    nb8 = 4
+    call bareadl(lu_unopened, ib8, nb8, ka8, data_in)
+    if (ka8 .ne. 0) then
+      print *, 'FAILED: Expected ka8 = 0 for unopened LU read, got', ka8
+      stop 50
+    end if
+
+    call bawritel(lu_unopened, ib8, nb8, ka8, data)
+    if (ka8 .ne. 0) then
+      print *, 'FAILED: Expected ka8 = 0 for unopened LU write, got', ka8
+      stop 51
+    end if
+
+    call wrytel(lu_unopened, nb8, data)
+    ! No return value to check, just ensure it doesn't crash
+
     
     ! Test with invalid LU (covers Line 547-548: KA = 0, RETURN)
     lu = 0
