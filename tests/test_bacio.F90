@@ -210,6 +210,5 @@ program test_bacio
   ! Close the test file.
   call baclose(lu, iret)
   if (iret .ne. 0) stop 413
-
   print *, 'SUCCESS!'
 end program test_bacio
